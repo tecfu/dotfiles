@@ -1,0 +1,17 @@
+set editing-mode vi
+$if mode=vi
+
+# these are for vi-command mode
+set keymap vi-command
+
+# unbind space
+" ": ""
+
+" a":beginning-of-line
+" ;":"$" 
+
+# these are for vi-insert mode
+set keymap vi-insert
+"\e[A": history-search-backward 
+"\e[B": history-search-forward
+$endif

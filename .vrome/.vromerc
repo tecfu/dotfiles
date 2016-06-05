@@ -1,0 +1,34 @@
+"===[ Mappings ]========================================================
+
+" Scroll up/down 20 lines at a time shift+j,shift+k
+map <C-j> 20j
+map <C-k> 20k
+
+" Press 'shift+l' to go forward in history
+map <S-l> :forward<CR>
+
+" Press 'shift+r' to reload
+map <S-r> :reload<CR>
+
+" Press 'shift+j' to go to previous tab
+map <S-j> :tabprevious<CR>
+" Press 'shift+k' to go to next tab
+map <S-k> :tabnext<CR>
+
+" Press 'C-a' to select all
+map <C-a> <C-v><C-a>
+
+" Press 'C-c' to copy, 'C-v' or 'S-Insert' to paste, or 'C-x' to cut
+map <C-c> <C-v><C-c>
+map <C-v> <C-v><C-v>
+map <C-x> <C-v><C-x>
+cmap <C-c> <C-v><C-c>
+cmap <C-v> <C-v><C-v>
+cmap <S-Insert> <C-v><C-v>
+cmap <C-x> <C-v><C-x>
+imap <C-c> <C-v><C-c>
+imap <C-v> <C-v><C-v>
+imap <S-Insert> <C-v><C-v>
+imap <C-x> <C-v><C-x>
+
+"===[ fin ]=============================================================

@@ -1,0 +1,14 @@
+tags
+*~
+*.swp
+*.swo
+.DS_Store
+.session
+.netrwhist
+
+bundle
+#!bundle
+#bundle/*
+#!bundle/.neobundle
+#!bundle/neobundle.vim
+node_modules

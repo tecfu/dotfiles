@@ -1,0 +1,9 @@
+tags
+*~
+*.swp
+*.swo
+.DS_Store
+.session
+.netrwhist
+Session.vim
+.vim/undo

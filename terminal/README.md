@@ -1,20 +1,39 @@
-# Dotfiles
+# .bashrc
 
-- [.bashrc / Terminal Emulator](terminal/README.md)  
+## Installation
+```
+ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
+ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
+```
 
-- [Vim](.vim/README.md)  
+### What this file does:
 
-- [Vimperator](.vimperator/README.md)  
+- Sets up Golang path
+- Puts terminal in vi mode
+- Adds some vim key mappings
 
-- [Vrome](.vrome/README.md)  
+```
+# Golang configuration
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
-- [X (.Xmodmap, et.al)](x/README.md)
+# Set vimode, Vim as editor
+set -o vi
+# Set default editor to VIM
+export VISUAL=/usr/bin/vim
+export EDITOR=/usr/bin/vim
+```
+
+### Checking your terminal for 256 colors:
+
+- Run the file ./256colors2.pl and check for tiled blocks that
+represent 256 colors in the output.
 
 ## License
 
 **The MIT License (MIT)**
 
-**Copyright (c) 2010 - 2016 Tecfu**
+**Copyright (c) 2016 Tecfu**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
