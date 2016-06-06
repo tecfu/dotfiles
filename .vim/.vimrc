@@ -220,14 +220,6 @@ nmap <S-Tab> <<
 " for insert mode
 "imap <S-Tab> <Esc><<i
 
-"Command mode mappings
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-k> <Up>
-cnoremap <C-j> <Down>
-cnoremap <C-h> <Left>
-cnoremap <C-l> <Right>
-
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -322,6 +314,15 @@ nnoremap <leader>l $a<space><esc>
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
+" Command mode mappings
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -335,11 +336,13 @@ noremap <C-k> 10k
 noremap <C-l> 10l 
 noremap <C-h> 10h  
 
-" Remap home and end to "ctrl+;" and ";" in addition to default "0" and "$" 
+" Remap home and end to "ctrl+;" and ";" in addition to default "1" and "$" 
 noremap <leader>a ^
 noremap <leader>; $
-"noremap <C-a> ^
-"noremap <C-;> $
+
+noremap <C-a> ^
+"<C-;> does not map
+noremap <C-e> $ 
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
