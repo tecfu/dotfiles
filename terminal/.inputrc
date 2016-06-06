@@ -8,16 +8,14 @@ set keymap vi-command
 # unbind space
 " ": ""
 
-#unbind C-e
-"\C-e": ""
-
 # beginning and end of line shortcuts
 " a":beginning-of-line
 " ;":end-of-line 
 
 "\C-a":beginning-of-line
-# Does not work
-# "\C-e":end-of-line 
+
+# Must be set in .bashrc
+#"\C-e":end-of-line 
 
 # jump left or right by one word
 "\C-h":shell-backward-word

@@ -131,9 +131,19 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Set vimode, Vim as editor
-# set -o vi
+set -o vi
 
 # Set default editor to VIM
 export VISUAL=/usr/bin/vim
 export EDITOR=/usr/bin/vim
+
+#enables binding to \C-e
+#doesn't work if done in .inputrc /  vi-command
+bind -m vi-move '"\C-e":end-of-line'
+# bind -m vi-command '"\C-e":end-of-line'
+
+# @todo Find out why this works if you enter it into the terminal 
+# after startup but doesn not work here
+# bind '"\C-e":end-of-line'
+
 
