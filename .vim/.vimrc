@@ -322,6 +322,10 @@ cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
+"5 left
+cnoremap <C-S-h> <C-f>5h<C-c>
+"5 right
+cnoremap <C-S-l> <C-f>5l<C-c>
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -342,7 +346,7 @@ noremap <leader>; $
 
 noremap <C-a> ^
 "<C-;> does not map
-noremap <C-e> $ 
+nmap <C-e> $ 
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
