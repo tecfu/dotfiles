@@ -43,7 +43,6 @@ NeoBundle "bling/vim-airline"
 " {{{
 "let g:airline_theme='colors/mango.vim'
 set laststatus=2
-set encoding=utf-8
 if has("gui_running")
   let g:airline_powerline_fonts=1
   " Even special font for this crap

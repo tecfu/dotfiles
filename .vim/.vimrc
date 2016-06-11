@@ -27,6 +27,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Load Plugins 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set utf8 as standard encoding and en_US as the standard language
+" Neovim requires it be done here
+set encoding=utf8
+
 if filereadable($HOME."/.vim/plugins.vim")
   source ${HOME}/.vim/plugins.vim
 endif
@@ -239,9 +243,6 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 set nobackup
 set nowb
 set noswapfile
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
