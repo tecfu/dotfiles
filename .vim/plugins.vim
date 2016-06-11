@@ -336,7 +336,7 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_update_time = 1000
 
 " set up mru limit
-let g:unite_source_file_mru_limit = 10
+let g:unite_source_file_mru_limit = 5
 
 " highlight like my vim
 let g:unite_cursor_line_highlight = 'CursorLine'
