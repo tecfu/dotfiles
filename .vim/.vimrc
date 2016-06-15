@@ -31,6 +31,19 @@
 " Neovim requires it be done here
 set encoding=utf8
 
+"Python fix for neovim
+if has("nvim")
+	"set shell=/bin/bash
+	if !has('python') && !has('python3')
+		echo "ERROR! Manually install python support with:\n"
+					\"pip2 install neovim\n" 
+					\"pip3 install neovim"
+	endif
+
+	let g:python_host_prog = '/usr/bin/python'
+endif
+
+
 if filereadable($HOME."/.vim/plugins.vim")
   source ${HOME}/.vim/plugins.vim
 endif
