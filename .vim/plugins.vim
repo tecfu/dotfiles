@@ -389,17 +389,18 @@ nnoremap <silent> <leader>b :<C-u>Unite -buffer-name=buffer buffer<CR>
 
 " Function that only triggers when unite opens
 autocmd FileType unite call s:unite_settings()
+
 function! s:unite_settings()
   
   setlocal modifiable
-  
+
   " Play nice with supertab
   "let b:SuperTabDisabled=1
 
   " Support autocompletion with tab at cost of actions menu
   "imap <silent><buffer> <tab> <c-x><c-f>
-  iunmap <silent><buffer> <c-n>
-  iunmap <silent><buffer> <c-p>
+  " iunmap <silent><buffer> <c-n>
+  " iunmap <silent><buffer> <c-p>
   imap <buffer> <Tab>   <Plug>SuperTabForward
   imap <buffer> <S-Tab>  <Plug>SuperTabBackward
   nnoremap <buffer> <S-Tab> <Plug>SuperTabBackward
@@ -410,15 +411,12 @@ function! s:unite_settings()
   " imap <buffer> <ESC> <Plug>(unite_exit)
 
   " Ctrl jk mappings
-  imap <buffer> <C-j> <Plug>(unite_insert_leave)
-  nmap <buffer> <C-k> <Plug>(unite_insert_enter)
+  nmap <buffer> <C-j> 5j
+	nmap <buffer> <C-k> 5k
 
   " Enable navigation with shift-j and shift-k in insert mode
   imap <buffer> <S-j>   <Plug>(unite_select_next_line)
   imap <buffer> <S-k>   <Plug>(unite_select_previous_line)
-
-  " qq `` to quit unite
-  imap <buffer> qq <Plug>(unite_exit)
 
   " refresh unite
   nmap <buffer> <C-r> <Plug>(unite_redraw)
@@ -463,38 +461,38 @@ function! s:unite_settings()
 
 " Unite custom menus ================================================================
 
-" Fugitive menu in Unite (depends on both Fugitive and Unite.vim) {{{
-let g:unite_source_menu_menus = {}
-let g:unite_source_menu_menus.git = {}
-let g:unite_source_menu_menus.git.description = 'git (Fugitive)'
-let g:unite_source_menu_menus.git.command_candidates = [
-    \['▷ git status       (Fugitive)',
-        \'Gstatus'],
-    \['▷ git diff         (Fugitive)',
-        \'Gdiff'],
-    \['▷ git commit       (Fugitive)',
-        \'Gcommit'],
-    \['▷ git log          (Fugitive)',
-        \'exe "silent Glog | Unite quickfix"'],
-    \['▷ git blame        (Fugitive)',
-        \'Gblame'],
-    \['▷ git stage        (Fugitive)',
-        \'Gwrite'],
-    \['▷ git checkout     (Fugitive)',
-        \'Gread'],
-    \['▷ git rm           (Fugitive)',
-        \'Gremove'],
-    \['▷ git mv           (Fugitive)',
-        \'exe "Gmove " input("destino: ")'],
-    \['▷ git push         (Fugitive, output buffer)',
-        \'Git! push'],
-    \['▷ git pull         (Fugitive, output buffer)',
-        \'Git! pull'],
-    \['▷ git prompt       (Fugitive, output buffer)',
-        \'exe "Git! " input("comando git: ")'],
-    \['▷ git cd           (Fugitive)',
-        \'Gcd'],
-    \]
+	" Fugitive menu in Unite (depends on both Fugitive and Unite.vim) {{{
+	let g:unite_source_menu_menus = {}
+	let g:unite_source_menu_menus.git = {}
+	let g:unite_source_menu_menus.git.description = 'git (Fugitive)'
+	let g:unite_source_menu_menus.git.command_candidates = [
+			\['▷ git status       (Fugitive)',
+					\'Gstatus'],
+			\['▷ git diff         (Fugitive)',
+					\'Gdiff'],
+			\['▷ git commit       (Fugitive)',
+					\'Gcommit'],
+			\['▷ git log          (Fugitive)',
+					\'exe "silent Glog | Unite quickfix"'],
+			\['▷ git blame        (Fugitive)',
+					\'Gblame'],
+			\['▷ git stage        (Fugitive)',
+					\'Gwrite'],
+			\['▷ git checkout     (Fugitive)',
+					\'Gread'],
+			\['▷ git rm           (Fugitive)',
+					\'Gremove'],
+			\['▷ git mv           (Fugitive)',
+					\'exe "Gmove " input("destino: ")'],
+			\['▷ git push         (Fugitive, output buffer)',
+					\'Git! push'],
+			\['▷ git pull         (Fugitive, output buffer)',
+					\'Git! pull'],
+			\['▷ git prompt       (Fugitive, output buffer)',
+					\'exe "Git! " input("comando git: ")'],
+			\['▷ git cd           (Fugitive)',
+					\'Gcd'],
+			\]
 " }}}
 
 endfunction
