@@ -35,7 +35,7 @@ set encoding=utf8
 if has("nvim")
 	"set shell=/bin/bash
 	if !has('python') && !has('python3')
-		echo "ERROR! Manually install python support with:\n"
+		echoe "ERROR! Manually install python support with:\n"
 					\"pip2 install neovim\n" 
 					\"pip3 install neovim"
 	endif
