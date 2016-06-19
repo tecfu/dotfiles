@@ -7,7 +7,7 @@ home directory.
 - Linux
 
 ```
-ln -s ~/.vimperator/.vimperatorrc ~/.vimperatorrc
+ln -s ~/.vimperator/.vimperator.vim ~/.vimperatorrc
 ```
 
 
