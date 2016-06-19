@@ -80,6 +80,10 @@ set showcmd
 " Set color column 
 set colorcolumn=80
 
+" Set relative line numbers except in insert mode
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
 " Text highlight of words that match that under the cursor
 " http://stackoverflow.com/questions/1551231/highlight-variable-under-cursor-in-vim-like-in-netbeans
 " :autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\')) 
