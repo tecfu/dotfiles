@@ -421,7 +421,7 @@ map <S-k> :tabnext<CR>
 "Overwrites join lines
 map <S-j> :tabprev<CR>
 "Because C-t is tag navigation
-map <S-t> :tabnew
+map <S-t> :tabnew<CR>
 
 " Undo close tab using Shougo/Unite to get MRU file
 function! UndoCloseTab()
