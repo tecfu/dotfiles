@@ -81,6 +81,7 @@ set showcmd
 set colorcolumn=80
 
 " Set relative line numbers except in insert mode
+set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 
