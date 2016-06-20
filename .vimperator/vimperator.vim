@@ -45,12 +45,12 @@ inoremap <C-S-i> <C-i>
 " js mappings.addUserMap([modes.INSERT], ["<C-S-i>"], "Launch the external editor.", function() { editor.editFieldExternally(); })
 
 " Scroll up/down 20 lines at a time shift+j,shift+k
-noremap <C-j> 20j
-noremap <C-k> 20k
+noremap <S-j> 20j
+noremap <S-k> 20k
 
-" Scroll right/left 10 characters
-noremap <C-l> 10l 
-noremap <C-h> 10h  
+" Scroll Sight/left 10 characters
+noremap <S-l> 10l 
+noremap <S-h> 10h  
  
 " Remap home and end to "ctrl+;" and ";" in addition to default "0" and "$"  
 noremap <leader>a ^
@@ -65,7 +65,10 @@ noremap <F10> :vimperatortoggle<CR>
 " Press 'b' to page up, instead of crazy CTRL-B
 "noremap b <PageUp>
 
-" Press 'shift+l' to go forward in history
+"Press 'C+h' to go backward in history
+"noremap <S-h> :back<CR>
+
+" Press 'C+l' to go forward in history
 noremap <S-l> :forward<CR>
 
 " Press 'shift+j' to go to previous tab

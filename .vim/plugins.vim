@@ -219,9 +219,9 @@ let g:syntastic_loc_list_height=3
 
 " Use deoplete with nvim
 if has("nvim")
-	"NeoBundle 'Shougo/deoplete.nvim'
-
-" neomplete with vim
+	NeoBundle 'Shougo/deoplete.nvim'
+	let g:deoplete#enable_at_startup = 1
+" Use neomplete with vim
 else
 	NeoBundle 'Shougo/neocomplete'
 
