@@ -164,9 +164,14 @@ set tm=500
 set foldcolumn=1
 
 " Code folding
-autocmd Filetype vim,md,txt,js setlocal foldmethod=marker
-set foldmethod=syntax
-set foldlevelstart=4
+set foldmethod=indent
+set foldlevel=2
+
+" Filetype specific folding
+au Filetype vim,vimrc,md 
+	\ setlocal foldmethod=marker |
+  \ setlocal foldlevel=0 |
+	\ setlocal foldlevelstart=0
 
 " Use Vim's persistent undo
 " Put plugins and dictionaries in this dir (also on Windows)
