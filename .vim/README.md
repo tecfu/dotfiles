@@ -29,6 +29,18 @@ ln -s ~/.dotfiles/.vim/.vimrc ~/.vimrc
 $ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 ```
 
+### Configure Vim-Airline for Linux terminal
+
+- Install Powerline Fonts
+```
+git clone http://www.github.com/powerline/fonts.git
+cd fonts
+./install.sh
+````
+
+- Configure your terminal to use a powerline font
+	- i.e.: Ubuntu Mono derivative Powerline
+
 ### Disable capturing of Ctrl-S, Ctrl-Q in terminal mode:
 
 - Add the following lines to your .bashrc
