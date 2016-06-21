@@ -42,11 +42,13 @@ NeoBundle 'blindFS/vim-taskwarrior'
 NeoBundle "bling/vim-airline"
 " {{{
 "let g:airline_theme='colors/mango.vim'
-set laststatus=2
+let g:airline_powerline_fonts=1
+
+"airline themed tabs
+"let g:airline#extensions#tabline#enabled = 1
+
 if has("gui_running")
-  let g:airline_powerline_fonts=1
-  " Even special font for this crap
-  set guifont=Source\ Code\ Pro\ for\ Powerline\ 13
+  
 endif
 
 function! AirlineOverride(...)
@@ -56,6 +58,31 @@ function! AirlineOverride(...)
   let g:airline_section_y = airline#section#create([])
 endfunction
 autocmd VimEnter * call AirlineOverride()
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_right_sep = '«'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 " }}}
 
 
@@ -273,28 +300,7 @@ else
 	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 	inoremap <expr><C-y>  neocomplete#close_popup()
 	inoremap <expr><C-e>  neocomplete#cancel_popup()
-	" Close popup by <Space>.
-	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-	" For cursor moving in insert mode(Not recommended)
-	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-	" Or set this.
-	"let g:neocomplete#enable_cursor_hold_i = 1
-	" Or set this.
-	"let g:neocomplete#enable_insert_char_pre = 1
-
-	" AutoComplPop like behavior.
-	" let g:neocomplete#enable_auto_select = 1
-
-	" Shell like behavior(not recommended).
-	"set completeopt+=longest
-	"let g:neocomplete#enable_auto_select = 1
-	"let g:neocomplete#disable_auto_complete = 1
-	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
+	
 	" Enable omni completion.
 	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -401,9 +407,9 @@ function! s:unite_settings()
   "imap <silent><buffer> <tab> <c-x><c-f>
   " iunmap <silent><buffer> <c-n>
   " iunmap <silent><buffer> <c-p>
-  imap <buffer> <Tab>   <Plug>SuperTabForward
-  imap <buffer> <S-Tab>  <Plug>SuperTabBackward
-  nnoremap <buffer> <S-Tab> <Plug>SuperTabBackward
+  imap <silent><buffer> <Tab>   <Plug>SuperTabForward
+  imap <silent><buffer> <S-Tab>  <Plug>SuperTabBackward
+  nnoremap <silent><buffer> <S-Tab> <Plug>SuperTabBackward
   "imap <buffer> <S-Tab> <c-p>
 
   " exit with esc
