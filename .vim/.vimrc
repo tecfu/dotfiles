@@ -30,6 +30,7 @@
 " Set utf8 as standard encoding and en_US as the standard language
 " Neovim requires it be done here
 set encoding=utf8
+set fileencoding=utf8
 
 "Python fix for neovim
 if has("nvim")
@@ -53,6 +54,15 @@ endif
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
+" Never run in vi-compatible mode
+set nocompatible
+
+" Enable tab autocomplete of commands in command mode"
+set wildmode=list:longest
+
+set incsearch
+
 " Sets how many lines of history VIM has to remember
 set history=700
 
@@ -127,12 +137,12 @@ if has('mouse')
   set mouse=a
 endif
 
-" Set incermental search
+" Set incremental search
 " Makes search act like search in modern browsers
 " This way you can :/findsomething to see all current matches
 " and then :%s//replace will use the last command (:/findsomething)
 " http://stackoverflow.com/questions/1276403/simple-vim-commands-you-wish-youd-known-earlier?page=1&tab=votes#tab-top
-set incsearch
+" set incsearch
 
 " Ignore case when searching
 set ignorecase
@@ -242,7 +252,7 @@ nnoremap qd :silent! normal di'hPl2xb<CR>
 nnoremap qqd :silent! normal di"hPl2xb<CR>
 
 " Map shift+tab to inverse tab
-" for command mode
+" for normal mode
 nmap <S-Tab> <<
 " for insert mode
 "imap <S-Tab> <Esc><<i
@@ -330,9 +340,17 @@ set ai "Auto indent
 "set si "Smart indent
 set wrap "Wrap lines
 
-" reselect visual block after indent/outdent
+" Reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
+
+" Select all
+function! SelectAll()
+	:mark l	
+	":exe 'normal ggVG'
+	:%
+endfunction
+nnoremap <C-a> :call SelectAll()<CR>
 
 " Allow pasting from clipboard without autoindenting
 " If your ssh session has X11 forwarding enabled, and the remote terminal Vim has +xclipboard support, then you can use the "+P keystroke to paste directly from the clipboard into Vim.
@@ -392,9 +410,9 @@ noremap <C-h> 10h
 noremap <leader>a ^
 noremap <leader>; $
 
-noremap <C-a> ^
+"noremap <C-a> ^
 "<C-;> does not map
-nmap <C-e> $ 
+"nmap <C-e> $ 
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -535,7 +553,6 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-
 
 " Returns true if paste mode is enabled
 function! HasPaste()

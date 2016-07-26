@@ -5,10 +5,6 @@
 if 0 | endif
 
 if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
-
   " Required:
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -19,6 +15,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
+
 " Custom Plugins Start Here
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
@@ -100,6 +97,9 @@ NeoBundle 'dhruvasagar/vim-table-mode'
 
 NeoBundle 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+
+NeoBundle 'fs111/pydoc.vim'
 
 
 "NeoBundle 'farseer90718/vim-taskwarrior'
@@ -204,7 +204,7 @@ let g:phpcomplete_index_composer_command = "composer"
 "}}}
 
 
-"Recommended: sudo -S apt-get install silversearcher-ag
+" Recommended: sudo -S apt-get install silversearcher-ag
 NeoBundle 'rking/ag.vim'
 
 
@@ -572,6 +572,9 @@ NeoBundle 'yuratomo/w3m.vim'
 
 
 NeoBundle 'vim-scripts/matchit.zip'
+
+
+NeoBundle 'vim-scripts/SearchComplete'
 
 
 NeoBundle 'vim-scripts/YankRing.vim'
