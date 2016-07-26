@@ -92,10 +92,6 @@ NeoBundle 'Chiel92/vim-autoformat'
 NeoBundle 'danro/rename.vim'
 
 
-"Fork of vim-scripts/SearchComplete
-NeoBundle 'Dewdrops/SearchComplete'
-
-
 NeoBundle 'dhruvasagar/vim-table-mode'
 
 
@@ -534,9 +530,6 @@ NeoBundle 'sidorares/node-vim-debugger'
 NeoBundle 'StanAngeloff/php.vim'
 
 
-NeoBundle 'tecfu/mango.vim'
-
-
 NeoBundle 'terryma/vim-multiple-cursors'
 
 
@@ -576,6 +569,11 @@ NeoBundle 'yuratomo/w3m.vim'
 
 
 NeoBundle 'vim-scripts/matchit.zip'
+
+
+"Fork
+NeoBundle 'Dewdrops/SearchComplete'
+"NeoBundle 'vim-scripts/SearchComplete'
 
 
 NeoBundle 'vim-scripts/YankRing.vim'
