@@ -206,6 +206,10 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Key mappings """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+" Clear highlighting on escape in normal mode
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
 " ctrl-q to force quit
 noremap <C-Q> :qa!<CR>
 vnoremap <C-Q> <C-C>:qa!<CR>
@@ -420,12 +424,12 @@ map <silent> <leader><cr> :noh<cr>
 " Navigation shortcuts for location window
 " map <leader>q :lopen <CR>
 "	map q :lclose <CR>
-map <expr> <C-Down> (empty(getloclist(0))  ? "" : ":lnext")."\n"
-map <expr> <C-Up> (empty(getloclist(0))  ? "" : ":lp")."\n"
+map <expr> <C-Down> (empty(getloclist(0))  ? "" : ":lnext")."<CR>"
+map <expr> <C-Up> (empty(getloclist(0))  ? "" : ":lp")."<CR>"
 
 " Navigation shortcuts for quickfix window
-map <expr> <A-Down> (empty(getqflist())  ? "" : ":cnext")."\n"
-map <expr> <A-Up> (empty(getqflist())  ? "" : ":cprevious")."\n"
+map <expr> <A-Down> (empty(getqflist())  ? "" : ":cnext")."<CR>"
+map <expr> <A-Up> (empty(getqflist())  ? "" : ":cprevious")."<CR>"
 
 " Move between buffers with keycodes that match vimperator
 " shift+h => back, shift+l => forward
