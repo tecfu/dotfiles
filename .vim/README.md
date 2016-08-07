@@ -16,9 +16,9 @@ Configuration files for the Vim editor.
 ### Clone this repository into your home directory.
 
 ```
-git clone git://github.com/tecfu/dotfiles ~/.dotfiles
-ln -s ~/.dotfiles/.vim ~/.vim
-ln -s ~/.dotfiles/.vim/.vimrc ~/.vimrc
+git clone git://github.com/tecfu/dotfiles ~/dotfiles
+ln -s ~/dotfiles/.vim ~/.vim
+ln -s ~/dotfiles/.vim/.vimrc ~/.vimrc
 ```
 
 ### Install NeoBundle
