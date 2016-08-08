@@ -315,6 +315,9 @@ set ffs=unix,dos,mac
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+" Show invisibles by default
+set list
+
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
