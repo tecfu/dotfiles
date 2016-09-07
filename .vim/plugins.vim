@@ -87,6 +87,9 @@ NeoBundle 'brookhong/DBGPavim'
 
 
 NeoBundle 'Chiel92/vim-autoformat'
+let g:formatterpath = ['/usr/local/bin']
+"For javascript, install js-beautify externally
+"npm install js-beautify -g
 
 
 NeoBundle 'danro/rename.vim'
@@ -216,9 +219,9 @@ NeoBundle 'Peeja/vim-cdo'
 
 NeoBundle 'scrooloose/syntastic', {
     \ 'build' : {
-    \   'unix': 'sh -c "npm install jshint -g"',
-    \   'mac': 'npm install jshint -g',
-    \   'win': 'npm install jshint -g' 
+    \   'unix': 'sh -c "npm install eslint -g"',
+    \   'mac': 'npm install eslint -g',
+    \   'win': 'npm install eslint -g' 
     \    }
     \ }
 
@@ -235,7 +238,7 @@ if !empty(glob("~/.vim/bundle/syntastic/plugin/syntastic.vim"))
 	let g:syntastic_check_on_open = 1
 	let g:syntastic_check_on_wq = 0
   let g:syntastic_reuse_loc_lists = 1
-	let g:syntastic_javascript_checkers = ['jshint']
+	let g:syntastic_javascript_checkers = ['eslint']
 
   set sessionoptions-=blank
 endif
