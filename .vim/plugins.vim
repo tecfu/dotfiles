@@ -161,6 +161,13 @@ let g:EasyMotion_smartcase = 1
 NeoBundle 'majutsushi/tagbar'
 "{{{
 nmap t :TagbarToggle<CR>
+
+"Open tagbar automatically if you're opening Vim with a supported file type
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+"Open Tagbar only for specific filetypes
+"autocmd FileType c,cpp nested :TagbarOpen
+
 "}}}
 
 
@@ -238,9 +245,21 @@ if !empty(glob("~/.vim/bundle/syntastic/plugin/syntastic.vim"))
 	let g:syntastic_check_on_open = 1
 	let g:syntastic_check_on_wq = 0
   let g:syntastic_reuse_loc_lists = 1
+
+" javascript	
 	let g:syntastic_javascript_checkers = ['eslint']
 
-  set sessionoptions-=blank
+" java
+	"let g:syntastic_java_checker = 'javac'
+	
+" manage custom filetypes
+	augroup filetype
+			autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+	augroup END
+
+	let g:syntastic_filetype_map = { "gradle": "java" }
+
+	set sessionoptions-=blank
 endif
 
 " Set location list height to 3 lines
