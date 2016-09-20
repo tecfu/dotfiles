@@ -362,6 +362,9 @@ nnoremap <C-a> :call SelectAll()<CR>
 " Allow pasting from clipboard without autoindenting
 " If your ssh session has X11 forwarding enabled, and the remote terminal Vim has +xclipboard support, then you can use the "+P keystroke to paste directly from the clipboard into Vim.
 nnoremap <leader>p :execute 'set noai' <bar> execute 'normal "+p' <bar> execute 'set ai' <CR>
+"Paste from clipboard before cursor
+nnoremap <leader>P :execute 'set noai' <bar> execute 'normal "+P' <bar> execute 'set ai' <CR>
+
 inoremap <C-v> <C-O>:set noai<CR> <C-R>+ <C-O>:set ai<CR>
 inoremap <leader>p <C-O>:set noai<CR> <C-R>+ <C-O>:set ai<CR>
 
