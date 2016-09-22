@@ -80,6 +80,10 @@ set autoread
 map <space> <leader>
 imap <space><space> <C-O><leader>
 set showcmd
+
+" Tell Vim to look for a tags file in the directory of the current file as well as in the working directory, and up, and up, and…
+set tags=./tags,tags;/
+
 "}}}
 
 
