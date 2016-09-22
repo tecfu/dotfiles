@@ -19,7 +19,6 @@
     "orgy": "^2.0.3"
   },
   "dependencies": {
-    "jsdom": "^3.1.2",
-		"jsctags": "git://github.com/ramitos/jsctags.git"
+    "jsdom": "^3.1.2"
   }
 }
