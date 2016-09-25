@@ -148,6 +148,9 @@ endif
 " http://stackoverflow.com/questions/1276403/simple-vim-commands-you-wish-youd-known-earlier?page=1&tab=votes#tab-top
 " set incsearch
 
+" Search for visually selected text by pressing // in visual mode
+vnoremap // y/<C-R>"<CR>
+
 " Ignore case when searching
 set ignorecase
 
@@ -165,6 +168,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
