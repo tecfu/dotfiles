@@ -221,6 +221,9 @@ let g:phpcomplete_index_composer_command = "composer"
 NeoBundle 'rking/ag.vim'
 
 
+NeoBundle 'matze/vim-move'
+
+
 NeoBundle 'mustache/vim-mustache-handlebars'
 
 
@@ -446,8 +449,8 @@ function! s:unite_settings()
 	nmap <buffer> <C-k> 5k
 
   " Enable navigation with shift-j and shift-k in insert mode
-  imap <buffer> <S-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <S-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> <S-j>  <Plug>(unite_select_next_line)
+  imap <buffer> <S-k>  <Plug>(unite_select_previous_line)
 
   " refresh unite
   nmap <buffer> <C-r> <Plug>(unite_redraw)
@@ -540,6 +543,10 @@ let g:vimshell_split_command = "tabnew"
 if has("gui_running")
   let g:vimshell_editor_command = "gvim"
 endif
+
+" use same keybindings to go forward and back in prompt as in vim bash
+imap <S-k> <Plug>(vimshell_previous_prompt)
+imap <S-j> <Plug>(vimshell_next_prompt)
 "}}}
 
 
