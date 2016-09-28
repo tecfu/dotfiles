@@ -217,11 +217,14 @@ let g:phpcomplete_index_composer_command = "composer"
 "}}}
 
 
-" Recommended: sudo -S apt-get install silversearcher-ag
-NeoBundle 'rking/ag.vim'
-
-
 NeoBundle 'matze/vim-move'
+
+
+" Recommended: sudo -S apt-get install silversearcher-ag
+NeoBundle 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 
 NeoBundle 'mustache/vim-mustache-handlebars'
