@@ -81,6 +81,15 @@ map <space> <leader>
 imap <space><space> <C-O><leader>
 set showcmd
 
+" Allow mapping to alt-somekey on linux terminal vim
+" <M-somekey> makes compatible with Mac's 'command' key
+" alt-j
+execute "set <M-j>=\ej"
+nnoremap <M-j> j
+" alt-k
+execute "set <M-k>=\ek"
+nnoremap <M-k> k
+
 " Tell Vim to look for a tags file in the directory of the current file as well as in the working directory, and up, and up, and…
 set tags=./tags,tags;/
 
@@ -152,10 +161,11 @@ endif
 vnoremap // y/<C-R>"<CR>
 
 " Ignore case when searching
-set ignorecase
+" set ignorecase
 
 " When searching try to be smart about cases
-set smartcase
+" Only works if ignorecase is set
+" set smartcase
 
 " Highlight search results
 set hlsearch
