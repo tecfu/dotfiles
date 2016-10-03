@@ -228,7 +228,7 @@ endif
 " => Key mappings """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 " Clear highlighting on escape in normal mode
-nnoremap <esc> :noh<return><esc>
+nnoremap <esc> <silent> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
 
 " ctrl-q to force quit
@@ -446,7 +446,7 @@ noremap <leader>; $
 "nmap <C-e> $ 
 
 " Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+" map <silent> <leader><cr> :noh<cr>
 
 " Navigation shortcuts for location window
 " map <leader>q :lopen <CR>
