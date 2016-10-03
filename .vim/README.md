@@ -162,7 +162,6 @@ For more information on grunt see gruntjs.com.
 | <a href="http://github.com/vim-scripts/matchit.zip">vim-scripts/matchit.zip</a>                   | extended % matching for HTML, LaTeX, and many other languages                                                  | http://github.com/vim-scripts/matchit.zip          |
 | <a href="http://github.com/vim-scripts/SearchComplete">vim-scripts/SearchComplete</a>             | Tab completion of words inside of a search ('/')                                                               | http://github.com/vim-scripts/SearchComplete       |
 | <a href="http://github.com/vim-scripts/YankRing.vim">vim-scripts/YankRing.vim</a>                 | Maintains a history of previous yanks, changes and deletes                                                     | http://github.com/vim-scripts/YankRing.vim         |
-| <a href="http://github.com/yuratomo/w3m.vim">yuratomo/w3m.vim</a>                                 | w3m plugin for vim                                                                                             | http://github.com/yuratomo/w3m.vim                 |
 <!---ENDPLUGINS-->
 
 ### Color Scheme
