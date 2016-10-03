@@ -600,9 +600,6 @@ endfunction
 NeoBundle 'tpope/vim-surround'
 
 
-NeoBundle 'yuratomo/w3m.vim'
-
-
 NeoBundle 'vim-scripts/matchit.zip'
 
 
