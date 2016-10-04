@@ -223,7 +223,7 @@ NeoBundle 'matze/vim-move'
 " Recommended: sudo -S apt-get install silversearcher-ag
 NeoBundle 'mileszs/ack.vim'
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+ let g:ackprg = 'ag --vimgrep'
 endif
 
 
@@ -548,8 +548,8 @@ if has("gui_running")
 endif
 
 " use same keybindings to go forward and back in prompt as in vim bash
-imap <S-k> <Plug>(vimshell_previous_prompt)
-imap <S-j> <Plug>(vimshell_next_prompt)
+"inoremap <buffer> <S-k>  <Plug>(vimshell_previous_prompt)
+"inoremap <buffer> <S-j>  <Plug>(vimshell_next_prompt)
 "}}}
 
 
