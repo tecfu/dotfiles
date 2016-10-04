@@ -81,14 +81,16 @@ map <space> <leader>
 imap <space><space> <C-O><leader>
 set showcmd
 
-" Allow mapping to alt-somekey on linux terminal vim
+
+" THIS IS FLAWED, SOMETIMES ESC-j will trigger ALT-j
 " <M-somekey> makes compatible with Mac's 'command' key
+" Allow mapping to alt-somekey on linux terminal vim
 " alt-j
-execute "set <M-j>=\ej"
-nnoremap <M-j> j
-" alt-k
-execute "set <M-k>=\ek"
-nnoremap <M-k> k
+" nnoremap <m-j> <a-j>
+" execute "set <a-j>=\ej"
+" " alt-k
+" execute "set <a-k>=\ek"
+" nnoremap <m-k> <a-k>
 
 " Tell Vim to look for a tags file in the directory of the current file as well as in the working directory, and up, and up, and…
 set tags=./tags,tags;/
@@ -228,8 +230,9 @@ endif
 " => Key mappings """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 " Clear highlighting on escape in normal mode
-nnoremap <esc> <silent> :noh<return><esc>
+" http://stackoverflow.com/questions/11940801/mapping-esc-in-vimrc-causes-bizzare-arrow-behaviour
 nnoremap <esc>^[ <esc>^[
+nnoremap <esc> <silent> :noh<return><esc>
 
 " ctrl-q to force quit
 noremap <C-Q> :qa!<CR>
