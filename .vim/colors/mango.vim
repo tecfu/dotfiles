@@ -17,19 +17,19 @@
     let Red = "guifg=#ff0000 guibg=NONE gui=NONE ctermfg=196 ctermbg=NONE cterm=NONE"
   endif
   if bgcolor == "dark"
-    let Black = "guifg=#585858 guibg=NONE gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
-    let Orange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=214 ctermbg=NONE cterm=NONE"
-    let Peach = "guifg=#ffd787 guibg=NONE gui=NONE ctermfg=222 ctermbg=NONE cterm=NONE"
-    let Red = "guifg=#ff5f5f guibg=NONE gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE"
+    let Black = "guifg=#585858 guibg=#282828 gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
+    let Orange = "guifg=#ffaf00 guibg=#282828 gui=NONE ctermfg=214 ctermbg=NONE cterm=NONE"
+    let Peach = "guifg=#ffd787 guibg=#282828 gui=NONE ctermfg=222 ctermbg=NONE cterm=NONE"
+    let Red = "guifg=#ff5f5f guibg=#282828 gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE"
   endif
 
-  let Green = "guifg=#87af5f guibg=NONE gui=NONE ctermfg=107 ctermbg=NONE cterm=NONE"
-  let Gray = "guifg=#bcbcbc guibg=NONE gui=NONE ctermfg=250 ctermbg=NONE cterm=NONE"
-  let Blue = "guifg=#5fafdf guibg=NONE gui=NONE ctermfg=74 ctermbg=NONE cterm=NONE"
-  let Pink = "guifg=#ff5faf guibg=NONE gui=NONE ctermfg=205 ctermbg=NONE cterm=NONE"
-  let Purple = "guifg=#af87ff guibg=NONE gui=NONE ctermfg=141 ctermbg=NONE cterm=NONE"
-  let Silver = "guifg=#8a8a8a guibg=NONE gui=NONE ctermfg=245 ctermbg=NONE cterm=NONE"
-  let White = "guifg=#eeeeee guibg=NONE gui=NONE ctermfg=255 ctermbg=NONE cterm=NONE"
+  let Green = "guifg=#87af5f guibg=#282828 gui=NONE ctermfg=107 ctermbg=NONE cterm=NONE"
+  let Gray = "guifg=#bcbcbc guibg=#282828 gui=NONE ctermfg=250 ctermbg=NONE cterm=NONE"
+  let Blue = "guifg=#5fafdf guibg=#282828 gui=NONE ctermfg=74 ctermbg=NONE cterm=NONE"
+  let Pink = "guifg=#ff5faf guibg=#282828 gui=NONE ctermfg=205 ctermbg=NONE cterm=NONE"
+  let Purple = "guifg=#af87ff guibg=#282828 gui=NONE ctermfg=141 ctermbg=NONE cterm=NONE"
+  let Silver = "guifg=#8a8a8a guibg=#282828 gui=NONE ctermfg=245 ctermbg=NONE cterm=NONE"
+  let White = "guifg=#eeeeee guibg=#282828 gui=NONE ctermfg=255 ctermbg=NONE cterm=NONE"
 " }}}
 
 " Light Background: {{{
