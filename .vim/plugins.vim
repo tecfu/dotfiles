@@ -116,6 +116,7 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 NeoBundle 'FooSoft/vim-argwrap'
 nnoremap <leader>w :ArgWrap<CR>
 
+
 NeoBundle 'fs111/pydoc.vim'
 
 
@@ -125,7 +126,11 @@ NeoBundle 'godlygeek/csapprox'
 NeoBundle 'godlygeek/tabular'
 
 
-NeoBundle 'gorkunov/smartpairs.vim'
+"Cool, but just use native vim selection
+":help object-select
+"Conflicts with vim-multiple-cursors
+"NeoBundle 'gorkunov/smartpairs.vim'
+"let g:smartpairs_uber_mode=1
 
 
 NeoBundle 'heavenshell/vim-jsdoc'
@@ -217,7 +222,8 @@ let g:phpcomplete_index_composer_command = "composer"
 "}}}
 
 
-NeoBundle 'matze/vim-move'
+"Cool plugin, but useless in terminal vim because no alt key
+" NeoBundle 'matze/vim-move'
 
 
 " Recommended: sudo -S apt-get install silversearcher-ag
