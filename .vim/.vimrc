@@ -164,11 +164,12 @@ endif
 vnoremap // y/<C-R>"<CR>
 
 " Ignore case when searching
-" set ignorecase
+set ignorecase
 
-" When searching try to be smart about cases
-" Only works if ignorecase is set
-" set smartcase
+" See :help 'smartcase'
+" Assumes lowercase searches insensitive,
+" Uppercase searches sensitive
+set smartcase
 
 " Highlight search results
 set hlsearch
