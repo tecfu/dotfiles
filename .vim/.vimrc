@@ -82,17 +82,18 @@ imap <space><space> <C-O><leader>
 set showcmd
 
 
-" THIS IS FLAWED, SOMETIMES ESC-j will trigger ALT-j
-" <M-somekey> makes compatible with Mac's 'command' key
-" Allow mapping to alt-somekey on linux terminal vim
-" alt-j
-" nnoremap <m-j> <a-j>
-" execute "set <a-j>=\ej"
-" " alt-k
-" execute "set <a-k>=\ek"
-" nnoremap <m-k> <a-k>
+" http://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim/10216459#10216459
+" Useless, because setting the alt-somekey will always work like esc-sokekey
+ " while c <= 'z'
+ "   let c='a'
+ "   exec "set <A-".c.">=\e".c
+ "   exec "imap \e".c." <A-".c.">"
+ " 	let c = nr2char(1+char2nr(c))
+ " endw
+
 
 " Tell Vim to look for a tags file in the directory of the current file as well as in the working directory, and up, and up, and…
+" alt-j
 set tags=./tags,tags;/
 
 "}}}
@@ -519,16 +520,7 @@ set splitright
 """"""""""""""""""""""""""""""
 "{{{
 
-" Set extra options when running in GUI mode
-if has("gui_running")
-  "set guioptions-=T
-  "set guioptions-=e
-  "set guitablabel=%M\ %t
-  colorscheme solarized
-  set guifont=monospace\ 11 
-  set background=dark
-  syntax on
-else
+" One color scheme for all!
 	set t_Co=256
 	colorscheme mango
   "colorscheme solarized
@@ -536,7 +528,6 @@ else
   set guifont=monospace\ 11 
   set background=dark
   syntax on
-endif
 "}}}
 
 
