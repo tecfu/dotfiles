@@ -368,6 +368,9 @@ endif
 NeoBundle 'Shougo/neomru.vim'
 
 
+NeoBundle 'Shougo/neoyank.vim'
+
+
 NeoBundle 'Shougo/unite.vim'
 "{{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -614,7 +617,9 @@ NeoBundle 'Dewdrops/SearchComplete'
 "NeoBundle 'vim-scripts/SearchComplete'
 
 
-NeoBundle 'vim-scripts/YankRing.vim'
+"Fucking cool, but using <leader>y w/ Shougo/Unite instead.
+"Seems to conflict with issuing [count] macros
+"NeoBundle 'vim-scripts/YankRing.vim'
 
 
 " End custom plugins
