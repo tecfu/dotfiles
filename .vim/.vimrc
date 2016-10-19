@@ -271,17 +271,8 @@ noremap <leader>j <S-j>
 "nmap p :pu<CR>
 
 "insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
-
-" 'quote' a word
-nnoremap qw :silent! normal mpea'<Esc>bi'<Esc>`pl
-" double "quote" a word
-nnoremap qqw :silent! normal mpea"<Esc>bi"<Esc>`pl
-" remove single quotes from a word
-nnoremap qd :silent! normal di'hPl2xb<CR>
-" remove double quotes from a word
-nnoremap qqd :silent! normal di"hPl2xb<CR>
+"nmap <S-Enter> O<Esc>
+"nmap <CR> o<Esc>
 
 " Map shift+tab to inverse tab
 " for normal mode
