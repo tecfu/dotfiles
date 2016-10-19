@@ -169,6 +169,8 @@ set ignorecase
 " See :help 'smartcase'
 " Assumes lowercase searches insensitive,
 " Uppercase searches sensitive
+" Will also make substitutions insensitive, so
+" set the I flag on a substitution to force the pattern to be case-sensitive. Like :%s/lowercasesearch/replaceString/gI
 set smartcase
 
 " Highlight search results
