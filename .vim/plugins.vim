@@ -239,13 +239,22 @@ NeoBundle 'mustache/vim-mustache-handlebars'
 NeoBundle 'Peeja/vim-cdo'
 
 
+" NeoBundle 'scrooloose/syntastic', {
+"     \ 'build' : {
+"     \   'unix': 'sh -c "npm install eslint -g"',
+"     \   'mac': 'npm install eslint -g',
+"     \   'win': 'npm install eslint -g' 
+"     \    }
+"     \ }
+
 NeoBundle 'scrooloose/syntastic', {
     \ 'build' : {
-    \   'unix': 'sh -c "npm install eslint -g"',
-    \   'mac': 'npm install eslint -g',
-    \   'win': 'npm install eslint -g' 
+    \   'unix': 'sh -c "npm install jshint -g"',
+    \   'mac': 'npm install jshint -g',
+    \   'win': 'npm install jshint -g' 
     \    }
     \ }
+
 
 "{{{
 "Check if plugin loaded
@@ -262,7 +271,8 @@ if !empty(glob("~/.vim/bundle/syntastic/plugin/syntastic.vim"))
   let g:syntastic_reuse_loc_lists = 1
 
 " javascript	
-	let g:syntastic_javascript_checkers = ['eslint']
+"	let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['jshint']
 
 " java
 	"let g:syntastic_java_checker = 'javac'
