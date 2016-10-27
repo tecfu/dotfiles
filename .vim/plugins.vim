@@ -19,10 +19,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Custom Plugins Start Here
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
+      \     'windows' : ' -f ',
+      \     'cygwin' : ' -f ',
+      \     'mac' : ' -f ',
+      \     'unix' : ' -f ',
       \    },
       \ }
 
@@ -209,7 +209,12 @@ NeoBundle 'mxw/vim-jsx'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 
+"Must be manually triggered by M:/ when SearchComplete plugin enabled
 NeoBundle 'othree/eregex.vim'
+let g:eregex_default_enable = 0
+let g:eregex_force_case = 1
+let g:eregex_forward_delim = '/'
+let g:eregex_backward_delim = '?'
 
 
 NeoBundle 'pangloss/vim-javascript'
@@ -578,7 +583,14 @@ NeoBundle 'shawncplus/phpcomplete.vim'
 NeoBundle 'sickill/vim-pasta'
 
 
-NeoBundle 'sidorares/node-vim-debugger'
+NeoBundle 'sidorares/node-vim-debugger',{
+      \ 'build' : {
+      \     'windows' : 'npm i vimdebug -g',
+      \     'cygwin' : 'npm i vimdebug -g',
+      \     'mac' : 'npm i vimdebug -g',
+      \     'unix' : 'npm i vimdebug -g',
+      \    },
+      \ }
 
 
 NeoBundle 'StanAngeloff/php.vim'
@@ -619,10 +631,10 @@ endfunction
 NeoBundle 'tpope/vim-surround'
 
 
-NeoBundle 'vim-scripts/matchit.zip'
-
-
 "Fork
+"This plugin hijacks the search mappings /,? and thus
+"other plugins that augment search won't work right
+"i.e. othree/eregex
 NeoBundle 'Dewdrops/SearchComplete'
 "NeoBundle 'vim-scripts/SearchComplete'
 
