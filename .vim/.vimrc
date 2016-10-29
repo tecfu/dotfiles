@@ -61,6 +61,11 @@ set nocompatible
 " Enable tab autocomplete of commands in command mode"
 set wildmode=list:longest
 
+" Set incremental search
+" Makes search act like search in modern browsers
+" This way you can :/findsomething to see all current matches
+" and then :%s//replace will use the last command (:/findsomething)
+" http://stackoverflow.com/questions/1276403/simple-vim-commands-you-wish-youd-known-earlier?page=1&tab=votes#tab-top
 set incsearch
 
 " Sets how many lines of history VIM has to remember
@@ -152,13 +157,6 @@ set whichwrap+=<,>,h,l
 if has('mouse')
   set mouse=a
 endif
-
-" Set incremental search
-" Makes search act like search in modern browsers
-" This way you can :/findsomething to see all current matches
-" and then :%s//replace will use the last command (:/findsomething)
-" http://stackoverflow.com/questions/1276403/simple-vim-commands-you-wish-youd-known-earlier?page=1&tab=votes#tab-top
-" set incsearch
 
 " Search for visually selected text by pressing // in visual mode
 vnoremap // y/<C-R>"<CR>
@@ -413,14 +411,6 @@ nnoremap <leader>l $a<space><esc>
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
-"{{{
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-" --Probably is useful if you don't care about pasting from clipboard. Removed.
-" vnoremap <silent> * :call VisualSelection('f', '')<CR>
-" vnoremap <silent> # :call VisualSelection('b', '')<CR>
-"}}}
-
   
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
