@@ -27,6 +27,10 @@ NeoBundle 'Shougo/vimproc', {
       \ }
 
 
+" UML syntax highlighting for scrooloose/vim-slumlord
+NeoBundle 'aklt/plantuml-syntax'
+
+
 NeoBundle 'airblade/vim-gitgutter'
 
 
@@ -36,7 +40,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'blindFS/vim-taskwarrior'
 
 
-NeoBundle "bling/vim-airline"
+NeoBundle 'bling/vim-airline'
 " {{{
 "let g:airline_theme='colors/mango.vim'
 let g:airline_powerline_fonts=1
@@ -242,6 +246,9 @@ NeoBundle 'mustache/vim-mustache-handlebars'
 
 
 NeoBundle 'Peeja/vim-cdo'
+
+
+NeoBundle 'scrooloose/vim-slumlord'
 
 
 " NeoBundle 'scrooloose/syntastic', {
