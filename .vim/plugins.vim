@@ -43,13 +43,6 @@ augroup TaskwarriorMapping
     autocmd!
     autocmd FileType taskreport nunmap <buffer> K
 augroup END
-"autocmd FileType taskreport TwUnmap
-"autocmd FileType taskreport unmap <buffer> K 
-
-"autocmd VimEnter * noremap <buffer> <S-j> :tabprev<CR>
-"autocmd VimEnter * noremap <buffer> <S-k> :echo 'tabnext'<CR>
-"autocmd VimEnter * noremap <buffer> <S-k> :tabnext<CR>
-
 
 NeoBundle 'bling/vim-airline'
 " {{{
