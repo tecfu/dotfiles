@@ -6,4 +6,6 @@ tags
 .session
 .netrwhist
 Session.vim
+node_modules
 .vim/undo
+.vim/bundle
