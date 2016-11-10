@@ -38,6 +38,17 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 
 NeoBundle 'blindFS/vim-taskwarrior'
+"remap <S-j>, <S-k> to switch to tabprev,tabnext
+augroup TaskwarriorMapping
+    autocmd!
+    autocmd FileType taskreport nunmap <buffer> K
+augroup END
+"autocmd FileType taskreport TwUnmap
+"autocmd FileType taskreport unmap <buffer> K 
+
+"autocmd VimEnter * noremap <buffer> <S-j> :tabprev<CR>
+"autocmd VimEnter * noremap <buffer> <S-k> :echo 'tabnext'<CR>
+"autocmd VimEnter * noremap <buffer> <S-k> :tabnext<CR>
 
 
 NeoBundle 'bling/vim-airline'
@@ -175,7 +186,7 @@ NeoBundle 'majutsushi/tagbar'
 nmap t :TagbarToggle<CR>
 
 "Open tagbar automatically if you're opening Vim with a supported file type
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 "Open Tagbar only for specific filetypes
 "autocmd FileType c,cpp nested :TagbarOpen
@@ -474,7 +485,8 @@ function! s:unite_settings()
   nnoremap <silent><buffer> <S-Tab> <Plug>SuperTabBackward
   "imap <buffer> <S-Tab> <c-p>
 
-  " exit with esc
+	
+	" exit with esc
   " nmap <buffer> <ESC> <Plug>(unite_exit)
   " imap <buffer> <ESC> <Plug>(unite_exit)
 
@@ -485,7 +497,7 @@ function! s:unite_settings()
   " Enable navigation with shift-j and shift-k in insert mode
   imap <buffer> <S-j>  <Plug>(unite_select_next_line)
   imap <buffer> <S-k>  <Plug>(unite_select_previous_line)
-
+  
   " refresh unite
   nmap <buffer> <C-r> <Plug>(unite_redraw)
   "imap <buffer> <C-r> <Plug>(unite_redraw)
