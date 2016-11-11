@@ -38,11 +38,25 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 
 NeoBundle 'blindFS/vim-taskwarrior'
-"remap <S-j>, <S-k> to switch to tabprev,tabnext
+"unmap <S-j>, <S-k> so defaults to tabprev,tabnext
+function! TWUnmap(a,b)
+	unmap <buffer> J
+	unmap <buffer> K
+endfunction
+
+function! TWUnmapChooser()
+	if has("nvim")
+		call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'TWUnmap'})
+	else
+		call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'TWUnmap'})
+	endif
+endfunction
+
 augroup TaskwarriorMapping
-    autocmd!
-    autocmd FileType taskreport nunmap <buffer> K
+	autocmd!
+	autocmd FileType taskreport :call TWUnmapChooser() 
 augroup END
+
 
 NeoBundle 'bling/vim-airline'
 " {{{
