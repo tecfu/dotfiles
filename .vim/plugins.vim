@@ -39,6 +39,18 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 NeoBundle 'blindFS/vim-taskwarrior'
 "unmap <S-j>, <S-k> so defaults to tabprev,tabnext
+
+"Found there are three ways to do this, as 
+"autocmd FileType taskreport unmap K
+"won't work because keys are mapped later.
+"
+" 1 - Comment out keymapping directly in plugin 
+" :verbose map K
+" 
+" 2 - Create||edit .vim/after/ftplugin/filetype.vim
+" unmap k
+"
+" 3 - Make async call via a job (as below)
 function! TWUnmap(a,b)
 	unmap <buffer> J
 	unmap <buffer> K
