@@ -222,7 +222,7 @@ au Filetype vim,vimrc,md
   \ setlocal foldlevel=0 |
 	\ setlocal foldlevelstart=0
 
-au Filetype js,json,ts
+au Filetype js,ts
 	\ setlocal folmethod=syntax
 
 " Use Vim's persistent undo
