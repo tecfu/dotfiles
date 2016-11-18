@@ -339,8 +339,8 @@ set nobackup
 set nowb
 set noswapfile
 
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
+" Automatic <EOL> detection
+set fileformats=unix,dos,mac
 
 "}}}
 
