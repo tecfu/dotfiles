@@ -163,7 +163,7 @@ NeoBundle 'godlygeek/tabular'
 "Cool, but just use native vim selection
 ":help object-select
 "Conflicts with vim-multiple-cursors
-"NeoBundle 'gorkunov/smartpairs.vim'
+NeoBundle 'gorkunov/smartpairs.vim'
 "let g:smartpairs_uber_mode=1
 
 
