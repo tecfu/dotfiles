@@ -634,6 +634,28 @@ NeoBundle 'sidorares/node-vim-debugger',{
 NeoBundle 'StanAngeloff/php.vim'
 
 
+NeoBundleLazy 'supermomonga/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
+
+if neobundle#tap('vimshell-inline-history.vim')
+  call neobundle#config({
+        \   'autoload' : {
+        \     'filetypes' : [ 'vimshell' ]
+        \   }
+        \ })
+
+	function! neobundle#hooks.on_post_source(bundle)
+		"Remap keys for plugin
+		imap <buffer> <C-j>  <Plug>(vimshell_inline_history#next)
+		imap <buffer> <C-k>  <Plug>(vimshell_inline_history#prev)
+	endfunction
+
+	"Unmap default keys
+	let g:vimshell_inline_history#default_mappings = 0
+
+	call neobundle#untap()
+endif
+
+
 NeoBundle 'terryma/vim-multiple-cursors'
 
 
