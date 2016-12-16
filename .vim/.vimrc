@@ -197,7 +197,7 @@ set lazyredraw
 " For regular expressions turn magic on
 set magic
 
-" Show matching brackets when text indicator is over them
+" Highlight matching parentheses when cursor is over one
 set showmatch
 
 " How many tenths of a second to blink when matching brackets
