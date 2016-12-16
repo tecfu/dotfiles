@@ -52,8 +52,8 @@ NeoBundle 'blindFS/vim-taskwarrior'
 "
 " 3 - Make async call via a job (as below)
 function! TWUnmap(a,b)
-	unmap <buffer> J
-	unmap <buffer> K
+	unmap <buffer><silent> J
+	unmap <buffer><silent> K
 endfunction
 
 function! TWUnmapChooser()
@@ -670,6 +670,11 @@ NeoBundle 'tpope/vim-fugitive'
 "Open split windows vertically
 set diffopt+=vertical
 
+function GetCommitForFileInBufferByNumber(filename,n)
+	"Get list of commits for the file in buffer
+	let commits=system('git log --pretty=format:%h --follow ' . filename)
+	echom commits
+endfunc
 
 NeoBundle 'tpope/vim-obsession'
 "{{{
