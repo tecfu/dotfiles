@@ -126,6 +126,10 @@ let g:formatterpath = ['/usr/local/bin']
 "npm install js-beautify -g
 
 
+"NeoBundle 'kien/ctrlp.vim' "unmaintained
+ NeoBundle 'ctrlpvim/ctrlp.vim' "maintained Fork
+
+
 NeoBundle 'danro/rename.vim'
 
 
@@ -167,6 +171,9 @@ NeoBundle 'gorkunov/smartpairs.vim'
 "let g:smartpairs_uber_mode=1
 
 
+NeoBundle 'gregsexton/gitv'
+
+
 NeoBundle 'heavenshell/vim-jsdoc'
 
 
@@ -178,9 +185,6 @@ NeoBundle 'int3/vim-extradite'
 
 NeoBundle 'itchyny/calendar.vim'
 
-
-"NeoBundle 'kien/ctrlp.vim'
- 
 
 NeoBundle 'Lokaltog/vim-easymotion'
 "{{{
@@ -268,7 +272,8 @@ let g:phpcomplete_index_composer_command = "composer"
 " Recommended: sudo -S apt-get install silversearcher-ag
 NeoBundle 'mileszs/ack.vim'
 if executable('ag')
- let g:ackprg = 'ag --vimgrep'
+ "let g:ackprg = 'ag --vimgrep'
+ let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
 
 
@@ -592,8 +597,8 @@ function! s:unite_settings()
 			\['▷ git cd           (Fugitive)',
 					\'Gcd'],
 			\]
-" }}}
-
+"" }}}
+"
 endfunction
 "}}}
 
