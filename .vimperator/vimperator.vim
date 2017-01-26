@@ -1,7 +1,7 @@
 "===[ Settings ]========================================================
 
 " Use characters instead of numbers for link hints - omit f
-:set hintchars=hkasdgyuopqwertnmzxcvb
+:set hintchars=hkasduowertnmzxcvb
 
 " Format link hints
 :highlight Hint color:white;background-color:#333;padding:0px 2px 0px 2px;
