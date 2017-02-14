@@ -40,7 +40,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'blindFS/vim-taskwarrior'
 "unmap <S-j>, <S-k> in plugin so can map it to tabprev,tabnext
 
-"Found there are three ways to do this, as 
+"Found three different techniques to do this, since
 "autocmd FileType taskreport unmap K
 "won't work because keys are mapped later.
 "
@@ -614,9 +614,32 @@ if has("gui_running")
   let g:vimshell_editor_command = "gvim"
 endif
 
-" use same keybindings to go forward and back in prompt as in vim bash
+" Use same keybindings to go forward and back in prompt as in vim bash
 "inoremap <buffer> <S-k>  <Plug>(vimshell_previous_prompt)
 "inoremap <buffer> <S-j>  <Plug>(vimshell_next_prompt)
+
+" Unmap C-j, C-k in normal mode to use default navigation
+function! VSmap(a,b)
+	nmap <buffer><silent> <C-J> 10j
+	nmap <buffer><silent> <C-K> 10k
+endfunction
+
+function! VSmapChooser()
+	if has("nvim")
+		call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'VSmap'})
+	else
+		call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'VSmap'})
+	endif
+endfunction
+
+"Group name can be arbitrary so long as doesn't conflict with another
+augroup VimshellMapping
+	autocmd!
+	"Get filetype with :echom &filetype when in buffer
+	autocmd FileType vimshell :call VSmapChooser() 
+augroup END
+
+
 "}}}
 
 
