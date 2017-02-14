@@ -38,7 +38,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 
 NeoBundle 'blindFS/vim-taskwarrior'
-"unmap <S-j>, <S-k> so defaults to tabprev,tabnext
+"unmap <S-j>, <S-k> in plugin so can map it to tabprev,tabnext
 
 "Found there are three ways to do this, as 
 "autocmd FileType taskreport unmap K
