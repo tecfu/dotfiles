@@ -127,7 +127,7 @@ let g:formatterpath = ['/usr/local/bin']
 
 
 "NeoBundle 'kien/ctrlp.vim' "unmaintained
- NeoBundle 'ctrlpvim/ctrlp.vim' "maintained Fork
+"NeoBundle 'ctrlpvim/ctrlp.vim' "maintained Fork
 
 
 NeoBundle 'danro/rename.vim'
@@ -734,7 +734,7 @@ NeoBundle 'Dewdrops/SearchComplete'
 
 "Fucking cool, but using <leader>y w/ Shougo/Unite instead.
 "Seems to conflict with issuing [count] macros
-"NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'tecfu/YankRing.vim'
 
 
 " End custom plugins
