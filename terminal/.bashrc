@@ -161,4 +161,16 @@ bind -m vi-move '"\C-e":end-of-line'
 # after startup but doesn not work here
 # bind '"\C-e":end-of-line'
 
-
+# Sets screen brightness
+# run with su -c 'setb'
+setb(){
+	#make sure user is root
+	if [[ $EUID -ne 0 ]]; then
+		 echo "Command must be run as root" 
+		 return
+	fi
+	echo "setb (Set brightness) accepts a number 1-255"
+	echo $1 > /sys/class/backlight/radeon_bl0/brightness
+	echo "You entered '$1'"
+}
+export setb
