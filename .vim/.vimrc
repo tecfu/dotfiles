@@ -4,7 +4,6 @@
 " │ http://github.com/tecfu           │
 " └───────────────────────────────────┘
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Sections:
@@ -48,6 +47,12 @@ endif
 if filereadable($HOME."/.vim/plugins.vim")
   source ${HOME}/.vim/plugins.vim
 endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Neovim Specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Fixes unsupported prompt character
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
