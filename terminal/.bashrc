@@ -162,8 +162,8 @@ bind -m vi-move '"\C-e":end-of-line'
 # bind '"\C-e":end-of-line'
 
 # Sets screen brightness
-# run with su -c 'setb'
-setb(){
+# run with su -c 'dim'
+dim(){
 	#make sure user is root
 	if [[ $EUID -ne 0 ]]; then
 		 echo "Command must be run as root" 
@@ -173,4 +173,4 @@ setb(){
 	echo $1 > /sys/class/backlight/radeon_bl0/brightness
 	echo "You entered '$1'"
 }
-export setb
+export dim
