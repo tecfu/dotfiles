@@ -228,7 +228,7 @@ au Filetype vim,vimrc,md
 	\ setlocal foldlevelstart=0
 
 au Filetype js,ts
-	\ setlocal folmethod=syntax
+	\ setlocal foldmethod=syntax
 
 " Use Vim's persistent undo
 " Put plugins and dictionaries in this dir (also on Windows)
