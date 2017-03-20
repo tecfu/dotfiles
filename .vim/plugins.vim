@@ -189,6 +189,9 @@ NeoBundle 'int3/vim-extradite'
 NeoBundle 'itchyny/calendar.vim'
 
 
+NeoBundle 'kshenoy/vim-signature'
+
+
 NeoBundle 'Lokaltog/vim-easymotion'
 "{{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -235,7 +238,7 @@ let g:tern_show_argument_hints = 'on_move'
 "let g:tern_show_argument_hints=0
 
 
-NeoBundle 'MattesGroeger/vim-bookmarks'
+"NeoBundle 'MattesGroeger/vim-bookmarks'
 
 
 NeoBundle 'mattn/emmet-vim'
@@ -737,7 +740,7 @@ NeoBundle 'Dewdrops/SearchComplete'
 
 "Fucking cool, but using <leader>y w/ Shougo/Unite instead.
 "Seems to conflict with issuing [count] macros
-NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'tecfu/YankRing.vim'
 
 
 " End custom plugins
