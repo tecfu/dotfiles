@@ -175,6 +175,8 @@ dim(){
 }
 export dim
 
+# Converts all .mp4 files in current working directory to mp3
+# Useful when desiring to play downloaded YouTube videos in cmus
 mp4tomp3(){
 	for f in *.mp4
 	do
@@ -182,3 +184,4 @@ mp4tomp3(){
 			ffmpeg -i "$f" -vn -ar 44100 -ac 2 -ab 192k -f mp3 "$name.mp3"
 	done
 }
+
