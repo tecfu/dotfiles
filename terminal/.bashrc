@@ -185,3 +185,5 @@ mp4tomp3(){
 	done
 }
 
+
+# Open vim within nodejs repl using ".editor" command

@@ -1,9 +1,15 @@
 # .bashrc
 
 ## Installation
+
+- Install sxhkd https://github.com/baskerville/sxhkd
+
 ```
 ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
 ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
+ln -s ~/dotfiles/terminal/.xprofile ~/.xprofile
+ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
+ln -s ~/dotfiles/terminal/chrome_unbind_ctrlk.sh ~/chrome_unbind_ctrlk.sh
 ```
 
 ### What this file does:
