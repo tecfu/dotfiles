@@ -41,6 +41,14 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 
 NeoBundle 'blindFS/vim-taskwarrior'
+
+"set code folding for plugin
+au Filetype taskreport 
+	\ setlocal foldmethod=marker |
+  \ setlocal foldlevel=0 |
+	\ setlocal foldlevelstart=0
+
+
 "unmap <S-j>, <S-k> in plugin so can map it to tabprev,tabnext
 
 "Found three different techniques to do this, since
