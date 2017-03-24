@@ -131,6 +131,9 @@ let g:airline_symbols.linenr = ''
 NeoBundle 'brookhong/DBGPavim'
 
 
+NeoBundle 'bronson/vim-visual-star-search'
+
+
 NeoBundle 'Chiel92/vim-autoformat'
 let g:formatterpath = ['/usr/local/bin']
 "For javascript, install js-beautify externally
