@@ -33,7 +33,7 @@ $ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install
 
 - Install Powerline Fonts
 ```
-git clone http://www.github.com/powerline/fonts.git
+git clone http://www.github.com/tecfu/fonts
 cd fonts
 ./install.sh
 ````
