@@ -3,6 +3,7 @@
 " ├───────────────────────────────────┤
 " │ http://github.com/tecfu           │
 " └───────────────────────────────────┘
+" Inspired by https://github.com/lucascaton/vimfiles
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -105,6 +106,9 @@ set showcmd
 " Tell Vim to look for a tags file in the directory of the current file as well as in the working directory, and up, and up, and…
 " alt-j
 set tags=./tags,tags;/
+
+" Set shell instances to use globstar
+set shell=/bin/bash\ -O\ globstar
 
 "}}}
 
