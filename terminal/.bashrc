@@ -185,5 +185,10 @@ mp4tomp3(){
 	done
 }
 
+# Globstar: The pattern ‘**’ used in a filename expansion context will match all files and zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
+# To unset use:
+# shopt -u globstar
+shopt -s globstar
+
 
 # Open vim within nodejs repl using ".editor" command
