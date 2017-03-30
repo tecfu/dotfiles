@@ -6,8 +6,6 @@
 
 - [Vimperator](.vimperator/README.md)  
 
-- [Vrome](.vrome/README.md)  
-
 - [X (.Xmodmap, et.al)](x/README.md)
 
 ## License
