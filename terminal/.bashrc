@@ -134,15 +134,15 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH="/home/$USER/bin:$PATH"
 
 # Set DBUS_SESSION_BUS_ADDRESS when connecting to remotes via SSH
-if [[ -n $SSH_CLIENT ]]; then
-	NAUTILUS_PID=`pidof nautilus`	
-	if [! NAUTILUS_PID]; then
-		nautilus &
-		NAUTILUS_PID=`pidof nautilus`	
-	fi
-	export DBUS_SESSION_BUS_ADDRESS=`cat /proc/$(NAUTILUS_PID)/environ | tr '\0' '\n' | grep DBUS_SESSION_BUS_ADDRESS | cut -d '=' -f2-`
-	echo NAUTILUS_PID = $NAUTILUS_PID
-fi
+#if [[ -n $SSH_CLIENT ]]; then
+#	NAUTILUS_PID=`pidof nautilus`	
+#	if [! NAUTILUS_PID]; then
+#		nautilus &
+#		NAUTILUS_PID=`pidof nautilus`	
+#	fi
+#	export DBUS_SESSION_BUS_ADDRESS=`cat /proc/$(NAUTILUS_PID)/environ | tr '\0' '\n' | grep DBUS_SESSION_BUS_ADDRESS | cut -d '=' -f2-`
+#	echo NAUTILUS_PID = $NAUTILUS_PID
+#fi
 
 
 # Set vimode, Vim as editor
