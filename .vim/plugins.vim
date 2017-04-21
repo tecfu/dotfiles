@@ -1,6 +1,14 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Neo Bundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"requires grep
+function! DetectPlugin(name)
+	redir @z 
+	silent scriptnames
+	redir END 
+	return system('echo '.shellescape(@z).' | grep -ci "'.a:name.'"')
+endfunction
+
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
@@ -99,10 +107,14 @@ function! AirlineOverride(...)
   let g:airline_section_c = airline#section#create_left(['%f'])
   let g:airline_section_y = airline#section#create([])
 endfunction
-autocmd VimEnter * call AirlineOverride()
+
+"only run AirlineOverride if vim-airline installed
+if DetectPlugin('airline')
+	autocmd VimEnter * call AirlineOverride()
+endif
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 
 " unicode symbols
