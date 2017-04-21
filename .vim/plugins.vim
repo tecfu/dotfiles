@@ -251,9 +251,9 @@ NeoBundle 'maksimr/vim-jsbeautify'
 
 NeoBundle 'marijnh/tern_for_vim', {
     \ 'build' : {
-    \   'unix': 'sh -c "(cd $PWD/bundle/tern_for_vim; npm install)"',
-    \   'mac': '(cd $PWD/bundle/tern_for_vim; npm install)',
-    \   'win': '(cd $PWD/bundle/tern_for_vim; npm install)' 
+    \   'unix': 'sh -c "(cd ~/.vim/bundle/tern_for_vim; npm install)"',
+    \   'mac': '(cd ~/.vim/bundle/tern_for_vim; npm install)',
+    \   'win': '(cd ~/.vim/bundle/tern_for_vim; npm install)' 
     \    }
     \ }
 "Awesome feature if your machine can handle it.
