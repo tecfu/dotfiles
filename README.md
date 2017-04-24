@@ -16,11 +16,13 @@ I have this configuration installed on Linux running [XFCE](https://en.wikipedia
 
 ## What each does:
 
-### Bashrc / Inputrc (Linux Specific)
+### Bashrc / Inputrc
 
 Sets bash to run in vi-mode. Here are a couple articles on that:
-[Working Productively in Bash's Vi Command Line Editing Mode](http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet)
-[Vi mode in Bash](https://sanctum.geek.nz/arabesque/vi-mode-in-bash)
+
+	[Working Productively in Bash's Vi Command Line Editing Mode](http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet)
+
+	[Vi mode in Bash](https://sanctum.geek.nz/arabesque/vi-mode-in-bash)
 
 ### Vim
 
@@ -30,7 +32,7 @@ The vim setup here should work on a Mac and even on a Windows box, but I haven't
 
 Vimperator is a dead project and I've begrudgingly moved to Vimperator, but I'll keep the config here for now anyway.
 
-### X (Linux Specific)
+### X
 
 This is where I have stored files that allow me to remap the native hotkeys for Google Chrome (those which are otherwise can't be remapped). 
 
