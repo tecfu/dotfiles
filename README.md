@@ -1,12 +1,38 @@
 # Dotfiles
 
-- [.bashrc / Terminal Emulator](terminal/README.md)  
+## Preamble:
 
-- [Vim](.vim/README.md)  
+I have this configuration installed on Linux running [XFCE](https://en.wikipedia.org/wiki/Xfce) on top of the the [X Window System](https://en.wikipedia.org/wiki/X_Window_System).
 
-- [Vimperator](.vimperator/README.md)  
+## Contents: 
 
-- [X (.Xmodmap, et.al)](x/README.md)
+- [Terminal Emulator Config](terminal/README.md)  
+
+- [Vim Config](.vim/README.md)  
+
+- [Vimperator Config](.vimperator/README.md)  
+
+- [X Window System (.Xmodmap, et.al) Config](x/README.md)
+
+## What each does:
+
+### Bashrc / Inputrc (Linux Specific)
+
+Sets bash to run in vi-mode. Here are a couple articles on that:
+[Working Productively in Bash's Vi Command Line Editing Mode](http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet)
+[Vi mode in Bash](https://sanctum.geek.nz/arabesque/vi-mode-in-bash)
+
+### Vim
+
+The vim setup here should work on a Mac and even on a Windows box, but I haven't used it in those environments so there may be some tweaking needed. 
+
+### Vimperator
+
+Vimperator is a dead project and I've begrudgingly moved to Vimperator, but I'll keep the config here for now anyway.
+
+### X (Linux Specific)
+
+This is where I have stored files that allow me to remap the native hotkeys for Google Chrome (those which are otherwise can't be remapped). 
 
 ## License
 
