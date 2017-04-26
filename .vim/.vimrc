@@ -207,7 +207,11 @@ set lazyredraw
 set magic
 
 " Highlight matching parentheses when cursor is over one
+" Don't use showmatch, use DoMatchParen / NoMatchParen
 "set showmatch
+
+" Change color of opposing highlighted cursor to avoid confusion
+hi MatchParen ctermbg=red guibg=lightblue
 
 " How many tenths of a second to blink when matching brackets
 set mat=2
