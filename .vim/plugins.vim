@@ -193,7 +193,7 @@ NeoBundle 'godlygeek/tabular'
 "Cool, but just use native vim selection
 ":help object-select
 "Conflicts with vim-multiple-cursors
-NeoBundle 'gorkunov/smartpairs.vim'
+"NeoBundle 'gorkunov/smartpairs.vim'
 "let g:smartpairs_uber_mode=1
 
 
@@ -203,7 +203,7 @@ NeoBundle 'gregsexton/gitv'
 NeoBundle 'heavenshell/vim-jsdoc'
 
 
-NeoBundle 'hhvm/vim-hack'
+"NeoBundle 'hhvm/vim-hack'
 
 
 NeoBundle 'int3/vim-extradite'
@@ -314,14 +314,6 @@ NeoBundle 'Peeja/vim-cdo'
 
 NeoBundle 'scrooloose/vim-slumlord'
 
-
-" NeoBundle 'scrooloose/syntastic', {
-"     \ 'build' : {
-"     \   'unix': 'sh -c "npm install eslint -g"',
-"     \   'mac': 'npm install eslint -g',
-"     \   'win': 'npm install eslint -g' 
-"     \    }
-"     \ }
 
 NeoBundle 'scrooloose/syntastic', {
     \ 'build' : {
