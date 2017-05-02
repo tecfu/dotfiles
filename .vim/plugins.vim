@@ -3,10 +3,30 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "requires grep
 function! DetectPlugin(name)
+	
+	"check if plugin found in scripnames
 	redir @z 
 	silent scriptnames
 	redir END 
-	return system('echo '.shellescape(@z).' | grep -ci "'.a:name.'"')
+
+	let l:scriptnameFound = system('echo '.shellescape(@z)
+				\.' | grep -ci "'.a:name.'"')
+	
+	let l:helpFound = 0
+	try
+		"we don't care about output here, only whether error is thrown
+		silent execute "h ".a:name
+		let l:helpFound = 1
+	catch
+		let l:helpFound = 0
+	endtry
+
+	if (l:scriptnameFound || l:helpFound)
+		return 1
+	else
+		return 0
+	endif
+	
 endfunction
 
 " Note: Skip initialization for vim-tiny or vim-small.
@@ -165,8 +185,25 @@ NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+"{{{
+function! BuildComposer()
+  if !DetectPlugin('markdown-composer')
+		if has('nvim')
+			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release
+    else
+			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
 
-"NeoBundle 'farseer90718/vim-taskwarrior'
+NeoBundle 'euclio/vim-markdown-composer', {
+		\ 'build' : {
+    \   'unix':BuildComposer(),
+    \   'mac':BuildComposer(),
+    \   'win':BuildComposer() 
+    \    }
+    \ }
+"}}}
 
 
 "Run commands such as go run for the current file with <leader>r or go build and go test for the current package with <leader>b and <leader>t respectively. Display beautifully annotated source code to see which functions are covered with <leader>c. 
