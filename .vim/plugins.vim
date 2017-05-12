@@ -15,7 +15,7 @@ function! DetectPlugin(name)
 	let l:helpFound = 0
 	try
 		"we don't care about output here, only whether error is thrown
-		silent execute "h ".a:name
+		silent execute "h ".a:name." | q"
 		let l:helpFound = 1
 	catch
 		let l:helpFound = 0
