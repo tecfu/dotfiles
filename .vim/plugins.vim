@@ -203,6 +203,9 @@ NeoBundle 'euclio/vim-markdown-composer', {
     \   'win':BuildComposer() 
     \    }
     \ }
+
+" Do not automatically open browser
+let g:markdown_composer_open_browser=0
 "}}}
 
 
