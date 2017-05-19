@@ -205,7 +205,10 @@ NeoBundle 'euclio/vim-markdown-composer', {
     \ }
 
 " Do not automatically open browser
-let g:markdown_composer_open_browser=0
+" let g:markdown_composer_open_browser=0
+
+" Whether the server should automatically start when a markdown file is opened.
+" let g:markdown_composer_autostart=0
 "}}}
 
 
