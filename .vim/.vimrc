@@ -368,8 +368,10 @@ set list
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
-" Use spaces instead of tabs
-" set expandtab
+" Replace tab character with empty spaces
+set expandtab
+" Use tabs, not spaces
+" set noexpandtab
 
 " Make "tab" insert indents instead of tabs at the beginning of a line
 set smarttab
@@ -378,8 +380,6 @@ set smarttab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-"Use tabs, not spaces
-set noexpandtab
 
 " Syntax of these languages is fussy over tabs Vs spaces
 autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
