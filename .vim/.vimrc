@@ -308,7 +308,7 @@ nmap <S-Tab> <<
 " for insert mode
 "imap <S-Tab> <Esc><<i
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+" Delete trailing white space on save, useful for Python and CoffeeScript
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
@@ -340,6 +340,10 @@ function! DeleteInactiveBufs()
 endfunction
 command! DeleteInactiveBuffers :call DeleteInactiveBufs()
 
+" map escape key for nvim terminal
+if has("nvim")
+  tnoremap <Esc> <C-\><C-n>
+endif
 "}}}
 
 
