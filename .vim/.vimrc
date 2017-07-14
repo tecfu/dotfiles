@@ -11,6 +11,7 @@
 "    -> Load Plugins
 "    -> General
 "    -> VIM user interface
+"    -> Printer setup
 "    -> Colors and Fonts
 "    -> Files, backups, and sessions
 "    -> Text, tab and indent related
@@ -257,6 +258,11 @@ endif
 
 "}}}
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Printer setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set pdev=HP_LASERJET_4000
+set popt=paper:letter,header:0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Key mappings """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
