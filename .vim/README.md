@@ -186,6 +186,15 @@ elrodeo		https://github.com/chmllr/elrodeo-colorscheme
 <leader>c <Plug>(go-coverage)
 ``` 
 
+- Installing Vim 8 on Ubuntu 14.04:
+
+```
+sudo add-apt-repository ppa:pi-rho/dev
+```
+
+https://launchpad.net/~pi-rho/+archive/ubuntu/dev
+
+
 ## Todo
 
 - When opened, make unite traverse up the directory structure incrementally with each "f" keypress.
