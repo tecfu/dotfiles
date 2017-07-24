@@ -255,6 +255,9 @@ NeoBundle 'int3/vim-extradite'
 NeoBundle 'itchyny/calendar.vim'
 
 
+NeoBundle 'joonty/vdebug'
+
+
 NeoBundle 'kshenoy/vim-signature'
 
 
@@ -398,8 +401,8 @@ let g:syntastic_javascript_checkers = ['jshint']
 	set sessionoptions-=blank
 endif
 
-" Set location list height to 3 lines
-let g:syntastic_loc_list_height=3
+" Set location list height to n lines
+let g:syntastic_loc_list_height=5
 "}}}
 
 " Use deoplete with nvim
