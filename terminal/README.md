@@ -5,7 +5,9 @@
 - Install sxhkd https://github.com/baskerville/sxhkd
 
 ```
+mv .bashrc .bashrc.saved
 ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
+mv .inputrc .inputrc.saved
 ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
 ln -s ~/dotfiles/terminal/.xprofile ~/.xprofile
 ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
