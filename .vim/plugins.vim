@@ -1,3 +1,4 @@
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Neo Bundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -32,43 +33,31 @@ endfunction
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
-if has('vim_starting')
-  " Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-" Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/bundle')
 
 " Custom Plugins Start Here
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
+Plug 'Shougo/vimproc', {
+      \ 'do' : 'make'
       \ }
 
 
 " UML syntax highlighting for scrooloose/vim-slumlord
-NeoBundle 'aklt/plantuml-syntax'
+Plug 'aklt/plantuml-syntax'
 
 
-NeoBundle 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 if has('nvim')
 	let g:gitgutter_sign_removed_first_line = "^_"
 endif
 
 
-NeoBundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 
-NeoBundle 'blindFS/vim-taskwarrior'
+Plug 'blindFS/vim-taskwarrior'
 
 "set code folding for plugin
 au Filetype taskreport 
@@ -109,7 +98,7 @@ augroup TaskwarriorMapping
 augroup END
 
 
-NeoBundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 " {{{
 "let g:airline_theme='colors/mango.vim'
 let g:airline_powerline_fonts=1
@@ -160,48 +149,50 @@ let g:airline_symbols.linenr = ''
 " }}}
 
 
-NeoBundle 'brookhong/DBGPavim'
+Plug 'brookhong/DBGPavim'
 
 
-NeoBundle 'bronson/vim-visual-star-search'
+Plug 'bronson/vim-visual-star-search'
 
 
-NeoBundle 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat'
 let g:formatterpath = ['/usr/local/bin']
 "For javascript, install js-beautify externally
 "npm install js-beautify -g
 
 
-"NeoBundle 'kien/ctrlp.vim' "unmaintained
-"NeoBundle 'ctrlpvim/ctrlp.vim' "maintained Fork
+"Plug 'kien/ctrlp.vim' "unmaintained
+"Plug 'ctrlpvim/ctrlp.vim' "maintained Fork
 
 
-NeoBundle 'danro/rename.vim'
+Plug 'danro/rename.vim'
 
 
-NeoBundle 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode'
 
 
-NeoBundle 'ervandew/supertab'
+Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 "{{{
-function! BuildComposer()
-  if !DetectPlugin('markdown-composer')
+function! BuildComposer(info)
+    " Check if RUST installed
+    let hasRust = system('command -v cargo >/dev/null 2>&1 || echo -n -1')
+    if hasRust == -1
+      echoerr "The RUST language and Cargo package manager must be installed for euclio/vim-markdown-composer"
+      system('rm -rf ~/dotfiles/.vim/bundle/vim-markdown-composer');
+      return 0
+    endif
+
 		if has('nvim')
 			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release
     else
 			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release --no-default-features --features json-rpc
     endif
-  endif
 endfunction
 
-NeoBundle 'euclio/vim-markdown-composer', {
-		\ 'build' : {
-    \   'unix':BuildComposer(),
-    \   'mac':BuildComposer(),
-    \   'win':BuildComposer() 
-    \    }
+Plug 'euclio/vim-markdown-composer', {
+		\ 'do' : function('BuildComposer')
     \ }
 
 " Do not automatically open browser
@@ -213,55 +204,55 @@ let g:markdown_composer_autostart=0
 
 
 "Run commands such as go run for the current file with <leader>r or go build and go test for the current package with <leader>b and <leader>t respectively. Display beautifully annotated source code to see which functions are covered with <leader>c. 
-NeoBundle 'fatih/vim-go'
+Plug 'fatih/vim-go'
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 
 
-NeoBundle 'FooSoft/vim-argwrap'
+Plug 'FooSoft/vim-argwrap'
 nnoremap <leader>w :ArgWrap<CR>
 
 
-NeoBundle 'fs111/pydoc.vim'
+Plug 'fs111/pydoc.vim'
 
 
-NeoBundle 'godlygeek/csapprox'
+Plug 'godlygeek/csapprox'
 
 
-NeoBundle 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
 
 "Cool, but just use native vim selection
 ":help object-select
 "Conflicts with vim-multiple-cursors
-"NeoBundle 'gorkunov/smartpairs.vim'
+"Plug 'gorkunov/smartpairs.vim'
 "let g:smartpairs_uber_mode=1
 
 
-NeoBundle 'gregsexton/gitv'
+Plug 'gregsexton/gitv'
 
 
-NeoBundle 'heavenshell/vim-jsdoc'
+Plug 'heavenshell/vim-jsdoc'
 
 
-"NeoBundle 'hhvm/vim-hack'
+"Plug 'hhvm/vim-hack'
 
 
-NeoBundle 'int3/vim-extradite'
+Plug 'int3/vim-extradite'
 
 
-NeoBundle 'itchyny/calendar.vim'
+Plug 'itchyny/calendar.vim'
 
 
-NeoBundle 'joonty/vdebug'
+Plug 'joonty/vdebug'
 
 
-NeoBundle 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 
 
-NeoBundle 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 "{{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
@@ -279,7 +270,7 @@ let g:EasyMotion_smartcase = 1
 "}}}
 
 
-NeoBundle 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 "{{{
 nmap t :TagbarToggle<CR>
 
@@ -292,83 +283,73 @@ nmap t :TagbarToggle<CR>
 "}}}
 
 
-NeoBundle 'maksimr/vim-jsbeautify'
+Plug 'maksimr/vim-jsbeautify'
 
 
-NeoBundle 'marijnh/tern_for_vim', {
-    \ 'build' : {
-    \   'unix': 'sh -c "(cd ~/.vim/bundle/tern_for_vim; npm install)"',
-    \   'mac': '(cd ~/.vim/bundle/tern_for_vim; npm install)',
-    \   'win': '(cd ~/.vim/bundle/tern_for_vim; npm install)' 
-    \    }
-    \ }
+Plug 'marijnh/tern_for_vim', {
+    \ 'do' :  'cd ~/.vim/bundle/tern_for_vim; npm install'}
+
 "Awesome feature if your machine can handle it.
 let g:tern_show_argument_hints = 'on_move'
 "let g:tern_show_argument_hints=0
 
 
-"NeoBundle 'MattesGroeger/vim-bookmarks'
+"Plug 'MattesGroeger/vim-bookmarks'
 
 
-NeoBundle 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 
-NeoBundle 'moll/vim-node'
+Plug 'moll/vim-node'
 
 
-NeoBundle 'mxw/vim-jsx'
+Plug 'mxw/vim-jsx'
 
 
-NeoBundle 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 
 
 "Must be manually triggered by M:/ when SearchComplete plugin enabled
-NeoBundle 'othree/eregex.vim'
+Plug 'othree/eregex.vim'
 let g:eregex_default_enable = 0
 let g:eregex_force_case = 1
 let g:eregex_forward_delim = '/'
 let g:eregex_backward_delim = '?'
 
 
-NeoBundle 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 let b:javascript_fold = 1
 
 
-NeoBundle 'm2mdas/phpcomplete-extended'
+Plug 'm2mdas/phpcomplete-extended'
 "{{{
 let g:phpcomplete_index_composer_command = "composer"
 "}}}
 
 
 "Cool plugin, but useless in terminal vim because no alt key
-" NeoBundle 'matze/vim-move'
+" Plug 'matze/vim-move'
 
 
 " Recommended: sudo -S apt-get install silversearcher-ag
-NeoBundle 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 if executable('ag')
  "let g:ackprg = 'ag --vimgrep'
  let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
 
 
-NeoBundle 'mustache/vim-mustache-handlebars'
+Plug 'mustache/vim-mustache-handlebars'
 
 
-NeoBundle 'Peeja/vim-cdo'
+Plug 'Peeja/vim-cdo'
 
 
-NeoBundle 'scrooloose/vim-slumlord'
+Plug 'scrooloose/vim-slumlord'
 
 
-NeoBundle 'scrooloose/syntastic', {
-    \ 'build' : {
-    \   'unix': 'sh -c "npm install jshint -g"',
-    \   'mac': 'npm install jshint -g',
-    \   'win': 'npm install jshint -g' 
-    \    }
-    \ }
-
+Plug 'scrooloose/syntastic', {
+    \ 'do' :  'npm install jshint -g'}
 
 "{{{
 "Check if plugin loaded
@@ -407,11 +388,11 @@ let g:syntastic_loc_list_height=5
 
 " Use deoplete with nvim
 if has("nvim")
-	NeoBundle 'Shougo/deoplete.nvim'
+	Plug 'Shougo/deoplete.nvim'
 	let g:deoplete#enable_at_startup = 1
 " Use neomplete with vim
 else
-	NeoBundle 'Shougo/neocomplete'
+	Plug 'Shougo/neocomplete'
 
 	"{{{
 	"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -489,13 +470,13 @@ else
 
 endif
 
-NeoBundle 'Shougo/neomru.vim'
+Plug 'Shougo/neomru.vim'
 
 
-NeoBundle 'Shougo/neoyank.vim'
+Plug 'Shougo/neoyank.vim'
 
 
-NeoBundle 'Shougo/unite.vim'
+Plug 'Shougo/unite.vim'
 "{{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Shougo/unite.vim Plugin
@@ -671,7 +652,7 @@ endfunction
 
 if !has('nvim')
  
-	NeoBundle 'Shougo/vimshell'
+	Plug 'Shougo/vimshell'
 	" {{{
 	let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 	let g:vimshell_prompt =  '$ '
@@ -710,58 +691,52 @@ if !has('nvim')
 endif
 
 
-NeoBundle 'shawncplus/phpcomplete.vim'
+Plug 'shawncplus/phpcomplete.vim'
 
 
-NeoBundle 'sickill/vim-pasta'
+Plug 'sickill/vim-pasta'
 
 
-NeoBundle 'sidorares/node-vim-debugger',{
-      \ 'build' : {
-      \     'windows' : 'npm i vimdebug -g',
-      \     'cygwin' : 'npm i vimdebug -g',
-      \     'mac' : 'npm i vimdebug -g',
-      \     'unix' : 'npm i vimdebug -g',
-      \    },
+Plug 'sidorares/node-vim-debugger', {
+      \ 'do' : 'npm i vimdebug -g'
       \ }
 
-
-NeoBundle 'StanAngeloff/php.vim'
-
-
-NeoBundleLazy 'supermomonga/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
-
-if neobundle#tap('vimshell-inline-history.vim')
-  call neobundle#config({
-        \   'autoload' : {
-        \     'filetypes' : [ 'vimshell' ]
-        \   }
-        \ })
-
-	function! neobundle#hooks.on_post_source(bundle)
-		"Remap keys for plugin
-		imap <buffer> <C-j>  <Plug>(vimshell_inline_history#next)
-		imap <buffer> <C-k>  <Plug>(vimshell_inline_history#prev)
-	endfunction
-
-	"Unmap default keys
-	let g:vimshell_inline_history#default_mappings = 0
-
-	call neobundle#untap()
-endif
+Plug 'StanAngeloff/php.vim'
 
 
-NeoBundle 'terryma/vim-multiple-cursors'
+Plug 'supermomonga/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
+
+"if neobundle#tap('vimshell-inline-history.vim')
+"  call neobundle#config({
+"        \   'autoload' : {
+"        \     'filetypes' : [ 'vimshell' ]
+"        \   }
+"        \ })
+"
+"	function! neobundle#hooks.on_post_source(bundle)
+"		"Remap keys for plugin
+"		imap <buffer> <C-j>  <Plug>(vimshell_inline_history#next)
+"		imap <buffer> <C-k>  <Plug>(vimshell_inline_history#prev)
+"	endfunction
+"
+"	"Unmap default keys
+"	let g:vimshell_inline_history#default_mappings = 0
+"
+"	call neobundle#untap()
+"endif
 
 
-NeoBundle 'tomtom/tcomment_vim'
+Plug 'terryma/vim-multiple-cursors'
 
 
-"NeoBundle 'tpope/vim-abolish'
+Plug 'tomtom/tcomment_vim'
+
+
+"Plug 'tpope/vim-abolish'
 "Abolish overwrites :S command in othree/eregex.vim
 
 
-NeoBundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 "Open split windows vertically
 set diffopt+=vertical
 
@@ -771,7 +746,7 @@ function GetCommitForFileInBufferByNumber(filename,n)
 	echom commits
 endfunc
 
-NeoBundle 'tpope/vim-obsession'
+Plug 'tpope/vim-obsession'
 "{{{
 
 " Sessions
@@ -788,29 +763,23 @@ endfunction
 " autocmd VimEnter * call RestoreSess()
 "}}}
 
-NeoBundle 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
 
 "Fork
 "This plugin hijacks the search mappings /,? and thus
 "other plugins that augment search won't work right
 "i.e. othree/eregex
-NeoBundle 'Dewdrops/SearchComplete'
-"NeoBundle 'vim-scripts/SearchComplete'
+Plug 'Dewdrops/SearchComplete'
+"Plug 'vim-scripts/SearchComplete'
 
 
 "Fucking cool, but using <leader>y w/ Shougo/Unite instead.
 "Seems to conflict with issuing [count] macros
-NeoBundle 'tecfu/YankRing.vim'
+Plug 'tecfu/YankRing.vim'
 
 
-" End custom plugins
-call neobundle#end()
+call plug#end()
 
 " Required:
 filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
