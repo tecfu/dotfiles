@@ -21,12 +21,13 @@ ln -s ~/dotfiles/.vim ~/.vim
 ln -s ~/dotfiles/.vim/.vimrc ~/.vimrc
 ```
 
-### Install NeoBundle
+### Install junegunn/vim-plug
 
 - Ubuntu/Mac
 
 ```
-$ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+$ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
 ### Configure Vim-Airline for Linux terminal
@@ -78,19 +79,26 @@ sudo -S apt-get install silversearcher-ag'
 
 ### Run Vim
 
-- Before running Vim, export your user password in the terminal to allow NeoBundle to install depedencies. You need only do this prior to install.
+- To install plugins, run:
+
+```
+:PlugInstall
+```
 
 ### Adding your own plugins
 
-- This .vimrc uses NeoBundle to manage plugin installation. You can add new plugins by appending them to the file: .vimrc.plugins .
+- This .vimrc uses junegunn/vim-plug to manage plugin installation.  You can add
+  new plugins by appending them to the file: .vimrc.plugins .
 
-- Once you have added a new plugin, you can auto-generate a tabular brief summary in the README.md file by running a grunt task that does this for you:
+- Once you have added a new plugin, you can auto-generate a tabular brief
+  summary in the README.md file by running a grunt task that does this for you:
 
 ```
 $ grunt
 ```
 
-If you don't already have grunt installed you'll need to run the following commands:
+If you don't already have grunt installed you'll need to run the following
+commands:
 
 ```
 $ npm install grunt -g
