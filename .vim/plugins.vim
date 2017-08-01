@@ -348,44 +348,48 @@ Plug 'Peeja/vim-cdo'
 Plug 'scrooloose/vim-slumlord'
 
 
-Plug 'scrooloose/syntastic', {
-    \ 'do' :  'npm install jshint -g'}
+"Plug 'scrooloose/syntastic', {
+"    \ 'do' :  'npm install jshint -g'}
+"
+""{{{
+"if DetectPlugin('syntastic')
+"  
+"  set statusline+=%#warningmsg#
+"  set statusline+=%{SyntasticStatuslineFlag()}
+"  set statusline+=%*
+"
+"  let g:syntastic_always_populate_loc_list = 1
+"  let g:syntastic_auto_loc_list = 1
+"  let g:syntastic_check_on_open = 1
+"  let g:syntastic_check_on_wq = 0
+"  let g:syntastic_reuse_loc_lists = 1
+"
+"  " javascript  
+"  "  let g:syntastic_javascript_checkers = ['eslint']
+"  let g:syntastic_javascript_checkers = ['jshint']
+"
+"" java
+"  "let g:syntastic_java_checker = 'javac'
+"  
+"" manage custom filetypes
+"  augroup filetype
+"    autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+"  augroup END
+"
+"  let g:syntastic_filetype_map = { "gradle": "java" }
+"
+"  set sessionoptions-=blank
+"endif
+"
+"" Set location list height to n lines
+"let g:syntastic_loc_list_height=5
+""}}}
+
 
 "{{{
-"Check if plugin loaded
-if !empty(glob("~/.vim/bundle/syntastic/plugin/syntastic.vim")) 
-  "echo "Syntastic Loaded..."
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_reuse_loc_lists = 1
-
-" javascript  
-"  let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_checkers = ['jshint']
-
-" java
-  "let g:syntastic_java_checker = 'javac'
-  
-" manage custom filetypes
-  augroup filetype
-      autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
-  augroup END
-
-  let g:syntastic_filetype_map = { "gradle": "java" }
-
-  set sessionoptions-=blank
-endif
-
-" Set location list height to n lines
-let g:syntastic_loc_list_height=5
-"}}}
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Shougo/neocomplete Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use deoplete with nvim
 if has("nvim")
   Plug 'Shougo/deoplete.nvim'
@@ -394,10 +398,6 @@ if has("nvim")
 else
   Plug 'Shougo/neocomplete'
 
-  "{{{
-  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  " => Shougo/neocomplete Plugin
-  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
   " Disable AutoComplPop.
   let g:acp_enableAtStartup = 0
@@ -776,6 +776,15 @@ Plug 'Dewdrops/SearchComplete'
 "Fucking cool, but using <leader>y w/ Shougo/Unite instead.
 "Seems to conflict with issuing [count] macros
 Plug 'tecfu/YankRing.vim'
+
+
+" Ale replaces syntastic because it lints continuously, i.e. on wordchange
+Plug 'w0rp/ale.vim', {
+    \ 'do' :  'npm install jshint -g'}
+
+let g:ale_linters = {
+\ 'javascript': ['jshint'],
+\}
 
 
 call plug#end()
