@@ -1,19 +1,4 @@
-
-## Installation
-
-- Make sure you install the following:
-  
-  - xdotool
-  - sxhkd
-
-```
-ln -s ~/dotfiles/x/.Xmodmap ~/.Xmodmap
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlk.sh ~/chrome_unbind_ctrlk.sh
-ln -s ~/dotfiles/terminal/sxhkdrc ~/.config/sxhkd/sxhdrc
-```
-
-### What this file does:
+## What this file does:
 
 - Maps Caps Lock to Esc
 - Sets sxhkd (Simple X Hotkey Daemon) to remap <C-j>, <C-j> to 
@@ -31,3 +16,23 @@ the files:
    
   This effectively allows us to override Chrome's <C-j>,<C-k> behavior, which
   browser plugins can't do.
+
+
+### Installation
+
+- Make sure you install the following:
+  
+  - xdotool
+  - [sxhkd](https://github.com/baskerville/sxhkd)
+
+- Also you'll want to create the following symlinks. Save/remove any existing
+conflicts.
+
+```
+ln -s ~/dotfiles/x/.Xmodmap ~/.Xmodmap
+ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
+ln -s ~/dotfiles/terminal/chrome_unbind_ctrlk.sh ~/chrome_unbind_ctrlk.sh
+ln -s ~/dotfiles/terminal/sxhkdrc ~/.config/sxhkd/sxhdrc
+```
+
+
