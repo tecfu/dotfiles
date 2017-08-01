@@ -1,10 +1,10 @@
 ## What this file does:
 
 - Maps Caps Lock to Esc
-- Sets sxhkd (Simple X Hotkey Daemon) to remap '<lt;C-j>'rt;, '<lt;C-j>'rt; to 
-the files:
-  - chrome_unbind_ctrlj.sh
-  - chrome_unbind_ctrlk.sh
+- Sets sxhkd (Simple X Hotkey Daemon) to remap '<lt;C-j>'rt;, '<lt;C-j>'rt; to the file:
+  ```
+  $ ~/dotfiles/x/remap_keypresses_in_chrome.sh
+  ```
 
   These files in turn run some xdotool commands. Those commands:
     - Check if the focused window is Google Chrome.
@@ -29,10 +29,8 @@ the files:
 conflicts.
 
 ```
-ln -s ~/dotfiles/x/.Xmodmap ~/.Xmodmap
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlk.sh ~/chrome_unbind_ctrlk.sh
-ln -s ~/dotfiles/terminal/sxhkdrc ~/.config/sxhkd/sxhdrc
+$ ln -s ~/dotfiles/x/.Xmodmap ~/.Xmodmap
+$ ln -s ~/dotfiles/x/sxhkdrc ~/.config/sxhkd/sxhkdrc
 ```
 
 
