@@ -4,30 +4,30 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "requires grep
 function! DetectPlugin(name)
-	
-	"check if plugin found in scripnames
-	redir @z 
-	silent scriptnames
-	redir END 
+  
+  "check if plugin found in scripnames
+  redir @z 
+  silent scriptnames
+  redir END 
 
-	let l:scriptnameFound = system('echo '.shellescape(@z)
-				\.' | grep -ci "'.a:name.'"')
-	
-	let l:helpFound = 0
-	try
-		"we don't care about output here, only whether error is thrown
-		silent execute "h ".a:name." | q"
-		let l:helpFound = 1
-	catch
-		let l:helpFound = 0
-	endtry
+  let l:scriptnameFound = system('echo '.shellescape(@z)
+        \.' | grep -ci "'.a:name.'"')
+  
+  let l:helpFound = 0
+  try
+    "we don't care about output here, only whether error is thrown
+    silent execute "h ".a:name." | q"
+    let l:helpFound = 1
+  catch
+    let l:helpFound = 0
+  endtry
 
-	if (l:scriptnameFound || l:helpFound)
-		return 1
-	else
-		return 0
-	endif
-	
+  if (l:scriptnameFound || l:helpFound)
+    return 1
+  else
+    return 0
+  endif
+  
 endfunction
 
 " Note: Skip initialization for vim-tiny or vim-small.
@@ -50,7 +50,7 @@ Plug 'aklt/plantuml-syntax'
 
 Plug 'airblade/vim-gitgutter'
 if has('nvim')
-	let g:gitgutter_sign_removed_first_line = "^_"
+  let g:gitgutter_sign_removed_first_line = "^_"
 endif
 
 
@@ -61,9 +61,9 @@ Plug 'blindFS/vim-taskwarrior'
 
 "set code folding for plugin
 au Filetype taskreport 
-	\ setlocal foldmethod=marker |
+  \ setlocal foldmethod=marker |
   \ setlocal foldlevel=0 |
-	\ setlocal foldlevelstart=0
+  \ setlocal foldlevelstart=0
 
 
 "unmap <S-j>, <S-k> in plugin so can map it to tabprev,tabnext
@@ -80,21 +80,21 @@ au Filetype taskreport
 "
 " 3 - Make async call via a job (as below)
 function! TWUnmap(a,b)
-	unmap <buffer><silent> J
-	unmap <buffer><silent> K
+  unmap <buffer><silent> J
+  unmap <buffer><silent> K
 endfunction
 
 function! TWUnmapChooser()
-	if has("nvim")
-		call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'TWUnmap'})
-	else
-		call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'TWUnmap'})
-	endif
+  if has("nvim")
+    call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'TWUnmap'})
+  else
+    call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'TWUnmap'})
+  endif
 endfunction
 
 augroup TaskwarriorMapping
-	autocmd!
-	autocmd FileType taskreport :call TWUnmapChooser() 
+  autocmd!
+  autocmd FileType taskreport :call TWUnmapChooser() 
 augroup END
 
 
@@ -119,7 +119,7 @@ endfunction
 
 "only run AirlineOverride if vim-airline installed
 if DetectPlugin('airline')
-	autocmd VimEnter * call AirlineOverride()
+  autocmd VimEnter * call AirlineOverride()
 endif
 
 if !exists('g:airline_symbols')
@@ -184,15 +184,15 @@ function! BuildComposer(info)
       return 0
     endif
 
-		if has('nvim')
-			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release
+    if has('nvim')
+      !cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release
     else
-			!cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release --no-default-features --features json-rpc
+      !cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release --no-default-features --features json-rpc
     endif
 endfunction
 
 Plug 'euclio/vim-markdown-composer', {
-		\ 'do' : function('BuildComposer')
+    \ 'do' : function('BuildComposer')
     \ }
 
 " Do not automatically open browser
@@ -354,32 +354,32 @@ Plug 'scrooloose/syntastic', {
 "{{{
 "Check if plugin loaded
 if !empty(glob("~/.vim/bundle/syntastic/plugin/syntastic.vim")) 
-	"echo "Syntastic Loaded..."
-	set statusline+=%#warningmsg#
-	set statusline+=%{SyntasticStatuslineFlag()}
-	set statusline+=%*
+  "echo "Syntastic Loaded..."
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
 
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 0
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
   let g:syntastic_reuse_loc_lists = 1
 
-" javascript	
-"	let g:syntastic_javascript_checkers = ['eslint']
+" javascript  
+"  let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_checkers = ['jshint']
 
 " java
-	"let g:syntastic_java_checker = 'javac'
-	
+  "let g:syntastic_java_checker = 'javac'
+  
 " manage custom filetypes
-	augroup filetype
-			autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
-	augroup END
+  augroup filetype
+      autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+  augroup END
 
-	let g:syntastic_filetype_map = { "gradle": "java" }
+  let g:syntastic_filetype_map = { "gradle": "java" }
 
-	set sessionoptions-=blank
+  set sessionoptions-=blank
 endif
 
 " Set location list height to n lines
@@ -388,85 +388,85 @@ let g:syntastic_loc_list_height=5
 
 " Use deoplete with nvim
 if has("nvim")
-	Plug 'Shougo/deoplete.nvim'
-	let g:deoplete#enable_at_startup = 1
+  Plug 'Shougo/deoplete.nvim'
+  let g:deoplete#enable_at_startup = 1
 " Use neomplete with vim
 else
-	Plug 'Shougo/neocomplete'
+  Plug 'Shougo/neocomplete'
 
-	"{{{
-	"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	" => Shougo/neocomplete Plugin
-	"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-	" Disable AutoComplPop.
-	let g:acp_enableAtStartup = 0
-	" Use neocomplete.
-	let g:neocomplete#enable_at_startup = 1
-	" Use smartcase.
-	let g:neocomplete#enable_smart_case = 1
-	" Set minimum syntax keyword length.
-	let g:neocomplete#sources#syntax#min_keyword_length = 3
-	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+  "{{{
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " => Shougo/neocomplete Plugin
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+  " Disable AutoComplPop.
+  let g:acp_enableAtStartup = 0
+  " Use neocomplete.
+  let g:neocomplete#enable_at_startup = 1
+  " Use smartcase.
+  let g:neocomplete#enable_smart_case = 1
+  " Set minimum syntax keyword length.
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-	" Define dictionary.
-	let g:neocomplete#sources#dictionary#dictionaries = {
-	\ 'default' : '',
-	\ 'vimshell' : $HOME.'/.vimshell_hist',
-	\ 'scheme' : $HOME.'/.gosh_completions'
-	\ }
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'vimshell' : $HOME.'/.vimshell_hist',
+  \ 'scheme' : $HOME.'/.gosh_completions'
+  \ }
 
-	" Define keyword.
-	if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
-	endif
-	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+  " Define keyword.
+  if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-	" Plugin key-mappings.
-	inoremap <expr><C-g>     neocomplete#undo_completion()
-	inoremap <expr><C-l>     neocomplete#complete_common_string()
+  " Plugin key-mappings.
+  inoremap <expr><C-g>     neocomplete#undo_completion()
+  inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-	" Recommended key-mappings.
-	" <CR>: close popup and save indent.
-	"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-	function! s:my_cr_function()
-	return neocomplete#close_popup() . "\<CR>"
-	" For no inserting <CR> key.
-	"return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-	endfunction
+  " Recommended key-mappings.
+  " <CR>: close popup and save indent.
+  "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  endfunction
 
-	" <TAB>: completion.
-	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-	" <C-h>, <BS>: close popup and delete backword char.
-	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><C-y>  neocomplete#close_popup()
-	inoremap <expr><C-e>  neocomplete#cancel_popup()
-	
-	" Enable omni completion.
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-	autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-	" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	" autocmd FileType javascript setlocal omnifunc=tern#Complete
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><C-y>  neocomplete#close_popup()
+  inoremap <expr><C-e>  neocomplete#cancel_popup()
+  
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript setlocal omnifunc=tern#Complete
 
-	" Enable heavy omni completion.
-	if !exists('g:neocomplete#sources#omni#input_patterns')
-		let g:neocomplete#sources#omni#input_patterns = {}
-	endif
-	"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-	"let g:neocomplete#sources#omni#input_patterns.javascript = '[^. \t]\.\w*'
-	"}}}
+  " Enable heavy omni completion.
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+  "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+  let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+  "let g:neocomplete#sources#omni#input_patterns.javascript = '[^. \t]\.\w*'
+  "}}}
 
-	if !exists('g:neocomplete#force_omni_input_patterns')
-		let g:neocomplete#force_omni_input_patterns = {}
-	endif
-	let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
 
 endif
 
@@ -557,14 +557,14 @@ function! s:unite_settings()
   nnoremap <silent><buffer> <S-Tab> <Plug>SuperTabBackward
   "imap <buffer> <S-Tab> <c-p>
 
-	
-	" exit with esc
+  
+  " exit with esc
   " nmap <buffer> <ESC> <Plug>(unite_exit)
   " imap <buffer> <ESC> <Plug>(unite_exit)
 
   " Ctrl jk mappings
   nmap <buffer> <C-j> 5j
-	nmap <buffer> <C-k> 5k
+  nmap <buffer> <C-k> 5k
 
   " Enable navigation with shift-j and shift-k in insert mode
   imap <buffer> <S-j>  <Plug>(unite_select_next_line)
@@ -580,71 +580,71 @@ function! s:unite_settings()
   inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 
-	"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	" => Shougo/unite.vim Plugin Postprocessing
-	"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	"{{{
-	" Use the fuzzy matcher for everything
-	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " => Shougo/unite.vim Plugin Postprocessing
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  "{{{
+  " Use the fuzzy matcher for everything
+  call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
-	" Use the rank sorter for everything
-	call unite#filters#sorter_default#use(['sorter_rank'])
+  " Use the rank sorter for everything
+  call unite#filters#sorter_default#use(['sorter_rank'])
 
-	" Set up some custom ignores
-	call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-				\ 'ignore_pattern', join([
-				\ '\.git/',
-				\ 'git5/review/',
-				\ 'google/obj/',
-				\ 'tmp/',
-				\ 'lib/Cake/',
-				\ 'node_modules/',
-				\ 'vendor/',
-				\ 'Vendor/',
-				\ 'app_old/',
-				\ 'acf-laravel/',
-				\ 'plugins/',
-				\ 'bower_components/',
-				\ '.sass-cache',
-				\ 'web/wp',
-				\ ], '\|'))
-	"}}}
+  " Set up some custom ignores
+  call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+        \ 'ignore_pattern', join([
+        \ '\.git/',
+        \ 'git5/review/',
+        \ 'google/obj/',
+        \ 'tmp/',
+        \ 'lib/Cake/',
+        \ 'node_modules/',
+        \ 'vendor/',
+        \ 'Vendor/',
+        \ 'app_old/',
+        \ 'acf-laravel/',
+        \ 'plugins/',
+        \ 'bower_components/',
+        \ '.sass-cache',
+        \ 'web/wp',
+        \ ], '\|'))
+  "}}}
 
 
 " Unite custom menus ================================================================
 
-	" Fugitive menu in Unite (depends on both Fugitive and Unite.vim) {{{
-	let g:unite_source_menu_menus = {}
-	let g:unite_source_menu_menus.git = {}
-	let g:unite_source_menu_menus.git.description = 'git (Fugitive)'
-	let g:unite_source_menu_menus.git.command_candidates = [
-			\['▷ git status       (Fugitive)',
-					\'Gstatus'],
-			\['▷ git diff         (Fugitive)',
-					\'Gdiff'],
-			\['▷ git commit       (Fugitive)',
-					\'Gcommit'],
-			\['▷ git log          (Fugitive)',
-					\'exe "silent Glog | Unite quickfix"'],
-			\['▷ git blame        (Fugitive)',
-					\'Gblame'],
-			\['▷ git stage        (Fugitive)',
-					\'Gwrite'],
-			\['▷ git checkout     (Fugitive)',
-					\'Gread'],
-			\['▷ git rm           (Fugitive)',
-					\'Gremove'],
-			\['▷ git mv           (Fugitive)',
-					\'exe "Gmove " input("destino: ")'],
-			\['▷ git push         (Fugitive, output buffer)',
-					\'Git! push'],
-			\['▷ git pull         (Fugitive, output buffer)',
-					\'Git! pull'],
-			\['▷ git prompt       (Fugitive, output buffer)',
-					\'exe "Git! " input("comando git: ")'],
-			\['▷ git cd           (Fugitive)',
-					\'Gcd'],
-			\]
+  " Fugitive menu in Unite (depends on both Fugitive and Unite.vim) {{{
+  let g:unite_source_menu_menus = {}
+  let g:unite_source_menu_menus.git = {}
+  let g:unite_source_menu_menus.git.description = 'git (Fugitive)'
+  let g:unite_source_menu_menus.git.command_candidates = [
+      \['▷ git status       (Fugitive)',
+          \'Gstatus'],
+      \['▷ git diff         (Fugitive)',
+          \'Gdiff'],
+      \['▷ git commit       (Fugitive)',
+          \'Gcommit'],
+      \['▷ git log          (Fugitive)',
+          \'exe "silent Glog | Unite quickfix"'],
+      \['▷ git blame        (Fugitive)',
+          \'Gblame'],
+      \['▷ git stage        (Fugitive)',
+          \'Gwrite'],
+      \['▷ git checkout     (Fugitive)',
+          \'Gread'],
+      \['▷ git rm           (Fugitive)',
+          \'Gremove'],
+      \['▷ git mv           (Fugitive)',
+          \'exe "Gmove " input("destino: ")'],
+      \['▷ git push         (Fugitive, output buffer)',
+          \'Git! push'],
+      \['▷ git pull         (Fugitive, output buffer)',
+          \'Git! pull'],
+      \['▷ git prompt       (Fugitive, output buffer)',
+          \'exe "Git! " input("comando git: ")'],
+      \['▷ git cd           (Fugitive)',
+          \'Gcd'],
+      \]
 "" }}}
 "
 endfunction
@@ -652,41 +652,41 @@ endfunction
 
 if !has('nvim')
  
-	Plug 'Shougo/vimshell'
-	" {{{
-	let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-	let g:vimshell_prompt =  '$ '
-	" open new splits actually in new tab
-	let g:vimshell_split_command = "tabnew"
+  Plug 'Shougo/vimshell'
+  " {{{
+  let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+  let g:vimshell_prompt =  '$ '
+  " open new splits actually in new tab
+  let g:vimshell_split_command = "tabnew"
 
-	if has("gui_running")
-		let g:vimshell_editor_command = "gvim"
-	endif
+  if has("gui_running")
+    let g:vimshell_editor_command = "gvim"
+  endif
 
-	" Use same keybindings to go forward and back in prompt as in vim bash
-	"inoremap <buffer> <S-k>  <Plug>(vimshell_previous_prompt)
-	"inoremap <buffer> <S-j>  <Plug>(vimshell_next_prompt)
+  " Use same keybindings to go forward and back in prompt as in vim bash
+  "inoremap <buffer> <S-k>  <Plug>(vimshell_previous_prompt)
+  "inoremap <buffer> <S-j>  <Plug>(vimshell_next_prompt)
 
-	" Unmap C-j, C-k in normal mode to use default navigation
-	function! VSmap(a,b)
-		nmap <buffer><silent> <C-J> 10j
-		nmap <buffer><silent> <C-K> 10k
-	endfunction
+  " Unmap C-j, C-k in normal mode to use default navigation
+  function! VSmap(a,b)
+    nmap <buffer><silent> <C-J> 10j
+    nmap <buffer><silent> <C-K> 10k
+  endfunction
 
-	function! VSmapChooser()
-		if has("nvim")
-			call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'VSmap'})
-		else
-			call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'VSmap'})
-		endif
-	endfunction
+  function! VSmapChooser()
+    if has("nvim")
+      call jobstart(['bash','-c','echo "-"; exit;'],{'on_stdout':'VSmap'})
+    else
+      call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'VSmap'})
+    endif
+  endfunction
 
-	"Group name can be arbitrary so long as doesn't conflict with another
-	augroup VimshellMapping
-		autocmd!
-		"Get filetype with :echom &filetype when in buffer
-		autocmd FileType vimshell :call VSmapChooser() 
-	augroup END
+  "Group name can be arbitrary so long as doesn't conflict with another
+  augroup VimshellMapping
+    autocmd!
+    "Get filetype with :echom &filetype when in buffer
+    autocmd FileType vimshell :call VSmapChooser() 
+  augroup END
 "}}}
 endif
 
@@ -703,27 +703,25 @@ Plug 'sidorares/node-vim-debugger', {
 
 Plug 'StanAngeloff/php.vim'
 
+"Plug 'supermomonga/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
+Plug 'tecfu/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
 
-Plug 'supermomonga/vimshell-inline-history.vim', { 'depends' : [ 'Shougo/vimshell.vim' ] }
+function! VSHistmapCB(a,b)
+  let g:vimshell_inline_history#default_mappings = 0
+  imap <buffer> <C-j>  <Plug>(vimshell_inline_history#next)
+  imap <buffer> <C-k>  <Plug>(vimshell_inline_history#prev)
+endfunction
 
-"if neobundle#tap('vimshell-inline-history.vim')
-"  call neobundle#config({
-"        \   'autoload' : {
-"        \     'filetypes' : [ 'vimshell' ]
-"        \   }
-"        \ })
-"
-"	function! neobundle#hooks.on_post_source(bundle)
-"		"Remap keys for plugin
-"		imap <buffer> <C-j>  <Plug>(vimshell_inline_history#next)
-"		imap <buffer> <C-k>  <Plug>(vimshell_inline_history#prev)
-"	endfunction
-"
-"	"Unmap default keys
-"	let g:vimshell_inline_history#default_mappings = 0
-"
-"	call neobundle#untap()
-"endif
+function! VSHistmap()
+  call job_start(['bash','-c','echo "-"; exit;'],{'out_cb':'VSHistmapCB'})
+endfunction
+
+  "Group name can be arbitrary so long as doesn't conflict with another
+augroup VSHistMapping
+  autocmd!
+  "Get filetype with :echom &filetype when in buffer
+  autocmd FileType vimshell :call VSHistmap()
+augroup END
 
 
 Plug 'terryma/vim-multiple-cursors'
@@ -740,11 +738,12 @@ Plug 'tpope/vim-fugitive'
 "Open split windows vertically
 set diffopt+=vertical
 
-function GetCommitForFileInBufferByNumber(filename,n)
-	"Get list of commits for the file in buffer
-	let commits=system('git log --pretty=format:%h --follow ' . filename)
-	echom commits
-endfunc
+"@todo complete this
+"!function GetCommitForFileInBufferByNumber(filename,n)
+"  "Get list of commits for the file in buffer
+"  let commits=system('git log --pretty=format:%h --follow ' . filename)
+"  echom commits
+"endfunc
 
 Plug 'tpope/vim-obsession'
 "{{{
