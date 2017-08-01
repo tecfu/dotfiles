@@ -1,0 +1,5 @@
+ctrl+j
+	~/chrome_unbind_ctrlj.sh
+
+ctrl+k
+	~/chrome_unbind_ctrlk.sh
