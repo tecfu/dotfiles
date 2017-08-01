@@ -3,8 +3,8 @@
 
 - Make sure you install the following:
   
-  xdotool
-  sxhkd
+  - xdotool
+  - sxhkd
 
 ```
 ln -s ~/dotfiles/x/.Xmodmap ~/.Xmodmap
