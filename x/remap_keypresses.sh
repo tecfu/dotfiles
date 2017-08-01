@@ -27,7 +27,8 @@ case "$1" in
     fi
     ;;
   *)
-    #if some other argument, do nothing
+    #if some other argument, write to keypress.error.log
+    Time = date +"%T"
+    echo "$Time: Argument $1 not recognized by remap_keypresses.sh" >> error.log
     ;;
 esac
-
