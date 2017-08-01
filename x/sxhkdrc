@@ -1,5 +1,5 @@
 ctrl+j
-	~/chrome_unbind_ctrlj.sh
+  ~/dotfiles/x/remap_keypresses_in_chrome.sh j
 
 ctrl+k
-	~/chrome_unbind_ctrlk.sh
+  ~/dotfiles/x/remap_keypresses_in_chrome.sh k
