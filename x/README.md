@@ -3,7 +3,7 @@
 - Maps Caps Lock to Esc
 - Sets sxhkd (Simple X Hotkey Daemon) to remap C-j, C-j to the file:
   ```
-  $ ~/dotfiles/x/remap_keypresses_in_chrome.sh
+  $ ~/dotfiles/x/remap_keypresses.sh
   ```
 
   These files in turn run some xdotool commands. Those commands:
