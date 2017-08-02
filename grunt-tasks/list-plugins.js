@@ -17,7 +17,8 @@ var fn = function(){
 		timeout : 120000
 	});
 
-	var matches = contents.match( /NeoBundle '(.*?)'/g );
+	//var matches = contents.match( /NeoBundle '(.*?)'/g );
+  var matches = contents.match( /Plug '(.*?)'/g );
 	matches = matches.map(function(match){
 		var arr = match.split(' ');
 		var str = arr[1].replace(/'/g,'');
