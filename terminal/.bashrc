@@ -47,12 +47,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+  # We have color support; assume it's compliant with Ecma-48
+  # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+  # a case would tend to support setf rather than setaf.)
+  color_prompt=yes
     else
-	color_prompt=
+  color_prompt=
     fi
 fi
 
@@ -110,8 +110,8 @@ stty -ixon > /dev/null 2>/dev/null
 
 # Sets the default CWD
 gotocwd(){ 
-	# cd "/var/www" ; 
-	echo "Predefined current working directory customized in ~/.bashrc" ;
+  # cd "/var/www" ; 
+  echo "Predefined current working directory customized in ~/.bashrc" ;
 }
 gotocwd
 
@@ -124,13 +124,13 @@ export PATH="/home/$USER/bin:$PATH"
 
 # Set DBUS_SESSION_BUS_ADDRESS when connecting to remotes via SSH
 #if [[ -n $SSH_CLIENT ]]; then
-#	NAUTILUS_PID=`pidof nautilus`	
-#	if [! NAUTILUS_PID]; then
-#		nautilus &
-#		NAUTILUS_PID=`pidof nautilus`	
-#	fi
-#	export DBUS_SESSION_BUS_ADDRESS=`cat /proc/$(NAUTILUS_PID)/environ | tr '\0' '\n' | grep DBUS_SESSION_BUS_ADDRESS | cut -d '=' -f2-`
-#	echo NAUTILUS_PID = $NAUTILUS_PID
+#  NAUTILUS_PID=`pidof nautilus`  
+#  if [! NAUTILUS_PID]; then
+#    nautilus &
+#    NAUTILUS_PID=`pidof nautilus`  
+#  fi
+#  export DBUS_SESSION_BUS_ADDRESS=`cat /proc/$(NAUTILUS_PID)/environ | tr '\0' '\n' | grep DBUS_SESSION_BUS_ADDRESS | cut -d '=' -f2-`
+#  echo NAUTILUS_PID = $NAUTILUS_PID
 #fi
 
 
@@ -153,25 +153,25 @@ bind -m vi-move '"\C-e":end-of-line'
 # Sets screen brightness
 # run with su -c 'dim'
 dim(){
-	#make sure user is root
-	if [[ $EUID -ne 0 ]]; then
-		 echo "Command must be run as root" 
-		 return
-	fi
-	echo "setb (Set brightness) accepts a number 1-255"
-	echo $1 > /sys/class/backlight/radeon_bl0/brightness
-	echo "You entered '$1'"
+  #make sure user is root
+  if [[ $EUID -ne 0 ]]; then
+     echo "Command must be run as root" 
+     return
+  fi
+  echo "setb (Set brightness) accepts a number 1-255"
+  echo $1 > /sys/class/backlight/radeon_bl0/brightness
+  echo "You entered '$1'"
 }
 export dim
 
 # Converts all .mp4 files in current working directory to mp3
 # Useful when desiring to play downloaded YouTube videos in cmus
 mp4tomp3(){
-	for f in *.mp4
-	do
-			name=`echo "$f" | sed -e "s/.mp4$//g"`
-			ffmpeg -i "$f" -vn -ar 44100 -ac 2 -ab 192k -f mp3 "$name.mp3"
-	done
+  for f in *.mp4
+  do
+      name=`echo "$f" | sed -e "s/.mp4$//g"`
+      ffmpeg -i "$f" -vn -ar 44100 -ac 2 -ab 192k -f mp3 "$name.mp3"
+  done
 }
 export mp4tomp3
 
@@ -182,3 +182,11 @@ shopt -s globstar
 
 
 # Open vim within nodejs repl using ".editor" command
+
+# REACT/ANDROID SETUP
+export ANDROID_HOME=/media/shared-1/android-studio/bin
+# Run the Gradle daemon for React Android builds
+# See (1): https://docs.gradle.org/2.9/userguide/gradle_daemon.html
+# See (2): https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html
+touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
