@@ -1,20 +1,6 @@
 # .bashrc
 
-## Installation
-
-- Install sxhkd https://github.com/baskerville/sxhkd
-
-```
-mv .bashrc .bashrc.saved
-ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
-mv .inputrc .inputrc.saved
-ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
-ln -s ~/dotfiles/terminal/.xprofile ~/.xprofile
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlj.sh ~/chrome_unbind_ctrlj.sh
-ln -s ~/dotfiles/terminal/chrome_unbind_ctrlk.sh ~/chrome_unbind_ctrlk.sh
-```
-
-### What this file does:
+## What this file does:
 
 - Sets up Golang path
 - Puts terminal in vi mode
@@ -30,6 +16,17 @@ set -o vi
 # Set default editor to VIM
 export VISUAL=/usr/bin/vim
 export EDITOR=/usr/bin/vim
+```
+
+
+### Installation
+
+```
+mv .bashrc .bashrc.saved
+ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
+mv .inputrc .inputrc.saved
+ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
+ln -s ~/dotfiles/terminal/.xprofile ~/.xprofile
 ```
 
 ### Checking your terminal for 256 colors:
