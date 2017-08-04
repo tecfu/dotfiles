@@ -239,6 +239,11 @@ au Filetype vim,vimrc,md
 au Filetype js,ts
 	\ setlocal foldmethod=syntax
 
+au Filetype uml
+	\ setlocal foldmethod=marker |
+  \ setlocal foldlevel=0 |
+	\ setlocal foldlevelstart=0
+
 " Use Vim's persistent undo
 " Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.vim'
