@@ -46,6 +46,8 @@ Plug 'Shougo/vimproc', {
 
 " UML syntax highlighting for scrooloose/vim-slumlord
 Plug 'aklt/plantuml-syntax'
+" Use a split window to view output
+" let g:slumlord_separate_win=1
 
 
 Plug 'airblade/vim-gitgutter'
@@ -348,6 +350,7 @@ Plug 'Peeja/vim-cdo'
 Plug 'scrooloose/vim-slumlord'
 
 
+"REPLACED temporarily by w0rp/ale
 "Plug 'scrooloose/syntastic', {
 "    \ 'do' :  'npm install jshint -g'}
 "
@@ -779,12 +782,16 @@ Plug 'tecfu/YankRing.vim'
 
 
 " Ale replaces syntastic because it lints continuously, i.e. on wordchange
-Plug 'w0rp/ale.vim', {
+Plug 'w0rp/ale', {
     \ 'do' :  'npm install jshint -g'}
 
-let g:ale_linters = {
-\ 'javascript': ['jshint'],
-\}
+"let g:ale_linters = {
+"\ 'javascript': ['jshint'],
+"\}
+" Show warnings/errors in status line
+let g:airline#extensions#ale#enabled = 1
+let g:ale_sign_column_always = 1
+let g:ale_open_list = 1
 
 
 call plug#end()
