@@ -351,42 +351,42 @@ Plug 'scrooloose/vim-slumlord'
 
 
 "REPLACED temporarily by w0rp/ale
-"Plug 'scrooloose/syntastic', {
-"    \ 'do' :  'npm install jshint -g'}
-"
-""{{{
-"if DetectPlugin('syntastic')
-"  
-"  set statusline+=%#warningmsg#
-"  set statusline+=%{SyntasticStatuslineFlag()}
-"  set statusline+=%*
-"
-"  let g:syntastic_always_populate_loc_list = 1
-"  let g:syntastic_auto_loc_list = 1
-"  let g:syntastic_check_on_open = 1
-"  let g:syntastic_check_on_wq = 0
-"  let g:syntastic_reuse_loc_lists = 1
-"
-"  " javascript  
-"  "  let g:syntastic_javascript_checkers = ['eslint']
-"  let g:syntastic_javascript_checkers = ['jshint']
-"
-"" java
-"  "let g:syntastic_java_checker = 'javac'
-"  
-"" manage custom filetypes
-"  augroup filetype
-"    autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
-"  augroup END
-"
-"  let g:syntastic_filetype_map = { "gradle": "java" }
-"
-"  set sessionoptions-=blank
-"endif
-"
-"" Set location list height to n lines
-"let g:syntastic_loc_list_height=5
-""}}}
+Plug 'scrooloose/syntastic', {
+    \ 'do' :  'npm install jshint -g'}
+
+"{{{
+if DetectPlugin('syntastic')
+  
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_reuse_loc_lists = 1
+
+  " javascript  
+  "  let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_checkers = ['jshint']
+
+" java
+  "let g:syntastic_java_checker = 'javac'
+  
+" manage custom filetypes
+  augroup filetype
+    autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+  augroup END
+
+  let g:syntastic_filetype_map = { "gradle": "java" }
+
+  set sessionoptions-=blank
+endif
+
+" Set location list height to n lines
+let g:syntastic_loc_list_height=5
+"}}}
 
 
 "{{{
@@ -781,17 +781,17 @@ Plug 'Dewdrops/SearchComplete'
 Plug 'tecfu/YankRing.vim'
 
 
-" Ale replaces syntastic because it lints continuously, i.e. on wordchange
-Plug 'w0rp/ale', {
-    \ 'do' :  'npm install jshint -g'}
-
-"let g:ale_linters = {
-"\ 'javascript': ['jshint'],
-"\}
-" Show warnings/errors in status line
-let g:airline#extensions#ale#enabled = 1
-let g:ale_sign_column_always = 1
-let g:ale_open_list = 1
+" Ale replaces syntastic because it lints continuously, i.e. on wordchange <KINDA ANNOYING, SLOW AS SHIT ON BIG PROJECTS>
+"Plug 'w0rp/ale', {
+"    \ 'do' :  'npm install jshint -g'}
+"
+""let g:ale_linters = {
+""\ 'javascript': ['jshint'],
+""\}
+"" Show warnings/errors in status line
+"let g:airline#extensions#ale#enabled = 1
+"let g:ale_sign_column_always = 1
+"let g:ale_open_list = 1
 
 
 call plug#end()
