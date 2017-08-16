@@ -35,14 +35,14 @@ set fileencoding=utf8
 
 "Python fix for neovim
 if has("nvim")
-	"set shell=/bin/bash
-	if !has('python') && !has('python3')
-		echoe "ERROR! Manually install python support with:\n"
-					\"pip2 install neovim\n" 
-					\"pip3 install neovim"
-	endif
+  "set shell=/bin/bash
+  if !has('python') && !has('python3')
+    echoe "ERROR! Manually install python support with:\n"
+          \"pip2 install neovim\n" 
+          \"pip3 install neovim"
+  endif
 
-	let g:python_host_prog = '/usr/bin/python'
+  let g:python_host_prog = '/usr/bin/python'
 endif
 
 
@@ -100,7 +100,7 @@ set showcmd
  "   let c='a'
  "   exec "set <A-".c.">=\e".c
  "   exec "imap \e".c." <A-".c.">"
- " 	let c = nr2char(1+char2nr(c))
+ "   let c = nr2char(1+char2nr(c))
  " endw
 
 
@@ -232,17 +232,23 @@ set foldlevel=2
 
 " Filetype specific folding
 au Filetype vim,vimrc,md 
-	\ setlocal foldmethod=marker |
+  \ setlocal foldmethod=marker |
   \ setlocal foldlevel=0 |
-	\ setlocal foldlevelstart=0
+  \ setlocal foldlevelstart=0
 
 au Filetype js,ts
-	\ setlocal foldmethod=syntax
+  \ setlocal foldmethod=syntax
+
+au Filetype php
+  \ setlocal foldmethod=syntax |
+  \ setlocal foldlevel=0 |
+  \ setlocal foldlevelstart=0
+
 
 au Filetype uml
-	\ setlocal foldmethod=marker |
+  \ setlocal foldmethod=marker |
   \ setlocal foldlevel=0 |
-	\ setlocal foldlevelstart=0
+  \ setlocal foldlevelstart=0
 
 " Use Vim's persistent undo
 " Put plugins and dictionaries in this dir (also on Windows)
@@ -251,14 +257,14 @@ let &runtimepath.=','.vimDir
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-		let myUndoDir = expand(vimDir . '/undo')
-		" Create dirs
-		call system('mkdir ' . vimDir)
-		call system('mkdir ' . myUndoDir)
-		let &undodir = myUndoDir
-		set undofile
-		set undolevels=1000         " How many undos
-		set undoreload=10000        " number of lines to save for undo
+    let myUndoDir = expand(vimDir . '/undo')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+    set undolevels=1000         " How many undos
+    set undoreload=10000        " number of lines to save for undo
 endif
 
 "}}}
@@ -415,17 +421,17 @@ vnoremap > >gv
 
 " Select all
 function! SelectAll()
-	:mark l	
-	":exe 'normal ggVG'
-	:%
+  :mark l  
+  ":exe 'normal ggVG'
+  :%
 endfunction
 nnoremap <C-a> :call SelectAll()<CR>
 
 " Allow pasting from clipboard without autoindenting
 " If your ssh session has X11 forwarding enabled, and the remote terminal Vim has +xclipboard support, then you can use the "+P keystroke to paste directly from the clipboard into Vim.
-	nnoremap <leader>p :execute 'set noai' <bar> execute 'normal "+p' <bar> execute 'set ai' <CR>
-	"Paste from clipboard before cursor
-	nnoremap <leader>P :execute 'set noai' <bar> execute 'normal "+P' <bar> execute 'set ai' <CR>
+  nnoremap <leader>p :execute 'set noai' <bar> execute 'normal "+p' <bar> execute 'set ai' <CR>
+  "Paste from clipboard before cursor
+  nnoremap <leader>P :execute 'set noai' <bar> execute 'normal "+P' <bar> execute 'set ai' <CR>
 
 inoremap <C-v> <C-O>:set noai<CR> <C-R>+ <C-O>:set ai<CR>
 inoremap <leader>p <C-O>:set noai<CR> <C-R>+ <C-O>:set ai<CR>
@@ -483,7 +489,7 @@ noremap <leader>; $
 
 " Navigation shortcuts for location window
 " map <leader>q :lopen <CR>
-"	map q :lclose <CR>
+"  map q :lclose <CR>
 map <expr> <C-Down> (empty(getloclist(0))  ? "" : ":lnext")."<CR>"
 map <expr> <C-Up> (empty(getloclist(0))  ? "" : ":lp")."<CR>"
 
@@ -512,10 +518,10 @@ map <C-t> :tabnew<CR>
 
 " Undo close tab using Shougo/Unite to get MRU file
 function! UndoCloseTab()
-	:tabnew	
-	:tabm -1	
-	:Unite file_mru
-	exe "normal! 2ggf/gf"
+  :tabnew  
+  :tabm -1  
+  :Unite file_mru
+  exe "normal! 2ggf/gf"
 endfunction
 nmap <C-u> :call UndoCloseTab()<CR><ESC>
 
@@ -550,10 +556,10 @@ set splitright
 "{{{
 
 " One color scheme for all!
-	set t_Co=256
-	colorscheme mango
+  set t_Co=256
+  colorscheme mango
   "colorscheme solarized
-	"let g:solarized_termcolors=256
+  "let g:solarized_termcolors=256
   set guifont=monospace\ 11 
   set background=dark
   syntax on
