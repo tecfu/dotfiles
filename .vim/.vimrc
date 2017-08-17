@@ -541,8 +541,9 @@ autocmd BufReadPost *
    \   exe "normal! g`\"" |
    \ endif
 
-" Remember info about open buffers on close
-set viminfo^=%
+" Save buffer list. Slows vim dramatically when in big project. 
+" Disabled.
+" set viminfo^=%
 
 " New splits to appear to the right and to the bottom of the current
 set splitbelow
