@@ -173,8 +173,11 @@ Plug 'danro/rename.vim'
 Plug 'dhruvasagar/vim-table-mode'
 
 
+"If tab completion runs slow, check that you don't have too many
+"open buffers
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
 
 "{{{
 function! BuildComposer(info)
