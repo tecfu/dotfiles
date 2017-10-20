@@ -183,10 +183,10 @@ shopt -s globstar
 
 # Open vim within nodejs repl using ".editor" command
 
-# REACT/ANDROID SETUP
-export ANDROID_HOME=/media/shared-1/android-studio/bin
-# Run the Gradle daemon for React Android builds
-# See (1): https://docs.gradle.org/2.9/userguide/gradle_daemon.html
-# See (2): https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html
-touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
-touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+## REACT/ANDROID SETUP
+#export ANDROID_HOME=/media/shared-1/android-studio/bin
+## Run the Gradle daemon for React Android builds
+## See (1): https://docs.gradle.org/2.9/userguide/gradle_daemon.html
+## See (2): https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html
+#touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+#touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
