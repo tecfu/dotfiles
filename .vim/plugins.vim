@@ -179,35 +179,6 @@ Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 
-"{{{
-function! BuildComposer(info)
-    " Check if RUST installed
-    let hasRust = system('command -v cargo >/dev/null 2>&1 || echo -n -1')
-    if hasRust == -1
-      echoerr "The RUST language and Cargo package manager must be installed for euclio/vim-markdown-composer"
-      system('rm -rf ~/dotfiles/.vim/bundle/vim-markdown-composer');
-      return 0
-    endif
-
-    if has('nvim')
-      !cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release
-    else
-      !cd ~/dotfiles/.vim/bundle/vim-markdown-composer/ && cargo build --release --no-default-features --features json-rpc
-    endif
-endfunction
-
-Plug 'euclio/vim-markdown-composer', {
-    \ 'do' : function('BuildComposer')
-    \ }
-
-" Do not automatically open browser
-let g:markdown_composer_open_browser=0
-
-" Whether the server should automatically start when a markdown file is opened.
-let g:markdown_composer_autostart=0
-"}}}
-
-
 "Run commands such as go run for the current file with <leader>r or go build and go test for the current package with <leader>b and <leader>t respectively. Display beautifully annotated source code to see which functions are covered with <leader>c. 
 Plug 'fatih/vim-go'
 au FileType go nmap <leader>r <Plug>(go-run)
