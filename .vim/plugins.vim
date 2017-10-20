@@ -253,6 +253,13 @@ Plug 'itchyny/calendar.vim'
 
 Plug 'joonty/vdebug'
 
+let g:vdebug_options = {
+\   'port':9000, 
+\   'path_maps': {
+\       "/home/printedm/public_html": "/var/www/pm/pm-site",
+\   },
+\}
+
 
 Plug 'kshenoy/vim-signature'
 
@@ -342,6 +349,9 @@ if executable('ag')
  "let g:ackprg = 'ag --vimgrep'
  let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
+
+
+Plug 'mbbill/undotree'
 
 
 Plug 'mustache/vim-mustache-handlebars'
