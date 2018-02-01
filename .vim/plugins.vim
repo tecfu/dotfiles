@@ -328,6 +328,9 @@ Plug 'mbbill/undotree'
 Plug 'mustache/vim-mustache-handlebars'
 
 
+Plug 'OrangeT/vim-csharp'
+
+
 Plug 'Peeja/vim-cdo'
 
 
@@ -361,6 +364,7 @@ if DetectPlugin('syntastic')
 " manage custom filetypes
   augroup filetype
     autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+    au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
   augroup END
 
   let g:syntastic_filetype_map = { "gradle": "java" }
