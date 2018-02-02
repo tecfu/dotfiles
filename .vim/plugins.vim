@@ -729,12 +729,24 @@ Plug 'tpope/vim-fugitive'
 "Open split windows vertically
 set diffopt+=vertical
 
-"@todo complete this
-"!function GetCommitForFileInBufferByNumber(filename,n)
-"  "Get list of commits for the file in buffer
-"  let commits=system('git log --pretty=format:%h --follow ' . filename)
-"  echom commits
-"endfunc
+"Diff the current file against n revision (instead of n commit)
+function! Diffrev(...)
+  
+  let a:target = @%
+ 
+  "check argument count
+  if a:0 == 0
+    "no revision number specified
+    let a:revnum=0
+  else
+    "revision number specified
+    let a:revnum=a:1
+  endif
+
+  let a:hash = system('git log -1 --skip='.a:revnum.' --pretty=format:"%h" ' . a:target)
+  execute 'Gdiff' . a:hash
+  "echom a:hash
+endfunc
 
 Plug 'tpope/vim-obsession'
 "{{{
