@@ -323,6 +323,7 @@ endif
 
 
 Plug 'mbbill/undotree'
+nnoremap <leader>t :UndotreeToggle<cr>
 
 
 Plug 'mustache/vim-mustache-handlebars'
