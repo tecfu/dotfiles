@@ -9,7 +9,11 @@ Configuration files for the Vim editor.
 
 - It includes editor preferences, colorscheme, plugins, custom functions and more.
 
-**This project is my personal vimrc**. Feel free to send me suggestions through the [issues page](https://github.com/tecfu/.vim/issues/new) or to send me improvements through the [pull requests page](https://github.com/tecfu/.vim/pulls).
+**This project is my personal vimrc**. Feel free to send me suggestions through
+the [issues page](https://github.com/tecfu/.vim/issues/new) or to send me
+improvements through the [pull requests
+page](https://github.com/tecfu/.vim/pulls).
+
 
 ## Quick start
 
@@ -17,39 +21,26 @@ Configuration files for the Vim editor.
 
 ```
 git clone git://github.com/tecfu/dotfiles ~/dotfiles
-ln -s ~/dotfiles/.vim ~/.vim
-ln -s ~/dotfiles/.vim/.vimrc ~/.vimrc
 ```
 
-### Install junegunn/vim-plug
-
-- Ubuntu/Mac
+### Run Install Script
 
 ```
-$ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+$ . ~/dotfiles/.vim/INSTALL.sh
 ```
 
-### Configure Vim-Airline for Linux terminal
+### Run Vim
 
-- Install Powerline Fonts
-```
-git clone http://www.github.com/tecfu/fonts
-cd fonts
-./install.sh
-````
-
-- Configure your terminal to use a powerline font
-	- i.e.: Ubuntu Mono derivative Powerline
-
-### Disable capturing of Ctrl-S, Ctrl-Q in terminal mode:
-
-- Add the following lines to your .bashrc
+- To install plugins on your first run:
 
 ```
-# Allows ctrl-s, ctrl-q in Vim
-stty -ixon > /dev/null 2>/dev/null
+vim -c "PlugInstall"
 ```
+
+## Optional
+
+### Configure your terminal to use a powerline font
+- i.e.: Ubuntu Mono derivative Powerline
 
 ### [Optional] Remap ESC to CAPS LOCK
 
@@ -62,9 +53,7 @@ keysym Caps_Lock = Escape
 add Lock = Caps_Lock
 ```
 
-### [Optional]
-
-Configure tern for vim to show argument hints if your machine can handle it.
+### [Configure tern for vim to show argument hints (if your machine can handle it)]
 ```
 g:tern_show_argument_hints="on_move"
 ```
@@ -77,15 +66,7 @@ Default is g:tern_show_argument_hints=0
 sudo -S apt-get install silversearcher-ag'
 ```
 
-### Run Vim
-
-- To install plugins, run:
-
-```
-:PlugInstall
-```
-
-### Adding your own plugins
+## Adding your own plugins
 
 - This .vimrc uses junegunn/vim-plug to manage plugin installation.  You can add
   new plugins by appending them to the file: .vimrc.plugins .
