@@ -10,6 +10,25 @@
 #
 ###
 
+### Check for npm
+if ! [ -x "$(which npm)" ]; then
+  echo "ERROR! You must install \"NPM (Nodejs Package Manager)\" prior to installing."
+  exit
+fi
+
+#### shougo-vimproc
+
+### Check for make
+if ! [ -x "$(which make)" ]; then
+  echo "ERROR! You must install \"make\" prior to installing."
+  exit
+fi
+
+### Check for gcc
+if ! [ -x "$(which gcc)" ]; then
+  echo "ERROR! You must install \"gcc\" prior to installing."
+  exit
+fi
 
 
 ### Configure Vim-Airline for Linux terminal
