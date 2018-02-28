@@ -1,4 +1,4 @@
-# .bashrc
+# .bashrc, .inputrc
 
 ## What this file does:
 
@@ -6,27 +6,10 @@
 - Puts terminal in vi mode
 - Adds some vim key mappings
 
-```
-# Golang configuration
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
-# Set vimode, Vim as editor
-set -o vi
-# Set default editor to VIM
-export VISUAL=/usr/bin/vim
-export EDITOR=/usr/bin/vim
-```
-
-
 ### Installation
 
 ```
-mv .bashrc .bashrc.saved
-ln -s ~/dotfiles/terminal/.bashrc ~/.bashrc
-mv .inputrc .inputrc.saved
-ln -s ~/dotfiles/terminal/.inputrc ~/.inputrc
-ln -s ~/dotfiles/terminal/.xprofile ~/.xprofile
+$ . ~/dotfiles/terminal/INSTALL.sh
 ```
 
 ### Checking your terminal for 256 colors:
