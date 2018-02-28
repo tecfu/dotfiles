@@ -14,9 +14,9 @@
 
 # declare array
 SYMLINKS=()
-SYMLINKS+=("~/dotfiles/terminal/.bashrc ~/.bashrc")
-SYMLINKS+=("~/dotfiles/terminal/.inputrc ~/.inputrc")
-SYMLINKS+=("~/dotfiles/terminal/.xprofile ~/.xprofile")
+SYMLINKS+=("$HOME/dotfiles/terminal/.bashrc $HOME/.bashrc")
+SYMLINKS+=("$HOME/dotfiles/terminal/.inputrc $HOME/.inputrc")
+SYMLINKS+=("$HOME/dotfiles/terminal/.xprofile $HOME/.xprofile")
 #printf '%s\n' "${SYMLINKS[@]}"
 
 for i in "${SYMLINKS[@]}"; do
@@ -24,10 +24,9 @@ for i in "${SYMLINKS[@]}"; do
   # split each command at the space to get config path
   IFS=' ' read -ra OUT <<< "$i"
   # ${OUT[1]} is path config file should be at
-  
   #no config, create symlink to one
-  if [ ! -f "${OUT[1]}" ] && [ ! -d "${OUT[1]}" ]; then
-    echo "${OUT[1]} not found, creating configs..."
+  if [ ! -f "${OUT[1]}" ] && [ ! -L "${OUT[1]}" ]; then
+    echo "Creating $i"
     ln -s $i 
   
   #config exsts; save if doesn't point to correct target
