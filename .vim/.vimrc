@@ -517,13 +517,13 @@ map <S-j> :tabprev<CR>
 map <C-t> :tabnew<CR>
 
 " Undo close tab using Shougo/Unite to get MRU file
-function! UndoCloseTab()
-  :tabnew  
-  :tabm -1  
-  :Unite file_mru
-  exe "normal! 2ggf/gf"
-endfunction
-nmap <C-u> :call UndoCloseTab()<CR><ESC>
+"function! UndoCloseTab()
+"  :tabnew  
+"  :tabm -1  
+"  :Unite file_mru
+"  exe "normal! 2ggf/gf"
+"endfunction
+"nmap <C-u> :call UndoCloseTab()<CR><ESC>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
