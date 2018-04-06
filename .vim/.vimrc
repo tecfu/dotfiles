@@ -236,8 +236,8 @@ au Filetype vim,vimrc,md
   \ setlocal foldlevel=0 |
   \ setlocal foldlevelstart=0
 
-au Filetype js,ts
-  \ setlocal foldmethod=syntax
+"au Filetype js,ts
+"  \ setlocal foldmethod=syntax
 
 au Filetype php
   \ setlocal foldmethod=syntax |
