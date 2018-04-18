@@ -4,7 +4,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "requires grep
 function! DetectPlugin(name)
-  
+  "
   "check if plugin found in scripnames
   redir @z 
   silent scriptnames
@@ -731,7 +731,7 @@ Plug 'tpope/vim-fugitive'
 set diffopt+=vertical
 
 "Diff the current file against n revision (instead of n commit)
-function! Diffrev(...)
+function! Gdiffrev(...)
   
   let a:target = @%
  
