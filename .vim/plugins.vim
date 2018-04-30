@@ -730,8 +730,16 @@ Plug 'tpope/vim-fugitive'
 "Open split windows vertically
 set diffopt+=vertical
 
+"Delete all Git conflict markers
+function! RemoveConflictMarkers() range
+  echom a:firstline.'-'.a:lastline
+  execute a:firstline.','.a:lastline . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
+endfunction
+"-range=% default is whole file
+command! -range=% GremoveConflictMarkers <line1>,<line2>call RemoveConflictMarkers()
+
 "Diff the current file against n revision (instead of n commit)
-function! Gdiffrev(...)
+function! DiffPrev(...)
   
   let a:target = @%
  
@@ -745,9 +753,10 @@ function! Gdiffrev(...)
   endif
 
   let a:hash = system('git log -1 --skip='.a:revnum.' --pretty=format:"%h" ' . a:target)
-  execute 'Gdiff' . a:hash
+  execute 'Gdiff ' . a:hash
   "echom a:hash
-endfunc
+endfunction
+command! -nargs=1 GdiffPrev call DiffPrev(<f-args>)
 
 Plug 'tpope/vim-obsession'
 "{{{
