@@ -91,7 +91,7 @@ alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -101,9 +101,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-
-export NVM_DIR="/home/base/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Allows ctrl-s, ctrl-q in Vim
 stty -ixon > /dev/null 2>/dev/null
@@ -136,7 +133,7 @@ export PATH="/home/$USER/bin:$PATH"
 
 # Set vimode, Vim as editor
 set -o vi
-
+#
 # Set default editor to VIM
 export VISUAL=/usr/bin/vim
 export EDITOR=/usr/bin/vim
@@ -152,17 +149,17 @@ bind -m vi-move '"\C-e":end-of-line'
 
 # Sets screen brightness
 # run with su -c 'dim'
-dim(){
-  #make sure user is root
-  if [[ $EUID -ne 0 ]]; then
-     echo "Command must be run as root" 
-     return
-  fi
-  echo "setb (Set brightness) accepts a number 1-255"
-  echo $1 > /sys/class/backlight/radeon_bl0/brightness
-  echo "You entered '$1'"
-}
-export dim
+#dim(){
+#  #make sure user is root
+#  if [[ $EUID -ne 0 ]]; then
+#     echo "Command must be run as root" 
+#     return
+#  fi
+#  echo "setb (Set brightness) accepts a number 1-255"
+#  echo $1 > /sys/class/backlight/radeon_bl0/brightness
+#  echo "You entered '$1'"
+#}
+#export dim
 
 # Converts all .mp4 files in current working directory to mp3
 # Useful when desiring to play downloaded YouTube videos in cmus
@@ -190,3 +187,4 @@ shopt -s globstar
 ## See (2): https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html
 #touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
 #touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+
