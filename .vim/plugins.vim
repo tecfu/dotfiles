@@ -222,12 +222,11 @@ Plug 'int3/vim-extradite'
 Plug 'itchyny/calendar.vim'
 
 
-Plug 'joonty/vdebug'
+Plug 'vim-debug/vdebug'
 
 let g:vdebug_options = {
 \   'port':9000, 
 \   'path_maps': {
-\       "/home/printedm/public_html": "/var/www/pm/pm-site",
 \   },
 \}
 
@@ -732,7 +731,6 @@ set diffopt+=vertical
 
 "Delete all Git conflict markers
 function! RemoveConflictMarkers() range
-  echom a:firstline.'-'.a:lastline
   execute a:firstline.','.a:lastline . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
 endfunction
 "-range=% default is whole file
