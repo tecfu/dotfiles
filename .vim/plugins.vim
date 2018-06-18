@@ -222,7 +222,7 @@ Plug 'int3/vim-extradite'
 Plug 'itchyny/calendar.vim'
 
 
-Plug 'vim-debug/vdebug'
+Plug 'vim-vdebug/vdebug'
 
 let g:vdebug_options = {
 \   'port':9000, 
@@ -332,6 +332,9 @@ Plug 'OrangeT/vim-csharp'
 
 
 Plug 'Peeja/vim-cdo'
+
+
+Plug 'posva/vim-vue'
 
 
 Plug 'scrooloose/vim-slumlord'
