@@ -133,6 +133,7 @@ shopt -s globstar
 
 # Get remote ip address
 alias ipv4lookup='dig +short myip.opendns.com @resolver1.opendns.com'
+alias ipv6lookup='ip -6 addr'
 
 ## REACT/ANDROID SETUP
 #export ANDROID_HOME=/media/shared-1/android-studio/bin
