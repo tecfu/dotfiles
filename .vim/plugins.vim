@@ -5,7 +5,7 @@
 "requires grep
 function! DetectPlugin(name)
   "
-  "check if plugin found in scripnames
+  "check if plugin found in scriptnames
   redir @z 
   silent scriptnames
   redir END 
@@ -23,8 +23,10 @@ function! DetectPlugin(name)
   endtry
 
   if (l:scriptnameFound || l:helpFound)
+    echom 'Plugin '.a:name.' detected'
     return 1
   else
+    echoerr 'Plugin '.a:name.' not detected'
     return 0
   endif
   
@@ -108,46 +110,44 @@ let g:airline_powerline_fonts=1
 "airline themed tabs
 "let g:airline#extensions#tabline#enabled = 1
 
-if has("gui_running")
-  
-endif
+function! OnLoadAirline(...)
+  if DetectPlugin('airline')
 
-function! AirlineOverride(...)
-  let g:airline_section_a = airline#section#create(['mode'])
-  let g:airline_section_b = airline#section#create_left(['branch'])
-  let g:airline_section_c = airline#section#create_left(['%f'])
-  let g:airline_section_y = airline#section#create([])
+    let g:airline_section_a = airline#section#create(['mode'])
+    let g:airline_section_b = airline#section#create_left(['branch'])
+    let g:airline_section_c = airline#section#create_left(['%f'])
+    let g:airline_section_y = airline#section#create([])
+
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+
+    " unicode symbols
+    let g:airline_left_sep = '»'
+    let g:airline_right_sep = '«'
+    let g:airline_symbols.linenr = '␊'
+    let g:airline_symbols.linenr = '␤'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.paste = 'Þ'
+    let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.whitespace = 'Ξ'
+
+    " airline symbols
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = ''
+
+  endif
 endfunction
 
-"only run AirlineOverride if vim-airline installed
-if DetectPlugin('airline')
-  autocmd VimEnter * call AirlineOverride()
-endif
+autocmd VimEnter * call OnLoadAirline()
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_right_sep = '«'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
 " }}}
 
 
@@ -340,43 +340,68 @@ Plug 'posva/vim-vue'
 Plug 'scrooloose/vim-slumlord'
 
 
-"REPLACED temporarily by w0rp/ale
+function! SyntasticPostInstall(info)
+  "install jshint
+  "!npm install jshint -g
+
+  "check jshint is installed
+  if(system('command -v jshint') == '')
+    "remove plugin
+    !rm -rf ~/dotfiles/.vim/bundle/syntastic
+    throw 'Warning: jshint not installed. Plugin removed.'
+  else
+    echom 'jshint found'
+  endif
+
+  echom 'End postinstall'
+endfunction
+
 Plug 'scrooloose/syntastic', {
-    \ 'do' :  'npm install jshint -g'}
+    \ 'do' :  function('SyntasticPostInstall')}
 
 "{{{
-if DetectPlugin('syntastic')
+
+
+function! OnLoadSyntastic()
   
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
+  if DetectPlugin('syntastic')
+    
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
 
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_reuse_loc_lists = 1
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_reuse_loc_lists = 1
 
-  " javascript  
-  "  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_checkers = ['jshint']
+    " javascript  
+    "  let g:syntastic_javascript_checkers = ['eslint']
+    let g:syntastic_javascript_checkers = ['jshint']
+    
+  " java
+    "let g:syntastic_java_checker = 'javac'
+    
+  " manage custom filetypes
+    augroup filetype
+      autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
+      au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+    augroup END
 
-" java
-  "let g:syntastic_java_checker = 'javac'
-  
-" manage custom filetypes
-  augroup filetype
-    autocmd! BufRead,BufNewFile  *.gradle  set filetype=gradle
-    au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-  augroup END
+    let g:syntastic_filetype_map = { "gradle": "java" }
 
-  let g:syntastic_filetype_map = { "gradle": "java" }
+    set sessionoptions-=blank
 
-  set sessionoptions-=blank
-endif
+    " Set location list height to n lines
+    let g:syntastic_loc_list_height=5
 
-" Set location list height to n lines
-let g:syntastic_loc_list_height=5
+  endif
+endfunction
+
+"Wait until VimEnter to see if plugin loaded
+autocmd VimEnter * call OnLoadSyntastic()
+
 "}}}
 
 
