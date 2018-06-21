@@ -16,9 +16,10 @@
 SYMLINKS=()
 SYMLINKS+=("$HOME/dotfiles/terminal/.bashrc $HOME/.bashrc")
 SYMLINKS+=("$HOME/dotfiles/terminal/.inputrc $HOME/.inputrc")
+SYMLINKS+=("$HOME/dotfiles/terminal/.profile $HOME/.profile")
 SYMLINKS+=("$HOME/dotfiles/terminal/.xprofile $HOME/.xprofile")
 #printf '%s\n' "${SYMLINKS[@]}"
-
+#
 for i in "${SYMLINKS[@]}"; do
   #echo $i
   # split each command at the space to get config path
