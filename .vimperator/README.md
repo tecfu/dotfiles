@@ -1,13 +1,8 @@
 # vimperatorrc
 Configuration files for Firefox's Vimperator plugin.
 
-### Make sure to create a symbolic link to .vimperatorrc in your
-home directory.
-
-- Linux
+### Install:
 
 ```
-ln -s ~/.vimperator/.vimperator.vim ~/.vimperatorrc
+$ ./INSTALL.sh
 ```
-
-
