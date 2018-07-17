@@ -13,7 +13,8 @@
 
 # declare array
 SYMLINKS=()
-SYMLINKS+=("$HOME/dotfiles/.vimperator/.vimperator.vim $HOME/.vimperatorrc")
+SYMLINKS+=("$HOME/dotfiles/.vimperator $HOME/.vimperator")
+SYMLINKS+=("$HOME/dotfiles/.vimperator/vimperator.vim $HOME/.vimperatorrc")
 
 #printf '%s\n' "${SYMLINKS[@]}"
 #
