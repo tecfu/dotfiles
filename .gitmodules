@@ -7,3 +7,6 @@
 [submodule "x11-config"]
 	path = x11-config
 	url = https://github.com/tecfu/x11-config
+[submodule "terminal-config"]
+	path = terminal-config
+	url = https://github.com/tecfu/terminal-config
