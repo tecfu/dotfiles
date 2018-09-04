@@ -1,3 +1,9 @@
 [submodule ".vim"]
 	path = .vim
 	url = https://github.com/tecfu/.vim
+[submodule "vimperator"]
+	path = vimperator
+	url = https://github.com/tecfu/vimperator
+[submodule "x11-config"]
+	path = x11-config
+	url = https://github.com/tecfu/x11-config
