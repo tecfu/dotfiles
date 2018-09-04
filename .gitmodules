@@ -10,3 +10,6 @@
 [submodule "terminal-config"]
 	path = terminal-config
 	url = https://github.com/tecfu/terminal-config
+[submodule ".vimperator"]
+	path = .vimperator
+	url = https://github.com/tecfu/.vimperator
