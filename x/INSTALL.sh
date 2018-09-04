@@ -11,6 +11,26 @@
 #
 ###
 
+### Check for sxhkd
+if ! [ -x "$(which sxhkd)" ]; then
+  echo "
+  ERROR! This package depends on \"sxhkd\" (Simple X Hotkey Daemon). 
+  To install it on Ubuntu use: 
+
+  apt install sxhkd"
+  exit
+fi
+
+### Check for xdotool
+if ! [ -x "$(which xdotool)" ]; then
+  echo "
+  ERROR! This package depends on \"xdotool\". 
+  To install it on Ubuntu use:
+
+  apt install xdotool"
+  exit
+fi
+
 # declare array
 SYMLINKS=()
 SYMLINKS+=("$HOME/dotfiles/x/.Xmodmap $HOME/.Xmodmap")
