@@ -9,6 +9,12 @@ git clone --recurse-submodules git://github.com/tecfu/dotfiles ~/dotfiles
 . ~/dotfiles/INSTALL.sh
 ```
 
+## Updating
+
+```
+$ git submodule update --recursive --remote
+```
+
 ## Contents: 
 
 - [Terminal Emulator Config](terminal/README.md)  
