@@ -2,6 +2,19 @@
 
 I have this configuration installed on Linux running [XFCE](https://en.wikipedia.org/wiki/Xfce) on top of the the [X Window System](https://en.wikipedia.org/wiki/X_Window_System).
 
+## Install
+
+```
+git clone --recurse-submodules git://github.com/tecfu/dotfiles ~/dotfiles
+. ~/dotfiles/INSTALL.sh
+```
+
+## Updating
+
+```
+$ git submodule update --recursive --remote
+```
+
 ## Contents: 
 
 - [Terminal Emulator Config](terminal/README.md)  
