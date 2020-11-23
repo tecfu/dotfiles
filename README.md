@@ -17,13 +17,13 @@ $ git submodule update --recursive --remote
 
 ## Contents: 
 
-- [Terminal Emulator Config](terminal/README.md)  
+- [Terminal Emulator Config](https://github.com/tecfu/.terminal/tree/server)  
 
-- [Vim Config](.vim/README.md)  
+- [Vim Config](https://github.com/tecfu/.vim/tree/server)  
 
-- [Vimperator Config](.vimperator/README.md)  
+- [Vimperator Config](https://github.com/tecfu/.vimperator/tree/master)  
 
-- [X Window System (.Xmodmap, et.al) Config](x/README.md)
+- [X Window System (.Xmodmap, et.al) Config](https://github.com/tecfu/x11-config/tree/master)
 
 ## What each does:
 
@@ -51,7 +51,7 @@ This is where I have stored files that allow me to remap hotkeys for Google Chro
 
 **The MIT License (MIT)**
 
-**Copyright (c) 2010 - 2016 Tecfu**
+**Copyright (c) 2010 - 2020 Tecfu**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
