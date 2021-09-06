@@ -1,6 +1,6 @@
 # create config directories if they don't exists
 SYMLINKS=()
-SYMLINKS+=("$HOME/dotfiles/terminal-config $HOME/.terminal")
+SYMLINKS+=("$HOME/dotfiles/.terminal $HOME/.terminal")
 
 for i in "${SYMLINKS[@]}"; do
   #echo $i
@@ -15,8 +15,7 @@ for i in "${SYMLINKS[@]}"; do
   fi
 done
 
-./terminal-config/INSTALL.sh
+./.terminal/INSTALL.sh
 ./x11-config/INSTALL.sh
 ./.vimperator/INSTALL.sh
 ./.vim/INSTALL.sh
-vim -c "PlugInstall"
