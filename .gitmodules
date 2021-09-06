@@ -10,3 +10,6 @@
 [submodule ".vimperator"]
 	path = .vimperator
 	url = https://github.com/tecfu/.vimperator
+[submodule ".terminal"]
+	path = .terminal
+	url = https://github.com/tecfu/.terminal
