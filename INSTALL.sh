@@ -15,7 +15,17 @@ for i in "${SYMLINKS[@]}"; do
   fi
 done
 
-./.terminal/INSTALL.sh
-./x11-config/INSTALL.sh
-./.vimperator/INSTALL.sh
-./.vim/INSTALL.sh
+### Check for node
+if ! [ -x "$(which node)" ]; then
+  echo "WARNING! You must install \"nodejs\" prior to installing due to coc-vim."
+  echo "Attempting to install nodejs via nvm..."
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+fi
+
+cd $(dirname $0); __DIR__=$(pwd)
+
+$__DIR__/.terminal/INSTALL.sh
+$__DIR__/x11-config/INSTALL.sh
+$__DIR__/.vim/INSTALL.sh
