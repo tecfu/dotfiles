@@ -1,5 +1,7 @@
 # create config directories if they don't exists
 SYMLINKS=()
+SYMLINKS+=("$HOME/dotfiles/.editorconfig $HOME/.editorconfig")
+SYMLINKS+=("$HOME/dotfiles/.ideavimrc $HOME/.ideavimrc")
 SYMLINKS+=("$HOME/dotfiles/.terminal $HOME/.terminal")
 
 for i in "${SYMLINKS[@]}"; do
