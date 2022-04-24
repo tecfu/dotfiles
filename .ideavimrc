@@ -1,3 +1,10 @@
+" Set default register to clipboard
+" https://stackoverflow.com/a/27928635/3751385
+" set clipboard+=unnamedplus
+
+" Remap paste from clipboard
+nnoremap <leader>p "+p
+
 " Use ctrl-c as an ide shortcut in normal and visual modes
 sethandler <C-J> a:vim
 sethandler <C-K> a:vim
