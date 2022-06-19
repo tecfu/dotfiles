@@ -12,7 +12,7 @@ This repo includes 2 branches for setup/configuration for Linux. Be sure to chec
 ## Installation
 
 ```
-git clone --recurse-submodules git://github.com/tecfu/dotfiles ~/dotfiles
+git clone --recurse-submodules https://github.com/tecfu/dotfiles ~/dotfiles
 . ~/dotfiles/INSTALL.sh
 ```
 
