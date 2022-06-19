@@ -4,12 +4,6 @@
 [submodule "terminal-config"]
 	path = terminal-config
 	url = https://github.com/tecfu/terminal-config
-[submodule ".vimperator"]
-	path = .vimperator
-	url = https://github.com/tecfu/.vimperator
-[submodule ".terminal"]
-	path = .terminal
-	url = https://github.com/tecfu/.terminal
 [submodule ".vim"]
 	path = .vim
 	url = https://github.com/tecfu/.vim
