@@ -7,3 +7,6 @@
 [submodule ".vim"]
 	path = .vim
 	url = https://github.com/tecfu/.vim
+[submodule ".terminal"]
+	path = .terminal
+	url = https://github.com/tecfu/.terminal
