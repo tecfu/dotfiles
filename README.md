@@ -42,7 +42,7 @@ The vim setup here should work on a Mac and even on a Windows box, but I haven't
 
 ### Vimperator
 
-Vimperator is a dead project and I've begrudgingly moved to Vimium, but I'll keep the config here for now anyway as an hommage. Vimperator was incredible.
+Vimperator is a dead project and I've begrudgingly moved to Vimium, but I'll keep the config here for now anyway as a hommage. Vimperator was incredible.
 
 
 ### Terminal Config
@@ -56,14 +56,14 @@ Sets bash to run in vi-mode. Here are a couple articles on that:
 
 ### X-11 Config
 
-This is where I have stored files that allow me to remap hotkeys for Google Chrome which otherwise can't be remapped. Think \<C-j\>, \<C-k\>.
+This is where I have stored files that allow me to remap hotkeys for Google Chrome / Chromium which otherwise can't be remapped. Think \<C-j\> (), \<C-k\>.
 
 
 ## License
 
 **The MIT License (MIT)**
 
-**Copyright (c) 2010 - 2021 Tecfu**
+**Copyright (c) 2010 - 2022 Tecfu**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
