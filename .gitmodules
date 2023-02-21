@@ -10,3 +10,6 @@
 [submodule ".terminal"]
 	path = .terminal
 	url = https://github.com/tecfu/.terminal
+[submodule ".xfce"]
+	path = .xfce
+	url = git@github.com:tecfu/.xfce.git
