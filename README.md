@@ -35,6 +35,10 @@ $ git submodule update --recursive --remote
 ## What each git submodule in this repo does
 
 
+### Surfingkeys
+
+Configuration and installation instructions for [Surfingkeys](https://github.com/tecfu/Surfingkeys/tree/hack_hint_sizes)
+
 ### Vim
 
 The vim setup here should work on a Mac and even on a Windows box, but I haven't used it in those environments so there may be some tweaking needed. 
@@ -44,6 +48,7 @@ The vim setup here should work on a Mac and even on a Windows box, but I haven't
 
 Vimperator is a dead project and I've begrudgingly moved to Vimium, but I'll keep the config here for now anyway as a hommage. Vimperator was incredible.
 
+> Note: Using [Surfingkeys](https://github.com/tecfu/Surfingkeys/tree/hack_hint_sizes) as a replacement
 
 ### Terminal Config
 

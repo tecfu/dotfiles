@@ -13,3 +13,6 @@
 [submodule ".xfce"]
 	path = .xfce
 	url = git@github.com:tecfu/.xfce.git
+[submodule ".surfingkeys"]
+	path = .surfingkeys
+	url = git@github.com:tecfu/.surfingkeys.git
