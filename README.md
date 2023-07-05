@@ -1,16 +1,5 @@
 # Dotfiles
 
-## Preamble
-
-This repo includes 2 branches for setup/configuration for Linux. Be sure to checkout the branch appropriate for your use case.
-
-- _linux_x11_
-
-  > In my case, running Xubuntu on a laptop: [XFCE](https://en.wikipedia.org/wiki/Xfce) on top of the the [X Window System](https://en.wikipedia.org/wiki/X_Window_System).
-
-- _linux_server_
-  > In my case, running Ubuntu Server
-
 ## Installation
 
 ```sh
