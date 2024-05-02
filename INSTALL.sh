@@ -52,4 +52,4 @@ done
 
 echo -e "\n"
 CLOSING_MESSAGE="DONE: $0"
-echo -e "\033[0;32m$CLOSING_MESSAGE\033[0m"
+echo -e "$CLOSING_MESSAGE"
