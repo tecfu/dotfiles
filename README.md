@@ -10,7 +10,7 @@ git clone --recurse-submodules https://github.com/tecfu/dotfiles ~/dotfiles
 ## Updating
 
 ```sh
-$ git submodule update --recursive --remote
+git submodule update --recursive --remote
 ```
 
 ## Contents
