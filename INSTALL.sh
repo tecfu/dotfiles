@@ -1,3 +1,10 @@
+#!/bin/bash
+
+PRODUCT="DOTFILES"
+
+OPENING_MESSAGE="STARTING $PRODUCT CONFIGURATION INSTALL"
+echo -e "\033[0;32m$OPENING_MESSAGE\033[0m"
+
 # create symlinks for config directories if they don't exists
 SYMLINKS=()
 SYMLINKS+=("$HOME/dotfiles/.editorconfig $HOME/.editorconfig")
@@ -18,8 +25,13 @@ for i in "${SYMLINKS[@]}"; do
   fi
 done
 
+./x11-config/INSTALL.sh
+
+# switch to HOME directory
 cd $(dirname $0); __DIR__=$(pwd)
 
 $__DIR__/.terminal/INSTALL.sh
-$__DIR__/x11-config/INSTALL.sh
 $__DIR__/.vim/INSTALL.sh
+
+CLOSING_MESSAGE="ENDING $PRODUCT CONFIGURATION INSTALL"
+echo -e "\033[0;32m$CLOSING_MESSAGE\033[0m"
