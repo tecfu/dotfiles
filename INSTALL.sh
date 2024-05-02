@@ -37,10 +37,11 @@ for SCRIPT in "${INSTALL_SCRIPTS[@]}"; do
   echo "START SUBSCRIPT: $SCRIPT"
 
   # Source each script individually
-  source "$SCRIPT"
+  $SCRIPT
+  return_code=$?
 
   # Check if the last command in the sourced script was successful
-  if [ $? -ne 0 ]; then
+  if [ $return_code -ne 0 ]; then
     ERROR_MESSAGE="ERROR: $SCRIPT"
     echo -e "\033[31m$ERROR_MESSAGE\033[0m"
     exit 1
