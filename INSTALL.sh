@@ -1,9 +1,7 @@
 #!/bin/bash
 
-PRODUCT="DOTFILES"
-
-OPENING_MESSAGE="STARTING $PRODUCT CONFIGURATION INSTALL"
-echo -e "\033[0;32m$OPENING_MESSAGE\033[0m"
+OPENING_MESSAGE="START: $0"
+echo $OPENING_MESSAGE
 
 # create symlinks for config directories if they don't exists
 SYMLINKS=()
@@ -25,13 +23,33 @@ for i in "${SYMLINKS[@]}"; do
   fi
 done
 
-./x11-config/INSTALL.sh
-
 # switch to HOME directory
 cd $(dirname $0); __DIR__=$(pwd)
 
-$__DIR__/.terminal/INSTALL.sh
-$__DIR__/.vim/INSTALL.sh
+# Exit if any child script fails
+INSTALL_SCRIPTS=()
+INSTALL_SCRIPTS+=("$__DIR__/x11-config/INSTALL.sh")
+INSTALL_SCRIPTS+=("$__DIR__/.terminal/INSTALL.sh")
+INSTALL_SCRIPTS+=("$__DIR__/.vim/INSTALL.sh")
 
-CLOSING_MESSAGE="ENDING $PRODUCT CONFIGURATION INSTALL"
+for SCRIPT in "${INSTALL_SCRIPTS[@]}"; do
+  echo -e "\n"
+  echo "START SUBSCRIPT: $SCRIPT"
+
+  # Source each script individually
+  source "$SCRIPT"
+
+  # Check if the last command in the sourced script was successful
+  if [ $? -ne 0 ]; then
+    ERROR_MESSAGE="ERROR: $SCRIPT"
+    echo -e "\033[31m$ERROR_MESSAGE\033[0m"
+    exit 1
+  fi
+
+  SUCCESS_MESSAGE="SUCCESS: $SCRIPT"
+  echo -e "\033[0;32m$SUCCESS_MESSAGE\033[0m"
+done
+
+echo -e "\n"
+CLOSING_MESSAGE="DONE: $0"
 echo -e "\033[0;32m$CLOSING_MESSAGE\033[0m"
