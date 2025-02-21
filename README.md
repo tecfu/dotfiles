@@ -24,6 +24,8 @@ git pull --recurse-submodules
 
 - [X Window System (.Xmodmap, et.al) Config](https://github.com/tecfu/x11-config/tree/master)
 
+- [XFCE (.xfce)](https://github.com/tecfu/.xfce)
+
 ## What each git submodule in this repo does
 
 ### Surfingkeys
@@ -51,6 +53,12 @@ Sets bash to run in vi-mode. Here are a couple articles on that:
 ### X-11 Config
 
 This is where I have stored files that allow me to remap hotkeys for Google Chrome / Chromium which otherwise can't be remapped. Think \<C-j\> (), \<C-k\>.
+
+### XFCE
+
+- Keyboad shortcuts (move Window to workspace) 
+- Themes
+- Panel settings
 
 ## License
 
