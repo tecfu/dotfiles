@@ -30,6 +30,10 @@ git pull --recurse-submodules
 
 ### Surfingkeys
 
+**NOTE**
+
+Surfingkeys has been abandoned in favor of Vimium due to tab switching performance and suboptimal builtin PDF reader.
+
 Configuration and installation instructions for [Surfingkeys](https://github.com/tecfu/Surfingkeys/tree/hack_hint_sizes)
 
 ### Vim
@@ -64,7 +68,7 @@ This is where I have stored files that allow me to remap hotkeys for Google Chro
 
 **The MIT License (MIT)**
 
-**Copyright (c) 2010 - 2022 Tecfu**
+**Copyright (c) 2010 - 2025 Tecfu**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
