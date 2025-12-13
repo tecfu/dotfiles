@@ -10,7 +10,7 @@ git clone --recurse-submodules https://github.com/tecfu/dotfiles ~/dotfiles
 ## Updating
 
 ```sh
-git update --recursive --remote
+git submodule update --recursive --remote
 git pull --recurse-submodules
 ```
 
@@ -60,7 +60,7 @@ This is where I have stored files that allow me to remap hotkeys for Google Chro
 
 ### XFCE
 
-- Keyboad shortcuts (move Window to workspace) 
+- Keyboad shortcuts (move Window to workspace)
 - Themes
 - Panel settings
 
