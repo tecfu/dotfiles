@@ -37,3 +37,17 @@ detect_de() {
     *)      echo "other" ;;
   esac
 }
+
+# detect_session -> "x11" | "wayland" | "unknown"
+# Uses the live session type; falls back to display-server env vars.
+detect_session() {
+  if [ -n "$XDG_SESSION_TYPE" ]; then
+    echo "$XDG_SESSION_TYPE"
+  elif [ -n "$WAYLAND_DISPLAY" ]; then
+    echo "wayland"
+  elif [ -n "$DISPLAY" ]; then
+    echo "x11"
+  else
+    echo "unknown"
+  fi
+}
