@@ -32,6 +32,11 @@ INSTALL_SCRIPTS+=("$__DIR__/x11-config/INSTALL.sh")
 INSTALL_SCRIPTS+=("$__DIR__/.terminal/INSTALL.sh")
 INSTALL_SCRIPTS+=("$__DIR__/.vim/INSTALL.sh")
 
+# opt-in: apply keyboard shortcuts (XFCE + KDE)
+if [[ " $* " == *" --keyboard-shortcuts "* ]]; then
+  INSTALL_SCRIPTS+=("$__DIR__/keyboard-shortcuts/install.sh")
+fi
+
 for SCRIPT in "${INSTALL_SCRIPTS[@]}"; do
   echo -e "\n"
   echo "START SUBSCRIPT: $SCRIPT"
