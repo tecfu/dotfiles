@@ -64,6 +64,17 @@ This is where I have stored files that allow me to remap hotkeys for Google Chro
 - Themes
 - Panel settings
 
+## CAPS LOCK -> ESC on machines without a BIOS keymap (e.g. Radxa ROCK 5B)
+
+On the primary machine this repo was written for, ESC-on-CAPS-LOCK is mapped in the BIOS.
+ARM SBCs like the ROCK 5B have no BIOS setup, so apply it at the X11 level instead (survives reboots, covers all X apps):
+
+```sh
+sudo sed -i 's/^XKBOPTIONS=.*/XKBOPTIONS="caps:escape"/' /etc/default/keyboard
+```
+
+Log out/in to apply. For virtual consoles (outside X), use `.terminal/custom.kmap` with `loadkeys`.
+
 ## License
 
 **The MIT License (MIT)**
