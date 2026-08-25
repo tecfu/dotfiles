@@ -26,6 +26,20 @@ done
 # switch to HOME directory
 cd $(dirname $0); __DIR__=$(pwd)
 
+. "$__DIR__/lib/common.sh"
+
+# --ignore-missing-deps: skip configs whose dependencies are missing instead
+# of aborting. Exported so sub-installers inherit it.
+IGNORE_MISSING_DEPS=0
+POSITIONAL=()
+for ARG in "$@"; do
+  case "$ARG" in
+    --ignore-missing-deps) IGNORE_MISSING_DEPS=1 ;;
+    *) POSITIONAL+=("$ARG") ;;
+  esac
+done
+export IGNORE_MISSING_DEPS
+
 # Exit if any child script fails
 INSTALL_SCRIPTS=()
 INSTALL_SCRIPTS+=("$__DIR__/x11-config/INSTALL.sh")
@@ -33,7 +47,7 @@ INSTALL_SCRIPTS+=("$__DIR__/.terminal/INSTALL.sh")
 INSTALL_SCRIPTS+=("$__DIR__/.vim/INSTALL.sh")
 
 # opt-in: apply keyboard shortcuts (XFCE + KDE)
-if [[ " $* " == *" --keyboard-shortcuts "* ]]; then
+if [[ " ${POSITIONAL[*]} " == *" --keyboard-shortcuts "* ]]; then
   INSTALL_SCRIPTS+=("$__DIR__/keyboard-shortcuts/install.sh")
 fi
 

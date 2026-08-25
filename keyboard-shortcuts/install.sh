@@ -6,12 +6,16 @@ set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONF="$DIR/shortcuts.conf"
 
+. "$DIR/../lib/common.sh"
+
 if [ ! -f "$CONF" ]; then
   echo "ERROR: $CONF missing. Run $DIR/export.sh on your XFCE machine first."
   exit 1
 fi
 
-DE="${XDG_CURRENT_DESKTOP,,}"
+# XFCE and KDE Plasma supported; other desktops: nothing applicable to apply,
+# skip instead of failing.
+DE="$(detect_de)"
 
 # --- XFCE ----------------------------------------------------------------
 install_xfce() {
@@ -129,7 +133,13 @@ EOF2
 }
 
 case "$DE" in
-  *xfce*) install_xfce ;;
-  *kde*)  install_kde ;;
-  *) echo "ERROR: Unsupported desktop '$XDG_CURRENT_DESKTOP' (supported: XFCE, KDE)"; exit 1 ;;
+  xfce)
+    require_dep xfconf-query "sudo apt-get install xfconf" || exit 0
+    install_xfce ;;
+  kde)
+    # kglobalshortcutsrc editing only needs coreutils; kglobalaccel restart is best-effort
+    install_kde ;;
+  *)
+    install_skip "desktop '$XDG_CURRENT_DESKTOP' is not XFCE/KDE; no applicable shortcut backend"
+    exit 0 ;;
 esac
