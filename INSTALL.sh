@@ -1,5 +1,23 @@
 #!/bin/bash
 
+usage() {
+  cat <<EOF
+Usage: $0 [OPTIONS]
+
+Installs dotfiles: symlinks configs into \$HOME, then runs each component
+installer (x11-config, .terminal, .vim).
+
+Options:
+  --ignore-missing-deps  Skip configs whose dependencies are missing instead of aborting
+  --keyboard-shortcuts   Also apply keyboard shortcuts (XFCE + KDE only)
+  --help                 Show this help and exit
+EOF
+}
+
+case " $* " in
+  *" --help "*) usage; exit 0 ;;
+esac
+
 OPENING_MESSAGE="START: $0"
 echo $OPENING_MESSAGE
 
