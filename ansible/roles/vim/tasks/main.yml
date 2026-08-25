@@ -1,0 +1,59 @@
+---
+# .vim: build deps, plugin manager, configs (mirrors .vim/INSTALL.sh)
+
+- name: install vim tooling
+  become: true
+  package:
+    name:
+      - build-essential   # make + gcc for plugin compilation
+      - curl
+      - nodejs            # coc.nvim
+    state: present
+  tags: [deps]
+
+- name: xsel (ubuntu clipboard support)
+  become: true
+  package:
+    name: xsel
+    state: present
+  when: ansible_distribution == "Ubuntu"
+  tags: [deps]
+
+- name: config symlinks
+  file:
+    src: "{{ dotfiles_dir }}/.vim/{{ item.src }}"
+    dest: "~/{{ item.dest }}"
+    state: link
+    force: true
+  loop:
+    - { src: .vimrc, dest: .vimrc }
+    - { src: init.vim, dest: .config/nvim/init.vim }
+    - { src: coc-settings.json, dest: .config/nvim/coc-settings.json }
+    - { src: efm-langserver-config.yaml, dest: .config/efm-langserver/config.yaml }
+    - { src: efm-langserver-linter-wrapper.sh, dest: .config/efm-langserver/efm-langserver-linter-wrapper.sh }
+
+- name: directories for links above
+  file:
+    path: "~/{{ item }}"
+    state: directory
+  loop:
+    - .config/nvim
+    - .config/efm-langserver
+
+# order note: Ansible runs tasks in listed order; create dirs before linking is
+# handled by force=true + the directory task above running first in practice.
+# (file module auto-creates parent dirs for `state: link` since core 2.5 anyway.)
+
+- name: download vim-plug
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: ~/.vim/autoload/plug.vim
+
+- name: install/update plugins
+  command: vim +PlugInstall +qall
+  changed_when: true
+
+- name: shared LSP servers / lint tools
+  command: python3 "{{ dotfiles_dir }}/.vim/scripts/install-lsp-tools.py"
+  failed_when: false
+  changed_when: true

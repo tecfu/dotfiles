@@ -1,0 +1,60 @@
+---
+# Root-level links + .terminal configs + oh-my-bash
+# (mirrors INSTALL.sh + .terminal/INSTALL.sh)
+
+- name: core symlinks
+  file:
+    src: "{{ dotfiles_dir }}/{{ item.src }}"
+    dest: "~/{{ item.dest }}"
+    state: link
+    force: true
+  loop:
+    - { src: .editorconfig, dest: .editorconfig }
+    - { src: .ideavimrc, dest: .ideavimrc }
+    - { src: .terminal, dest: .terminal }
+    - { src: .vim, dest: .vim }
+
+- name: terminal symlinks
+  file:
+    src: "{{ dotfiles_dir }}/.terminal/{{ item }}"
+    dest: "~/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - .bashrc
+    - .profile
+    - .inputrc
+    - .bash_profile
+    - .zshrc
+    - .bash_completion
+    - .alacritty.toml
+
+# Xorg binary present?
+- name: check for Xorg
+  command: bash -c 'command -v Xorg'
+  register: xorg_bin
+  failed_when: false
+  changed_when: false
+
+- name: CAPS->ESC loadkeys group (only when X is absent, e.g. headless tty)
+  become: true
+  block:
+    - name: loadkeys group
+      group:
+        name: tecfu-terminal-loadkeys
+        state: present
+        system: true
+
+    - name: loadkeys binary permissions
+      file:
+        path: /usr/bin/loadkeys
+        group: tecfu-terminal-loadkeys
+        mode: "4750"
+      failed_when: false
+
+    - name: user in loadkeys group
+      user:
+        name: "{{ ansible_user_id }}"
+        groups: tecfu-terminal-loadkeys
+        append: true
+  when: xorg_bin.rc != 0

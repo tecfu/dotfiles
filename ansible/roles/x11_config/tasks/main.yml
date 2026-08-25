@@ -1,0 +1,73 @@
+---
+# x11-config: key remapping + hotkeys. Only meaningful on a live X11 session
+# (wayland boards like the radxa rock5b skip cleanly).
+
+- name: guard - X11 sessions only
+  debug:
+    msg: "SKIP x11-config (session type '{{ session_type }}' is not x11)"
+  when: session_type != 'x11'
+
+- name: udev permissions for xremap
+  become: true
+  when: session_type == 'x11'
+  block:
+    - name: input group
+      group:
+        name: input
+        state: present
+        system: true
+
+    - name: user in input group
+      user:
+        name: "{{ ansible_user_id }}"
+        groups: input
+        append: true
+
+    - name: uinput rule
+      copy:
+        content: 'KERNEL=="uinput", GROUP="input", MODE="0660"'
+        dest: /etc/udev/rules.d/99-input.rules
+      notify: reload udev
+
+- name: sxhkd + xdotool
+  become: true
+  package:
+    name: [sxhkd, xdotool]
+    state: present
+  when: session_type == 'x11'
+  tags: [deps]
+
+- name: cargo available for xremap?
+  command: bash -c 'command -v cargo'
+  register: cargo_bin
+  failed_when: false
+  changed_when: false
+  when: session_type == 'x11'
+
+- name: install xremap (x11 feature)
+  command:
+    cmd: cargo install xremap --features x11
+    creates: ~/.cargo/bin/xremap
+  when:
+    - session_type == 'x11'
+    - cargo_bin.rc == 0
+
+- name: fail on missing cargo unless ignoring
+  fail:
+    msg: 'xremap requires cargo. Install rustup, or rerun with -e ignore_missing_deps=true'
+  when:
+    - session_type == 'x11'
+    - cargo_bin.rc != 0
+    - not ignore_missing_deps | bool
+
+- name: x11 symlinks
+  file:
+    src: "{{ dotfiles_dir }}/x11-config/{{ item.src }}"
+    dest: "~/{{ item.dest }}"
+    state: link
+    force: true
+  loop:
+    - { src: .xprofile, dest: .xprofile }
+    - { src: xremap.yml, dest: .config/xremap/xremap.yml }
+    - { src: sxhkdrc, dest: .config/sxhkd/sxhkdrc }
+  when: session_type == 'x11'

@@ -1,0 +1,15 @@
+---
+# keyboard-shortcuts: delegates to the existing installer, which already
+# handles XFCE (xfconf-query) and KDE (kglobalshortcutsrc) and skips
+# unsupported desktops cleanly.
+
+- name: apply keyboard shortcuts
+  command: "{{ dotfiles_dir }}/keyboard-shortcuts/install.sh"
+  register: shortcuts
+  changed_when: "'OK' in shortcuts.stdout"
+  when: desktop is search('xfce') or desktop is search('kde')
+
+- name: report skipped desktops
+  debug:
+    msg: "SKIP keyboard-shortcuts (desktop '{{ desktop }}' is not XFCE/KDE)"
+  when: not (desktop is search('xfce') or desktop is search('kde'))

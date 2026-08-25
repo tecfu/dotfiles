@@ -1,0 +1,6 @@
+---
+- name: reload udev
+  become: true
+  command: udevadm control --reload-rules && udevadm trigger
+  args:
+    executable: /bin/bash

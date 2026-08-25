@@ -1,0 +1,36 @@
+---
+# tecfu dotfiles via Ansible.
+#
+#   ansible-playbook site.yml -K          # apply to this machine (sudo password)
+#   ansible-playbook site.yml -K --tags deps        # only install packages
+#   ansible-playbook site.yml -K -e ignore_missing_deps=true
+#                                         # skip configs whose deps can't be installed
+#
+# Guards replace the shell installers' logic:
+#   x11-config runs only when the live session is X11 (wayland boards skip cleanly)
+#   keyboard-shortcuts runs only on XFCE/KDE desktops
+# Package installs are tagged `deps`; --skip-tags deps mimics a fully-provisioned box.
+
+- name: tecfu dotfiles
+  hosts: all
+  gather_facts: true
+
+  vars:
+    dotfiles_dir: "{{ playbook_dir }}/.."
+    ignore_missing_deps: false
+
+  pre_tasks:
+    - name: detect session and desktop
+      set_fact:
+        session_type: "{{ ansible_env.XDG_SESSION_TYPE | default('unknown') }}"
+        desktop: "{{ (ansible_env.XDG_CURRENT_DESKTOP | default('')) | lower }}"
+
+    - name: show what was detected
+      debug:
+        msg: "desktop={{ desktop }} session={{ session_type }}"
+
+  roles:
+    - terminal
+    - vim
+    - x11_config
+    - keyboard_shortcuts
