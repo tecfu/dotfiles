@@ -182,7 +182,7 @@ EOF2
 
 case "$DE" in
   xfce)
-    require_dep xfconf-query "sudo apt-get install xfconf" || exit 0
+    require_dep xfconf-query xfconf || exit 0
     install_xfce ;;
   kde)
     # kglobalshortcutsrc editing only needs coreutils; kglobalaccel restart is best-effort

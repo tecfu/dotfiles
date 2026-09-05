@@ -14,14 +14,29 @@
 install_error() { echo -e "\033[31mERROR: $*\033[0m" >&2; }
 install_skip()  { echo -e "\033[33mSKIP: $*\033[0m"; }
 
-# require_dep CMD [INSTALL_HINT]
-# Returns 0 if CMD is available. If missing: prints error + hint, then exits,
+# apt_install PKG... — best-effort apt install (Ubuntu/Debian).
+# Returns 1 without installing if apt-get is unavailable (e.g. macOS).
+apt_install() {
+  if ! command -v apt-get >/dev/null 2>&1; then
+    install_skip "apt-get not found; install manually: apt install $*"
+    return 1
+  fi
+  echo "INFO: sudo apt-get install -y $*"
+  sudo apt-get install -y "$@"
+}
+
+# require_dep CMD [APT_PKG]
+# Returns 0 if CMD is available. If missing and APT_PKG is set, auto-installs
+# it via apt_install, then re-checks. Still missing: prints error, then exits,
 # or returns 1 when IGNORE_MISSING_DEPS=1 (caller must skip dependent configs).
 # Always call inside `if require_dep ...; then` so the ignore-path is honored.
 require_dep() {
+  if ! command -v "$1" >/dev/null 2>&1 && [ -n "$2" ]; then
+    apt_install "$2"
+  fi
   command -v "$1" >/dev/null 2>&1 && return 0
   install_error "dependency \"$1\" is missing.${2:+
-To install: $2}"
+To install: apt install $2}"
   if [ "${IGNORE_MISSING_DEPS:-0}" = "1" ]; then
     install_skip "--ignore-missing-deps set; skipping configs that need \"$1\"."
     return 1

@@ -48,6 +48,7 @@ cd $(dirname $0); __DIR__=$(pwd)
 
 # Volta (node version manager): install if missing, then ensure latest node
 if ! command -v volta >/dev/null 2>&1; then
+  apt_install curl
   echo "Installing volta (node version manager)..."
   curl -sSf https://get.volta.sh | bash
   export PATH="$HOME/.volta/bin:$PATH"
