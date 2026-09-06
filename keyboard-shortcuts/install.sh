@@ -196,6 +196,36 @@ declare -A GNOME_WM_MAP=(
   [move_window_prev_workspace]="org.gnome.desktop.wm.keybindings move-to-workspace-left"
 )
 
+# corner/quarter tiling: Mutter can't, but Ubuntu's Tiling Assistant
+# shell extension can — and it ships preinstalled on Ubuntu.
+declare -A GNOME_TA_MAP=(
+  [tile_up_left]=tile-topleft-quarter
+  [tile_up_right]=tile-topright-quarter
+  [tile_down_left]=tile-bottomleft-quarter
+  [tile_down_right]=tile-bottomright-quarter
+)
+
+# enable the Tiling Assistant shell extension (idempotent, once per run)
+enable_tiling_assistant() {
+  local UUID=tiling-assistant@ubuntu.com cur base
+  [ -n "${TA_ENABLED:-}" ] && return 0
+  TA_ENABLED=1
+  cur="$(gsettings get org.gnome.shell enabled-extensions)"
+  case "$cur" in *"'$UUID'"*) return 0 ;; esac   # already enabled
+  if command -v gnome-extensions >/dev/null 2>&1; then
+    gnome-extensions enable "$UUID" 2>/dev/null || true
+    cur="$(gsettings get org.gnome.shell enabled-extensions)"
+    case "$cur" in *"'$UUID'"*) echo "OK  enabled tiling-assistant extension"; return 0 ;; esac
+  fi
+  base="${cur#@as }"; base="${base%]}"
+  if [ "$base" = "[" ]; then
+    gsettings set org.gnome.shell enabled-extensions "['$UUID']"
+  else
+    gsettings set org.gnome.shell enabled-extensions "${base}, '$UUID']"
+  fi
+  echo "OK  enabled tiling-assistant extension"
+}
+
 # append accel to a gsettings keybinding array, preserving existing defaults
 gnome_bind() {
   local schema="$1" key="$2" accel="$3" cur base new
@@ -265,11 +295,18 @@ install_gnome() {
       gsettings set $SLOT:$path binding "$accel"
       echo "OK  [app] $accel -> $action"
 
+    elif [ -n "${GNOME_TA_MAP[$action]:-}" ]; then
+      if gsettings list-schemas | grep -q '^org.gnome.shell.extensions.tiling-assistant$'; then
+        enable_tiling_assistant
+        gnome_bind org.gnome.shell.extensions.tiling-assistant "${GNOME_TA_MAP[$action]}" "$accel"
+      else
+        echo "SKIP [window] $accel -> $action (Tiling Assistant extension not installed)"
+      fi
     elif [ -n "${GNOME_WM_MAP[$action]:-}" ]; then
       # shellcheck disable=SC2086
       gnome_bind ${GNOME_WM_MAP[$action]} "$accel"
     else
-      echo "SKIP [window] $accel -> $action (no GNOME equivalent; Mutter can't quarter-tile)"
+      echo "SKIP [window] $accel -> $action (no GNOME equivalent)"
     fi
   done < "$CONF"
 

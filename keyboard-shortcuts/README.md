@@ -46,8 +46,9 @@ Edit `shortcuts.conf` (or maintain a private copy) for machine-specific paths su
 * **App shortcuts** use media-keys custom keybindings (`gsettings`); no sxhkd.
   A built-in `terminal` binding claiming the same accelerator (Ubuntu binds
   Ctrl+Alt+T to gnome-terminal) is released so the custom binding works.
-* Corner/quarter tiling has no GNOME equivalent and is skipped (use the
-  Tiling Assistant extension if you want it).
+* Corner/quarter tiling maps to Ubuntu's **Tiling Assistant** extension
+  (`tiling-assistant@ubuntu.com`), which the installer enables automatically
+  when present. Note: enabling TA also activates its drag-to-edge tiling UX.
 * Bindings apply live via dconf; log out/in only if one didn't take.
 
 ## Dependencies
@@ -56,4 +57,4 @@ Edit `shortcuts.conf` (or maintain a private copy) for machine-specific paths su
 |------|--------------------------------------------|
 | XFCE | `xfconf-query` (package `xfconf`)          |
 | KDE  | `sxhkd` for app launches; coreutils for KWin edits |
-| GNOME | `gsettings` (always present in a GNOME session) |
+| GNOME | `gsettings` (always present); Tiling Assistant ext for corner tiling |
