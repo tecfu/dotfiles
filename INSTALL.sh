@@ -166,6 +166,9 @@ fi
 # root-owned files under /root — the user's config can never be polluted or
 # locked out. Root-side changes survive until the user's copy of the same
 # file changes (rsync merge, no --delete).
+# 'sudo pi update ...' is re-executed as the invoking user instead: pi's
+# package dir is $HOME/.pi/agent, so updating as root would only touch the
+# /root/.pi snapshot (or write root-owned files into the user's home/volta).
 # Invoke as 'sudo pi' — never 'sudo -E pi' (leaks HOME and env between users).
 # ---------------------------------------------------------------------------
 PI_PKG="@earendil-works/pi-coding-agent"
@@ -185,10 +188,27 @@ elif command -v volta >/dev/null 2>&1; then
 # files under /root — the user's config is never written by root, so it can
 # never be polluted or locked out. Root-side changes survive until the user's
 # copy of the same file changes.
+# 'sudo pi update ...' is re-executed as the invoking user instead: pi's
+# package dir is $HOME/.pi/agent, so updating as root would only touch the
+# /root/.pi snapshot (or write root-owned files into the user's home/volta).
 VH="__VOLTA_HOME__"
 PI_BUNDLE="$VH/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js"
 NODE="$(ls -1d "$VH"/tools/image/node/*/bin/node 2>/dev/null | sort -V | tail -n1)"
 [ -f "$PI_BUNDLE" ] && [ -x "$NODE" ] || { echo "pi not installed for '__USER__'; run dotfiles INSTALL.sh as __USER__" >&2; exit 127; }
+# Spawned tools (npm, git) must resolve: prepend the real node/npm bin dir
+# (not Volta shims — those resolve against the invoking user's VOLTA_HOME).
+export PATH="$(dirname "$NODE"):$PATH"
+# Git must never hang the TUI on an unattended prompt: BatchMode fails fast
+# instead of asking; accept-new trusts first-contact keys (TOFU) but still
+# rejects keys that CHANGED. Seed /root/.ssh/known_hosts for git: sources.
+export GIT_TERMINAL_PROMPT=0
+export GIT_SSH_COMMAND="ssh -oBatchMode=yes -oStrictHostKeyChecking=accept-new"
+# 'update' edits $HOME/.pi/agent — run it as the invoking user (their npm,
+# their SSH keys for git: sources), never as root.
+if [ "$(id -u)" = "0" ] && [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ] && [ "${1:-}" = "update" ]; then
+  UHOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
+  exec runuser -u "$SUDO_USER" -- env "PATH=$(dirname "$NODE"):$PATH" "$NODE" "$PI_BUNDLE" "$@"
+fi
 if [ "$(id -u)" = "0" ] && [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ]; then
   UHOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
   if [ -d "$UHOME/.pi/" ]; then
