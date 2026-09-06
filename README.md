@@ -1,79 +1,128 @@
 # Dotfiles
 
+Personal Ubuntu / Xubuntu development environment configs (bash vi-mode, Vim/Neovim, X11 key remaps, XFCE/KDE shortcuts).
+
+## Prerequisites
+
+- Git with submodule support
+- Ubuntu/Debian recommended (installer uses `apt` when available)
+- For full desktop features: XFCE or KDE Plasma (X11 preferred for x11-config)
+- Optional: `curl`, `sudo` for package auto-install
+
 ## Installation
 
 ```sh
 git clone --recurse-submodules https://github.com/tecfu/dotfiles ~/dotfiles
-. ~/dotfiles/INSTALL.sh
+~/dotfiles/INSTALL.sh
 ```
+
+You can clone anywhere; the installer uses its own directory (or `DOTFILES_DIR`) instead of hard-coding `~/dotfiles`.
+
+### Installer flags
+
+| Flag | Purpose |
+|------|---------|
+| `--help` | Show usage |
+| `--dry-run` | Print actions without changing the system |
+| `--ignore-missing-deps` | Skip components whose dependencies are missing |
+| `--keyboard-shortcuts` | Apply portable XFCE/KDE shortcuts from `keyboard-shortcuts/` |
+| `--skip-volta` | Do not install/update Volta or Node |
+
+Examples:
+
+```sh
+./INSTALL.sh --dry-run
+./INSTALL.sh --ignore-missing-deps --keyboard-shortcuts
+DOTFILES_DIR=/opt/dotfiles ./INSTALL.sh --skip-volta
+```
+
+### After install checklist
+
+1. Log out and back in (or reboot) so group/udev changes and desktop shortcuts take effect.
+2. Confirm Caps Lock → Esc (BIOS, `/etc/default/keyboard`, or x11-config / custom.kmap).
+3. Run `./scripts/doctor.sh` to verify symlinks and tools.
+4. Open a new terminal and check vi-mode (`set -o | grep vi`) and editor plugins.
 
 ## Updating
 
+Preferred (records current submodule SHAs in the parent commit):
+
 ```sh
-git submodule update --recursive --remote
+./scripts/update-submodules.sh
+git add -A && git commit -m "chore: update submodules"
+git push
+```
+
+Manual equivalent:
+
+```sh
+git submodule update --init --recursive
+git submodule update --remote --recursive
 git pull --recurse-submodules
 ```
 
+Pin policy: the parent repo records exact submodule commits. Prefer committing after `--remote` updates rather than always floating on branch tips in production machines.
+
 ## Contents
 
-- [Terminal Emulator Config](https://github.com/tecfu/.terminal/tree/server)
+| Component | Path / submodule | Notes |
+|-----------|------------------|--------|
+| Terminal (bash, Alacritty, Kitty, tmux, …) | [`.terminal`](https://github.com/tecfu/.terminal) | vi-mode, oh-my-bash, fonts |
+| Vim / Neovim | [`.vim`](https://github.com/tecfu/.vim) | Cross-platform; some tweaks may be needed on macOS/Windows |
+| X11 key remaps | [`x11-config`](https://github.com/tecfu/x11-config) | Browser C-j/C-k, Caps→Esc via xremap/sxhkd |
+| Keyboard shortcuts | `keyboard-shortcuts/` | Portable TSV; XFCE + KDE (sxhkd for app launches on KDE) |
+| XFCE panel/themes | [`.xfce`](https://github.com/tecfu/.xfce) | Optional; not auto-run by INSTALL.sh |
+| IdeaVim | `.ideavimrc` | Symlinked into `$HOME` |
+| Surfingkeys (archived) | [`.surfingkeys`](https://github.com/tecfu/.surfingkeys) | Abandoned in favor of Vimium; kept for reference |
 
-- [Vim Config](https://github.com/tecfu/.vim/tree/server)
+### Terminal
 
-- [Vimperator Config](https://github.com/tecfu/.vimperator/tree/master)
-
-- [X Window System (.Xmodmap, et.al) Config](https://github.com/tecfu/x11-config/tree/master)
-
-- [XFCE (.xfce)](https://github.com/tecfu/.xfce)
-
-## What each git submodule in this repo does
-
-### Surfingkeys
-
-**NOTE**
-
-Surfingkeys has been abandoned in favor of Vimium due to tab switching performance and suboptimal builtin PDF reader.
-
-Configuration and installation instructions for [Surfingkeys](https://github.com/tecfu/Surfingkeys/tree/hack_hint_sizes)
-
-### Vim
-
-The vim setup here should work on a Mac and even on a Windows box, but I haven't used it in those environments so there may be some tweaking needed.
-
-### Vimperator
-
-Vimperator is a dead project and I've begrudgingly moved to Vimium, but I'll keep the config here for now anyway as a hommage. Vimperator was incredible.
-
-> Note: Using [Surfingkeys](https://github.com/tecfu/Surfingkeys/tree/hack_hint_sizes) as a replacement
-
-### Terminal Config
-
-Sets bash to run in vi-mode. Here are a couple articles on that:
+Sets bash to vi editing mode. Background reading:
 
 - [Working Productively in Bash's Vi Command Line Editing Mode](http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet)
-
 - [Vi mode in Bash](https://sanctum.geek.nz/arabesque/vi-mode-in-bash)
 
-### X-11 Config
+### X11 config
 
-This is where I have stored files that allow me to remap hotkeys for Google Chrome / Chromium which otherwise can't be remapped. Think \<C-j\> (), \<C-k\>.
+Remaps keys that browsers do not expose (e.g. `<C-j>`, `<C-k>`). See the submodule README for xremap vs xmodmap vs sxhkd.
 
-### XFCE
+### Keyboard shortcuts (XFCE ↔ KDE)
 
-- Keyboad shortcuts (move Window to workspace)
-- Themes
-- Panel settings
+Source of truth: `keyboard-shortcuts/shortcuts.conf` (TSV).
 
-## CAPS LOCK -> ESC on machines without a BIOS keymap (e.g. Radxa ROCK 5B)
+```sh
+# Capture current XFCE bindings
+./keyboard-shortcuts/export.sh
 
-On the primary machine this repo was written for, ESC-on-CAPS-LOCK is mapped in the BIOS.
-ARM SBCs like the ROCK 5B have no BIOS setup, so apply it at the X11 level instead (survives reboots, covers all X apps):
+# Apply to current DE (auto-detects XFCE vs KDE)
+./keyboard-shortcuts/install.sh
+# or: ./INSTALL.sh --keyboard-shortcuts
+```
+
+**KDE notes:** App shortcuts are bound via **sxhkd** (KGlobalAccel ignores file-only `[services]` entries). Window actions map to the closest KWin equivalents. Install `sxhkd` for app launches. Log out/in if bindings do not appear immediately.
+
+Machine-specific app paths (e.g. Code, terminal emulator) live in `shortcuts.conf`; edit that file or maintain a private overlay before applying on a new host.
+
+### CAPS LOCK → ESC (no BIOS, e.g. Radxa ROCK 5B)
 
 ```sh
 sudo sed -i 's/^XKBOPTIONS=.*/XKBOPTIONS="caps:escape"/' /etc/default/keyboard
 ```
 
-Log out/in to apply. For virtual consoles (outside X), use `.terminal/custom.kmap` with `loadkeys`.
+Log out/in. For virtual consoles, use `.terminal/custom.kmap` with `loadkeys`.
+
+## Doctor / verification
+
+```sh
+./scripts/doctor.sh
+```
+
+Checks symlinks, session/DE detection, and common tools (xsel, sxhkd, volta, vim/nvim, …).
+
+## Archived / historical
+
+- **Vimperator** — project is dead; config was removed from active install paths. Prefer Vimium.
+- **Surfingkeys** — abandoned here due to tab-switch performance and PDF reader limitations; prefer Vimium. Submodule retained as a historical reference only.
 
 ## License
 

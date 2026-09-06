@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  shellcheck-and-help:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+
+      - name: Syntax-check shell scripts
+        run: |
+          set -euo pipefail
+          mapfile -t scripts < <(find . -type f \( -name '*.sh' -o -name 'INSTALL.sh' \) \
+            ! -path './.git/*' ! -path './.vim/*' ! -path './.terminal/*' \
+            ! -path './x11-config/*' ! -path './.xfce/*' ! -path './.surfingkeys/*')
+          for f in "${scripts[@]}"; do
+            echo "bash -n $f"
+            bash -n "$f"
+          done
+          if command -v shellcheck >/dev/null; then
+            shellcheck -x INSTALL.sh lib/common.sh scripts/doctor.sh scripts/update-submodules.sh \
+              keyboard-shortcuts/install.sh keyboard-shortcuts/export.sh || true
+          fi
+
+      - name: INSTALL.sh --help
+        run: |
+          chmod +x INSTALL.sh
+          ./INSTALL.sh --help | grep -q "Usage"
+
+      - name: doctor runs (best-effort without full install)
+        run: |
+          chmod +x scripts/doctor.sh
+          ./scripts/doctor.sh || true
