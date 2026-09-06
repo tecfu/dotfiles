@@ -1,6 +1,7 @@
 #!/bin/bash
 # Apply shortcuts.conf to the current desktop.
-# Supports XFCE (xfconf-query) and KDE Plasma (kglobalshortcutsrc).
+# Supports XFCE (xfconf-query), KDE Plasma (kglobalshortcutsrc) and GNOME
+# (mutter wm keybindings + media-keys custom keybindings).
 set -e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -181,6 +182,109 @@ EOF2
   echo "NOTE: log out/in once if any shortcut didn't take effect."
 }
 
+# --- GNOME ----------------------------------------------------------------
+# window actions map to Mutter's own bindings (appended, defaults kept);
+# app launches use media-keys custom-keybindings. shortcuts.conf accelerators
+# are GTK syntax, which is exactly what gsettings wants.
+declare -A GNOME_WM_MAP=(
+  [tile_left]="org.gnome.mutter.keybindings toggle-tiled-left"
+  [tile_right]="org.gnome.mutter.keybindings toggle-tiled-right"
+  [maximize_window]="org.gnome.desktop.wm.keybindings maximize"
+  [next_workspace]="org.gnome.desktop.wm.keybindings switch-to-workspace-right"
+  [prev_workspace]="org.gnome.desktop.wm.keybindings switch-to-workspace-left"
+  [move_window_next_workspace]="org.gnome.desktop.wm.keybindings move-to-workspace-right"
+  [move_window_prev_workspace]="org.gnome.desktop.wm.keybindings move-to-workspace-left"
+)
+
+# append accel to a gsettings keybinding array, preserving existing defaults
+gnome_bind() {
+  local schema="$1" key="$2" accel="$3" cur base new
+  cur="$(gsettings get "$schema" "$key")"
+  case "$cur" in
+    *"'$accel'"*)
+      echo "OK  [window] $accel -> $schema $key (already bound)"; return 0 ;;
+  esac
+  base="${cur#@as }"; base="${base%]}"   # '@as []' -> '['
+  if [ "$base" = "[" ]; then new="['$accel']"; else new="${base}, '$accel']"; fi
+  if gsettings set "$schema" "$key" "$new"; then
+    echo "OK  [window] $accel -> $schema $key (appended)"
+  else
+    echo "FAIL [window] $accel -> $schema $key"
+  fi
+}
+
+install_gnome() {
+  if ! command -v gsettings >/dev/null 2>&1; then
+    install_skip "gsettings not found; not a GNOME session"
+    return 0
+  fi
+
+  local SCHEMA=org.gnome.settings-daemon.plugins.media-keys
+  local SLOT=$SCHEMA.custom-keybinding
+  local BASE=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/
+  local -a paths=()
+  local raw; raw="$(gsettings get $SCHEMA custom-keybindings)"
+  read -ra paths <<<"$(sed "s/^@as //; s/[]['\"()]//g" <<<"$raw" | tr ',' ' ')"
+
+  while IFS=$'\t' read -r kind accel action; do
+    case "$kind" in ''|'#'*) continue ;; esac
+    accel="${accel//<Primary>/<Control>}"   # gsettings spells it Control
+
+    if [ "$kind" = "app" ]; then
+      local bin="${action%% *}"
+      if ! command -v "$bin" >/dev/null 2>&1 && [ ! -x "$bin" ]; then
+        echo "SKIP [app] $accel -> $action ('$bin' not installed)"
+        continue
+      fi
+
+      # Ubuntu's gnome-terminal owns Ctrl+Alt+T via the built-in `terminal`
+      # key — and that value IS the schema default on Ubuntu, so `reset`
+      # wouldn't release it. Set an explicit empty override instead.
+      local term; term="$(gsettings get $SCHEMA terminal)"
+      case "${term//<Primary>/<Control>}" in
+        *"'$accel'"*)
+          gsettings set $SCHEMA terminal "[]"
+          echo "OK  [app] released built-in terminal binding $accel" ;;
+      esac
+
+      # reuse an existing slot bound to this accel, else allocate the next
+      # free customN (gap-safe)
+      local path="" p n=0
+      for p in "${paths[@]}"; do
+        if [ "$(gsettings get $SLOT:$p binding 2>/dev/null)" = "'$accel'" ]; then
+          path="$p"; break
+        fi
+      done
+      if [ -z "$path" ]; then
+        while printf '%s' "${paths[*]}" | grep -q "custom$n/"; do n=$((n+1)); done
+        path="${BASE}custom$n/"
+        paths+=("$path")
+      fi
+      gsettings set $SLOT:$path name "dotfiles: $bin"
+      gsettings set $SLOT:$path command "$action"
+      gsettings set $SLOT:$path binding "$accel"
+      echo "OK  [app] $accel -> $action"
+
+    elif [ -n "${GNOME_WM_MAP[$action]:-}" ]; then
+      # shellcheck disable=SC2086
+      gnome_bind ${GNOME_WM_MAP[$action]} "$accel"
+    else
+      echo "SKIP [window] $accel -> $action (no GNOME equivalent; Mutter can't quarter-tile)"
+    fi
+  done < "$CONF"
+
+  # write back the slot list
+  if [ ${#paths[@]} -eq 0 ]; then
+    gsettings set $SCHEMA custom-keybindings "@as []"
+  else
+    local list=""
+    for p in "${paths[@]}"; do list+="'$p', "; done
+    gsettings set $SCHEMA custom-keybindings "[${list%, }]"
+  fi
+
+  echo "NOTE: GNOME applies these live; log out/in only if one didn't take effect."
+}
+
 case "$DE" in
   xfce)
     require_dep xfconf-query xfconf || exit 0
@@ -188,7 +292,9 @@ case "$DE" in
   kde)
     # kglobalshortcutsrc editing only needs coreutils; kglobalaccel restart is best-effort
     install_kde ;;
+  gnome)
+    install_gnome ;;
   *)
-    install_skip "desktop '$XDG_CURRENT_DESKTOP' is not XFCE/KDE; no applicable shortcut backend"
+    install_skip "desktop '$XDG_CURRENT_DESKTOP' is not XFCE/KDE/GNOME; no applicable shortcut backend"
     exit 0 ;;
 esac

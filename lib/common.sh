@@ -7,7 +7,7 @@
 #     Missing dependencies no longer abort: affected configs are skipped and
 #     installation continues. Without it, a missing dependency is fatal.
 #
-# Desktop compatibility: XFCE and KDE Plasma are supported. Callers use
+# Desktop compatibility: XFCE, KDE Plasma and GNOME are supported. Callers use
 # detect_de to skip DE-specific steps that don't apply ("inapplicable
 # incompatibilities"); unknown desktops never abort the install.
 
@@ -44,12 +44,13 @@ To install: apt install $2}"
   exit 1
 }
 
-# detect_de -> "xfce" | "kde" | "other"
+# detect_de -> "xfce" | "kde" | "gnome" | "other"
 detect_de() {
   case "${XDG_CURRENT_DESKTOP,,}" in
-    *xfce*) echo "xfce" ;;
-    *kde*)  echo "kde" ;;
-    *)      echo "other" ;;
+    *xfce*)  echo "xfce" ;;
+    *kde*)   echo "kde" ;;
+    *gnome*) echo "gnome" ;;
+    *)       echo "other" ;;
   esac
 }
 

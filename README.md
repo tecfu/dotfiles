@@ -70,7 +70,7 @@ Pin policy: the parent repo records exact submodule commits. Prefer committing a
 | Terminal (bash, Alacritty, Kitty, tmux, …) | [`.terminal`](https://github.com/tecfu/.terminal) | vi-mode, oh-my-bash, fonts |
 | Vim / Neovim | [`.vim`](https://github.com/tecfu/.vim) | Cross-platform; some tweaks may be needed on macOS/Windows |
 | X11 key remaps | [`x11-config`](https://github.com/tecfu/x11-config) | Browser C-j/C-k, Caps→Esc via xremap/sxhkd |
-| Keyboard shortcuts | `keyboard-shortcuts/` | Portable TSV; XFCE + KDE (sxhkd for app launches on KDE) |
+| Keyboard shortcuts | `keyboard-shortcuts/` | Portable TSV; XFCE + KDE + GNOME (sxhkd for app launches on KDE) |
 | XFCE panel/themes | [`.xfce`](https://github.com/tecfu/.xfce) | Optional; not auto-run by INSTALL.sh |
 | IdeaVim | `.ideavimrc` | Symlinked into `$HOME` |
 | Surfingkeys (archived) | [`.surfingkeys`](https://github.com/tecfu/.surfingkeys) | Abandoned in favor of Vimium; kept for reference |
