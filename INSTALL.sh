@@ -162,8 +162,10 @@ fi
 # https://github.com/tecfu/alacritty — install via cargo, skip if present.
 # ---------------------------------------------------------------------------
 ALACRITTY_REPO="https://github.com/tecfu/alacritty"
-if command -v alacritty >/dev/null 2>&1; then
-  echo "OK   alacritty already installed: $(command -v alacritty)"
+# Check for the fork specifically — a distro alacritty (/usr/bin) must NOT
+# satisfy this, or the fork (with the keyboard/copy patches) never installs.
+if [ -x "$HOME/.cargo/bin/alacritty" ]; then
+  echo "OK   alacritty (tecfu fork) already installed: $HOME/.cargo/bin/alacritty"
 elif [ "$DRY_RUN" = "1" ]; then
   echo "DRY  would install alacritty: cargo install --git $ALACRITTY_REPO alacritty"
 else
@@ -175,9 +177,10 @@ else
     export PATH="${HOME}/.cargo/bin:${PATH}"
   fi
   if command -v cargo >/dev/null 2>&1; then
-    # Low-RAM devices (fork README: IoT e.g. Radxa 5b) need -j 2 to avoid OOM
+    # Low-RAM devices (fork README: IoT e.g. Radxa 5b) need -j 2 to avoid OOM.
+    # Use AVAILABLE memory — total can be large while cache pressure leaves little.
     JOBS=""
-    total_mb="$(free -m 2>/dev/null | awk '/^Mem:/{print $2; exit}')"
+    total_mb="$(free -m 2>/dev/null | awk '/^Mem:/{print ($7 != "" && $7 + 0 > 0) ? $7 : $2; exit}')"
     if [ -n "$total_mb" ] && [ "$total_mb" -lt 4000 ]; then
       echo "INFO: low RAM detected (${total_mb}MB), building with -j 2"
       JOBS="-j 2"
