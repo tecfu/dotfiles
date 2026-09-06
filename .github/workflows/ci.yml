@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  check:
+    name: Shell syntax, help, dry-run, doctor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # Public submodule URLs; no token needed for public repos
+          fetch-depth: 1
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck
+
+      - name: bash -n on top-level scripts
+        run: |
+          set -euo pipefail
+          mapfile -t scripts < <(find . -type f \( -name '*.sh' -o -name 'INSTALL.sh' \) \
+            ! -path './.git/*' \
+            ! -path './.vim/*' \
+            ! -path './.terminal/*' \
+            ! -path './x11-config/*' \
+            ! -path './.xfce/*' \
+            ! -path './.surfingkeys/*')
+          if [ "${#scripts[@]}" -eq 0 ]; then
+            echo "No scripts found" >&2
+            exit 1
+          fi
+          for f in "${scripts[@]}"; do
+            echo "bash -n $f"
+            bash -n "$f"
+          done
+
+      - name: shellcheck (top-level)
+        run: |
+          set -euo pipefail
+          # Fail the job on shellcheck findings for scripts we own in this repo
+          shellcheck -x -e SC1091 \
+            INSTALL.sh \
+            lib/common.sh \
+            scripts/doctor.sh \
+            scripts/update-submodules.sh \
+            keyboard-shortcuts/install.sh \
+            keyboard-shortcuts/export.sh
+
+      - name: INSTALL.sh --help
+        run: |
+          chmod +x INSTALL.sh scripts/*.sh
+          out="$(./INSTALL.sh --help)"
+          echo "$out"
+          echo "$out" | grep -q "Usage"
+          echo "$out" | grep -q "dry-run"
+          echo "$out" | grep -q "DOTFILES_DIR"
+
+      - name: INSTALL.sh --dry-run --skip-volta
+        run: |
+          set -euo pipefail
+          # Submodules are present from checkout; dry-run should complete without writing
+          ./INSTALL.sh --dry-run --skip-volta | tee /tmp/dry-run.log
+          grep -q "DRY-RUN mode" /tmp/dry-run.log
+          grep -q "DONE:" /tmp/dry-run.log
+
+      - name: INSTALL.sh --dry-run --keyboard-shortcuts --skip-volta
+        run: |
+          set -euo pipefail
+          ./INSTALL.sh --dry-run --keyboard-shortcuts --skip-volta | tee /tmp/dry-run-ks.log
+          grep -q "keyboard-shortcuts/install.sh" /tmp/dry-run-ks.log
+          grep -q "DONE:" /tmp/dry-run-ks.log
+
+      - name: doctor (CI mode — missing home links are warnings)
+        run: |
+          set -euo pipefail
+          chmod +x scripts/doctor.sh
+          ./scripts/doctor.sh --ci | tee /tmp/doctor.log
+          # --ci exits 0 unless hard failures (e.g. broken script); missing symlinks warn only
+
+      - name: Reject unknown installer flags
+        run: |
+          set -euo pipefail
+          if ./INSTALL.sh --not-a-real-flag 2>/dev/null; then
+            echo "Expected non-zero exit for unknown flag" >&2
+            exit 1
+          fi

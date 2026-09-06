@@ -6,6 +6,7 @@ set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONF="$DIR/shortcuts.conf"
 
+# shellcheck source=../lib/common.sh
 . "$DIR/../lib/common.sh"
 
 if [ ! -f "$CONF" ]; then
