@@ -158,6 +158,37 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Alacritty (tecfu fork)
+# https://github.com/tecfu/alacritty — install via cargo, skip if present.
+# ---------------------------------------------------------------------------
+ALACRITTY_REPO="https://github.com/tecfu/alacritty"
+if command -v alacritty >/dev/null 2>&1; then
+  echo "OK   alacritty already installed: $(command -v alacritty)"
+elif [ "$DRY_RUN" = "1" ]; then
+  echo "DRY  would install alacritty: cargo install --git $ALACRITTY_REPO alacritty"
+else
+  apt_install cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 || true
+  if ! command -v cargo >/dev/null 2>&1; then
+    apt_install curl || true
+    echo "Installing rustup (cargo)..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    export PATH="${HOME}/.cargo/bin:${PATH}"
+  fi
+  if command -v cargo >/dev/null 2>&1; then
+    # Low-RAM devices (fork README: IoT e.g. Radxa 5b) need -j 2 to avoid OOM
+    JOBS=""
+    total_mb="$(free -m 2>/dev/null | awk '/^Mem:/{print $2; exit}')"
+    if [ -n "$total_mb" ] && [ "$total_mb" -lt 4000 ]; then
+      echo "INFO: low RAM detected (${total_mb}MB), building with -j 2"
+      JOBS="-j 2"
+    fi
+    cargo install --git "$ALACRITTY_REPO" alacritty $JOBS
+  else
+    install_skip "cargo unavailable; install manually: cargo install --git $ALACRITTY_REPO alacritty"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 # Component installers
 # ---------------------------------------------------------------------------
 INSTALL_SCRIPTS=(
