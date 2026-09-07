@@ -275,14 +275,16 @@ fi
 
 # ---------------------------------------------------------------------------
 # Headless detection: skip UI components (alacritty) on servers.
-# GUI = live X11/Wayland session, or an Xorg binary present (inverse of the
-# x11-config/INSTALL.sh session guard, so the two installers agree).
+# GUI = live X11/Wayland session, or an X server actually running on this
+# machine (X sockets in /tmp/.X11-unix — covers SSH installs on desktops,
+# where session env vars are absent). Mere presence of the Xorg binary is
+# NOT GUI evidence: Ubuntu servers often carry it unused.
 # ---------------------------------------------------------------------------
 HEADLESS=1
 case "$(detect_session)" in
   x11|wayland) HEADLESS=0 ;;
 esac
-command -v Xorg >/dev/null 2>&1 && HEADLESS=0
+ls /tmp/.X11-unix/X* >/dev/null 2>&1 && HEADLESS=0
 
 # ---------------------------------------------------------------------------
 # Alacritty (tecfu fork)
