@@ -1,0 +1,194 @@
+#!/bin/bash
+# dotfiles-tile — dotfiles' own window-tiling layer for GNOME (X11).
+#
+# Mutter can't quarter-tile and the Tiling Assistant extension brings its
+# own drag-to-edge UX, so we enforce tiling ourselves: this script moves the
+# focused window into a half/quarter of the monitor it currently occupies.
+# Keybindings are wired up by install.sh via media-keys custom keybindings
+# (gsettings), which run e.g. `dotfiles-tile up-left`.
+#
+# Geometry is tracked in FRAME coordinates: read the client rect via
+# xdotool, convert with _NET_FRAME_EXTENTS (xprop), write via wmctrl -e
+# (which positions the frame). Pressing the same tile key again restores
+# the window's previous geometry.
+#
+# usage: dotfiles-tile left|right|up-left|up-right|down-left|down-right
+#        dotfiles-tile --selftest
+# X11 only: xdotool/wmctrl cannot move Wayland windows.
+
+set -euo pipefail
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles-tile"
+TOL=6   # px tolerance when comparing saved vs current geometry
+
+hid() { printf '0x%x' "$1"; }
+
+# usage: tiles_of X Y W H -> "x y w h" per line, regions in this order:
+# left right up-left up-right down-left down-right (halves, then quarters)
+tiles_of() {
+  local rx=$1 ry=$2 hw=$(($3 / 2)) hh=$(($4 / 2))
+  local rw2=$(($3 - hw)) rh2=$(($4 - hh))
+  printf '%s %s %s %s\n' "$rx" "$ry" "$hw" "$4"
+  printf '%s %s %s %s\n' "$((rx + hw))" "$ry" "$rw2" "$4"
+  printf '%s %s %s %s\n' "$rx" "$ry" "$hw" "$hh"
+  printf '%s %s %s %s\n' "$((rx + hw))" "$ry" "$rw2" "$hh"
+  printf '%s %s %s %s\n' "$rx" "$((ry + hh))" "$hw" "$rh2"
+  printf '%s %s %s %s\n' "$((rx + hw))" "$((ry + hh))" "$rw2" "$rh2"
+}
+
+approx() { (( $1 >= $2 - TOL && $1 <= $2 + TOL )); }
+
+# usage: same_rect X1 Y1 W1 H1 X2 Y2 W2 H2 — all four within TOL
+same_rect() { approx "$1" "$5" && approx "$2" "$6" && approx "$3" "$7" && approx "$4" "$8"; }
+
+# usage: clamp_to_workarea MX MY MW MH WAX WAY WAW WAH -> intersection rect
+clamp_to_workarea() {
+  local mx=$1 my=$2 mw=$3 mh=$4 ax=$5 ay=$6 aw=$7 ah=$8
+  local x1=$(( mx > ax ? mx : ax )) y1=$(( my > ay ? my : ay ))
+  local x2=$(( mx + mw < ax + aw ? mx + mw : ax + aw ))
+  local y2=$(( my + mh < ay + ah ? my + mh : ay + ah ))
+  printf '%s %s %s %s\n' "$x1" "$y1" "$((x2 - x1))" "$((y2 - y1))"
+}
+
+# WIN -> "fx fy fw fh" (frame rect in root coordinates)
+read_frame_rect() {
+  local X=0 Y=0 W=0 H=0 k v ext fl=0 fr=0 ft=0 fb=0
+  while IFS='=' read -r k v; do
+    case "$k" in
+      X) X=$v ;; Y) Y=$v ;; WIDTH) W=$v ;; HEIGHT) H=$v ;;
+    esac
+  done < <(xdotool getwindowgeometry --shell "$1")
+  ext=$(xprop -id "$(hid "$1")" _NET_FRAME_EXTENTS 2>/dev/null) || ext=""
+  if [[ "$ext" == *"="* ]]; then
+    IFS=', ' read -r fl fr ft fb <<<"${ext#*= }"
+  fi
+  printf '%s %s %s %s\n' "$((X - fl))" "$((Y - ft))" "$((W + fl + fr))" "$((H + ft + fb))"
+}
+
+# WIN — clear states that would otherwise ignore a plain geometry change
+unmaximize() {
+  wmctrl -i -r "$(hid "$1")" -b remove,fullscreen
+  wmctrl -i -r "$(hid "$1")" -b remove,maximized_vert,maximized_horz
+}
+
+selftest() {
+  local fail=0
+  local -a rects
+  local -a expected=("0 0 960 1080" "960 0 960 1080" "0 0 960 540" "960 0 960 540" "0 540 960 540" "960 540 960 540")
+  mapfile -t rects < <(tiles_of 0 0 1920 1080)
+  local i
+  for i in 0 1 2 3 4 5; do
+    [ "${rects[i]}" = "${expected[i]}" ] || { echo "FAIL tiles_of[$i]: '${rects[i]}'" >&2; fail=1; }
+  done
+  # odd sizes: right column and bottom row must exactly reach the far edge
+  mapfile -t rects < <(tiles_of 0 0 1921 1081)
+  local x y w h
+  read -r x y w h <<<"${rects[1]}"; [ $((x + w)) -eq 1921 ] || { echo "FAIL odd-width right tile" >&2; fail=1; }
+  read -r x y w h <<<"${rects[5]}"; [ $((y + h)) -eq 1081 ] || { echo "FAIL odd-height bottom tile" >&2; fail=1; }
+  # tiles are placed relative to the given origin
+  mapfile -t rects < <(tiles_of 100 200 1920 1080)
+  [ "${rects[5]}" = "1060 740 960 540" ] || { echo "FAIL origin offset: '${rects[5]}'" >&2; fail=1; }
+  # clamp: monitor ∩ workarea
+  [ "$(clamp_to_workarea 0 0 1920 1080 0 27 1920 1053)" = "0 27 1920 1053" ] || { echo "FAIL clamp top bar" >&2; fail=1; }
+  [ "$(clamp_to_workarea 1920 0 1920 1080 0 27 3840 1053)" = "1920 27 1920 1053" ] || { echo "FAIL clamp right monitor" >&2; fail=1; }
+  # tolerance compare
+  same_rect 0 0 960 1080 3 -4 958 1082 || { echo "FAIL same_rect within tolerance" >&2; fail=1; }
+  if same_rect 0 0 960 1080 30 0 960 1080; then echo "FAIL same_rect beyond tolerance" >&2; fail=1; fi
+  if [ "$fail" = 0 ]; then echo "selftest OK"; fi
+  exit "$fail"
+}
+
+main() {
+  local action=$1 dep
+  for dep in xdotool wmctrl xrandr xprop; do
+    command -v "$dep" >/dev/null 2>&1 || { echo "dotfiles-tile: $dep missing (X11 required)" >&2; exit 1; }
+  done
+
+  local win
+  win=$(xdotool getactivewindow 2>/dev/null) || exit 0   # nothing focused
+
+  # --- current geometry (frame coordinates) ---
+  local fx fy fw fh
+  read -r fx fy fw fh < <(read_frame_rect "$win")
+
+  # --- global workarea from the window manager ---
+  local wax=0 way=0 waw=0 wah=0 wa
+  wa=$(wmctrl -d 2>/dev/null | awk '$2 == "*" { for (i = 1; i <= NF; i++) if ($i == "WA:") { print $(i + 1), $(i + 2); exit } }') || wa=""
+  if [ -n "$wa" ]; then
+    local wa_xy=${wa%% *} wa_wh=${wa#* }
+    wax=${wa_xy%,*} way=${wa_xy#*,} waw=${wa_wh%x*} wah=${wa_wh#*x}
+  fi
+
+  # --- pick the monitor the window is currently on ---
+  local -a mons=()
+  local line geo
+  while IFS= read -r line; do
+    geo=$(awk '{ for (i = 3; i <= NF; i++) if ($i ~ /^[0-9]+x[0-9]+\+[0-9-]+\+[0-9-]+$/) { print $i; exit } }' <<<"$line")
+    if [ -n "$geo" ]; then mons+=("$geo"); fi
+  done < <(xrandr --current 2>/dev/null | awk '/ connected /')
+
+  local cx=$(( fx + fw / 2 )) cy=$(( fy + fh / 2 ))
+  local mx=0 my=0 mw=0 mh=0 mon t found=""
+  for mon in "${mons[@]}"; do
+    mw=${mon%x*} t=${mon#*x} mh=${t%%+*} t=${t#*+} mx=${t%%+*} my=${t#*+}
+    if (( cx >= mx && cx < mx + mw && cy >= my && cy < my + mh )); then found=1; break; fi
+  done
+  if [ -z "$found" ]; then
+    if [ "${#mons[@]}" -gt 0 ]; then
+      mon=${mons[0]}
+      mw=${mon%x*} t=${mon#*x} mh=${t%%+*} t=${t#*+} mx=${t%%+*} my=${t#*+}
+    else
+      mx=$wax my=$way mw=$waw mh=$wah   # no xrandr: treat workarea as the monitor
+    fi
+  fi
+
+  # --- tile area = monitor ∩ workarea ---
+  local ax=$mx ay=$my aw=$mw ah=$mh
+  if (( waw > 0 && wah > 0 )); then
+    read -r ax ay aw ah < <(clamp_to_workarea "$mx" "$my" "$mw" "$mh" "$wax" "$way" "$waw" "$wah")
+  fi
+  if (( aw <= 0 || ah <= 0 )); then
+    echo "dotfiles-tile: no usable area for window at $fx,$fy" >&2
+    exit 1
+  fi
+
+  # --- target rect for this action ---
+  local order=(left right up-left up-right down-left down-right) idx=-1 i
+  for i in 0 1 2 3 4 5; do
+    if [ "${order[i]}" = "$action" ]; then idx=$i; fi
+  done
+  local tx ty tw th
+  read -r tx ty tw th < <(tiles_of "$ax" "$ay" "$aw" "$ah" | sed -n "$((idx + 1))p")
+
+  # --- toggle: pressing the SAME tile key again restores the previous geometry ---
+  mkdir -p "$STATE_DIR"
+  local sf x y w h
+  sf="$STATE_DIR/$(hid "$win")"
+  if [ -f "$sf" ] && same_rect "$fx" "$fy" "$fw" "$fh" "$tx" "$ty" "$tw" "$th"; then
+    read -r x y w h <"$sf"
+    unmaximize "$win"
+    wmctrl -i -r "$(hid "$win")" -e "0,$x,$y,$w,$h"
+    rm -f "$sf"
+    exit 0
+  fi
+
+  # save the pre-tile geometry, but only when the window is not already in
+  # one of our tiles — so left→up-left→up-left walks back to the original
+  local in_tile=0
+  while read -r x y w h; do
+    if same_rect "$fx" "$fy" "$fw" "$fh" "$x" "$y" "$w" "$h"; then in_tile=1; break; fi
+  done < <(tiles_of "$ax" "$ay" "$aw" "$ah")
+  if [ "$in_tile" = 0 ]; then
+    printf '%s %s %s %s\n' "$fx" "$fy" "$fw" "$fh" >"$sf"
+  fi
+  unmaximize "$win"
+  wmctrl -i -r "$(hid "$win")" -e "0,$tx,$ty,$tw,$th"
+}
+
+case "${1:-}" in
+  --selftest) selftest ;;
+  left|right|up-left|up-right|down-left|down-right) main "$1" ;;
+  *)
+    echo "usage: ${0##*/} left|right|up-left|up-right|down-left|down-right|--selftest" >&2
+    exit 2 ;;
+esac

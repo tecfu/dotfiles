@@ -12,7 +12,7 @@ installer (x11-config, .terminal, .vim). Optionally applies keyboard shortcuts.
 
 Options:
   --ignore-missing-deps  Skip configs whose dependencies are missing instead of aborting
-  --keyboard-shortcuts   Also apply keyboard shortcuts (XFCE + KDE only)
+  --keyboard-shortcuts   Also apply keyboard shortcuts (XFCE + KDE + GNOME)
   --dry-run              Print actions without changing the system
   --skip-volta           Do not install or update Volta / Node
   --help                 Show this help and exit

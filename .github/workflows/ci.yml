@@ -52,7 +52,8 @@ jobs:
             scripts/doctor.sh \
             scripts/update-submodules.sh \
             keyboard-shortcuts/install.sh \
-            keyboard-shortcuts/export.sh
+            keyboard-shortcuts/export.sh \
+            keyboard-shortcuts/dotfiles-tile
 
       - name: INSTALL.sh --help
         run: |

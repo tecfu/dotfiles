@@ -39,16 +39,27 @@ Edit `shortcuts.conf` (or maintain a private copy) for machine-specific paths su
 
 ## GNOME notes
 
-* **Window actions** map to Mutter's own bindings: half-tiling to
-  `org.gnome.mutter.keybindings toggle-tiled-left/right`, maximize/workspaces to
-  `org.gnome.desktop.wm.keybindings`. Bindings are appended — existing defaults
-  (e.g. `Super+Left`) are kept, and re-running never duplicates.
+* **Tiling** (halves + corners) is enforced by **our own layer**: the
+  installer drops `dotfiles-tile` into `~/.local/bin` and binds each
+  `tile_*` action to it via media-keys custom keybindings (same mechanism as
+  app launches). The script moves the focused window into that region of the
+  monitor it currently occupies (frame geometry via xdotool/wmctrl, dock-aware
+  via the WM workarea); pressing the same key again restores the previous
+  geometry. **X11 only** — on Wayland the tile bindings are skipped
+  (xdotool/wmctrl can't move Wayland windows). Mutter half-tiling and the
+  Tiling Assistant extension are intentionally not used — the installer
+  also **removes the bindings the old Mutter/Tiling-Assistant setup left
+  behind** (our accels are stripped from Mutter's `toggle-tiled-*` and TA's
+  quarter keys, and the extension is disabled again) so nothing fires twice.
+  Other bindings and extensions are preserved.
+  Sanity check without a WM: `~/.local/bin/dotfiles-tile --selftest`.
+* **Other window actions** (maximize, workspaces) map to Mutter's own
+  bindings (`org.gnome.desktop.wm.keybindings`). Bindings are appended —
+  existing defaults (e.g. `Super+Left`) are kept, and re-running never
+  duplicates.
 * **App shortcuts** use media-keys custom keybindings (`gsettings`); no sxhkd.
   A built-in `terminal` binding claiming the same accelerator (Ubuntu binds
   Ctrl+Alt+T to gnome-terminal) is released so the custom binding works.
-* Corner/quarter tiling maps to Ubuntu's **Tiling Assistant** extension
-  (`tiling-assistant@ubuntu.com`), which the installer enables automatically
-  when present. Note: enabling TA also activates its drag-to-edge tiling UX.
 * Bindings apply live via dconf; log out/in only if one didn't take.
 
 ## Dependencies
@@ -57,4 +68,4 @@ Edit `shortcuts.conf` (or maintain a private copy) for machine-specific paths su
 |------|--------------------------------------------|
 | XFCE | `xfconf-query` (package `xfconf`)          |
 | KDE  | `sxhkd` for app launches; coreutils for KWin edits |
-| GNOME | `gsettings` (always present); Tiling Assistant ext for corner tiling |
+| GNOME | `gsettings` (always present); `wmctrl`, `xdotool`, `x11-xserver-utils` for the tiling layer (X11 only) |
