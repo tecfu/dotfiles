@@ -67,7 +67,7 @@ Pin policy: the parent repo records exact submodule commits. Prefer committing a
 
 | Component | Path / submodule | Notes |
 |-----------|------------------|--------|
-| Terminal (bash, Alacritty, Kitty, tmux, …) | [`.terminal`](https://github.com/tecfu/.terminal) | vi-mode, oh-my-bash, fonts |
+| Terminal (bash, Alacritty, Kitty, tmux, …) | [`.terminal`](https://github.com/tecfu/.terminal) | vi-mode, git prompt, bashmarks, fonts |
 | Vim / Neovim | [`.vim`](https://github.com/tecfu/.vim) | Cross-platform; some tweaks may be needed on macOS/Windows |
 | X11 key remaps | [`x11-config`](https://github.com/tecfu/x11-config) | Browser C-j/C-k, Caps→Esc via xremap/sxhkd |
 | Keyboard shortcuts | `keyboard-shortcuts/` | Portable TSV; XFCE + KDE + GNOME (sxhkd for app launches on KDE) |
