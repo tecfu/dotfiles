@@ -12,6 +12,7 @@
 [submodule ".xfce"]
 	path = .xfce
 	url = https://github.com/tecfu/.xfce.git
+	branch = develop
 [submodule ".surfingkeys"]
 	path = .surfingkeys
 	url = https://github.com/tecfu/.surfingkeys.git
