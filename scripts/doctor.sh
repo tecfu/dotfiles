@@ -60,6 +60,8 @@ check_link() {
 check_link "$HOME/.ideavimrc" "$ROOT/.ideavimrc"
 check_link "$HOME/.terminal" "$ROOT/.terminal"
 check_link "$HOME/.vim" "$ROOT/.vim"
+check_link "$HOME/.inputrc" "$ROOT/.terminal/.inputrc"
+check_link "$HOME/.alacritty.toml" "$ROOT/.terminal/.alacritty.toml"
 
 echo ""
 echo "---- tools ----"
@@ -94,12 +96,7 @@ for path in x11-config .terminal .vim; do
   if [ -d "$ROOT/$path" ] && [ -n "$(ls -A "$ROOT/$path" 2>/dev/null || true)" ]; then
     ok "submodule present: $path"
   else
-    if [ "$CI_MODE" = "1" ]; then
-      # Checkout should have fetched them; missing is a real CI problem
-      bad "submodule missing/empty: $path"
-    else
-      bad "submodule missing/empty: $path"
-    fi
+    bad "submodule missing/empty: $path"
   fi
 done
 
