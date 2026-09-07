@@ -317,6 +317,24 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Alacritty terminfo. cargo installs the binary but not the terminfo entry;
+# without it tmux aborts with: "missing or unsuitable terminal: alacritty".
+# Installs user-level (~/.terminfo), no sudo needed.
+# ---------------------------------------------------------------------------
+if infocmp alacritty >/dev/null 2>&1; then
+  echo "OK   alacritty terminfo already present"
+elif [ "$DRY_RUN" = "1" ]; then
+  echo "DRY  would install alacritty terminfo via tic (~/.terminfo)"
+elif ! command -v tic >/dev/null 2>&1; then
+  install_skip "tic unavailable; run: curl -fsSL $ALACRITTY_REPO/raw/master/extra/alacritty.info | tic -x -"
+else
+  apt_install curl || true
+  curl -fsSL "$ALACRITTY_REPO/raw/master/extra/alacritty.info" -o /tmp/alacritty.info
+  tic -xe alacritty,alacritty-direct /tmp/alacritty.info
+  echo "OK   alacritty terminfo installed to ~/.terminfo"
+fi
+
+# ---------------------------------------------------------------------------
 # Component installers
 # ---------------------------------------------------------------------------
 INSTALL_SCRIPTS=(
