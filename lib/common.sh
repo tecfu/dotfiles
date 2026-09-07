@@ -56,12 +56,14 @@ detect_de() {
 
 # detect_session -> "x11" | "wayland" | "unknown"
 # Uses the live session type; falls back to display-server env vars.
+# All vars guarded with :- : callers run under `set -u` (top-level INSTALL.sh)
+# where unbound session vars are the norm on headless/SSH shells.
 detect_session() {
-  if [ -n "$XDG_SESSION_TYPE" ]; then
+  if [ -n "${XDG_SESSION_TYPE:-}" ]; then
     echo "$XDG_SESSION_TYPE"
-  elif [ -n "$WAYLAND_DISPLAY" ]; then
+  elif [ -n "${WAYLAND_DISPLAY:-}" ]; then
     echo "wayland"
-  elif [ -n "$DISPLAY" ]; then
+  elif [ -n "${DISPLAY:-}" ]; then
     echo "x11"
   else
     echo "unknown"

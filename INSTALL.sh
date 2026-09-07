@@ -274,13 +274,26 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Headless detection: skip UI components (alacritty) on servers.
+# GUI = live X11/Wayland session, or an Xorg binary present (inverse of the
+# x11-config/INSTALL.sh session guard, so the two installers agree).
+# ---------------------------------------------------------------------------
+HEADLESS=1
+case "$(detect_session)" in
+  x11|wayland) HEADLESS=0 ;;
+esac
+command -v Xorg >/dev/null 2>&1 && HEADLESS=0
+
+# ---------------------------------------------------------------------------
 # Alacritty (tecfu fork)
 # https://github.com/tecfu/alacritty — install via cargo, skip if present.
 # ---------------------------------------------------------------------------
 ALACRITTY_REPO="https://github.com/tecfu/alacritty"
-# Check for the fork specifically — a distro alacritty (/usr/bin) must NOT
-# satisfy this, or the fork (with the keyboard/copy patches) never installs.
-if [ -x "$HOME/.cargo/bin/alacritty" ]; then
+if [ "$HEADLESS" = "1" ]; then
+  install_skip "headless server (no GUI session, no Xorg); skipping alacritty (UI component)"
+elif [ -x "$HOME/.cargo/bin/alacritty" ]; then
+  # Fork check specifically — a distro alacritty (/usr/bin) must NOT satisfy
+  # this, or the fork (with the keyboard/copy patches) never installs.
   echo "OK   alacritty (tecfu fork) already installed: $HOME/.cargo/bin/alacritty"
 elif [ "$DRY_RUN" = "1" ]; then
   echo "DRY  would install alacritty: cargo install --git $ALACRITTY_REPO alacritty"
@@ -311,6 +324,8 @@ fi
 # Alacritty terminfo. cargo installs the binary but not the terminfo entry;
 # without it tmux aborts with: "missing or unsuitable terminal: alacritty".
 # Installs user-level (~/.terminfo), no sudo needed.
+# Installed even on headless servers: ~2KB, and needed there when SSH clients
+# connect FROM alacritty ($TERM=alacritty arrives over SSH) and run tmux.
 # ---------------------------------------------------------------------------
 if infocmp alacritty >/dev/null 2>&1; then
   echo "OK   alacritty terminfo already present"
