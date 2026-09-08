@@ -86,6 +86,7 @@ declare -A SYMLINKS=(
   ["$DOTFILES_DIR/.ideavimrc"]="$HOME/.ideavimrc"
   ["$DOTFILES_DIR/.terminal"]="$HOME/.terminal"
   ["$DOTFILES_DIR/.vim"]="$HOME/.vim"
+  ["$DOTFILES_DIR/.pi/agent/extensions/footer-pwd-host.ts"]="$HOME/.pi/agent/extensions/footer-pwd-host.ts"
 )
 
 link_one() {
@@ -131,6 +132,8 @@ link_one() {
   fi
   ln -sfn "$src" "$dst"
 }
+
+mkdir -p "$HOME/.pi/agent/extensions"
 
 for src in "${!SYMLINKS[@]}"; do
   link_one "$src" "${SYMLINKS[$src]}"
