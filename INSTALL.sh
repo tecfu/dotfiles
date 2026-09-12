@@ -225,8 +225,13 @@ fi
 exec "$NODE" "$PI_BUNDLE" "$@"
 WRAPPER
     sed -i "s|__VOLTA_HOME__|$HOME/.volta|g; s|__USER__|$USER|g" /tmp/pi-root-wrapper
-    sudo install -m 0755 /tmp/pi-root-wrapper /usr/local/bin/pi
-    echo "OK   pi installed (volta) + snapshot wrapper /usr/local/bin/pi"
+    # Best-effort like apt_install: a sudo failure (no TTY / no NOPASSWD) must
+    # not abort the whole installer under set -e.
+    if sudo install -m 0755 /tmp/pi-root-wrapper /usr/local/bin/pi; then
+      echo "OK   pi installed (volta) + snapshot wrapper /usr/local/bin/pi"
+    else
+      install_skip "pi snapshot wrapper (sudo install /usr/local/bin/pi failed; re-run with sudo)"
+    fi
   else
     install_skip "pi wrapper (bundle not found after volta install)"
   fi
@@ -250,8 +255,11 @@ $snapshot
 fi
 exec $exec_bin "\$@"
 WRAPPER
-    sudo install -m 0755 "/tmp/$name-sudo-wrapper" "/usr/local/bin/$name"
-    echo "OK   snapshot wrapper /usr/local/bin/$name"
+    if sudo install -m 0755 "/tmp/$name-sudo-wrapper" "/usr/local/bin/$name"; then
+      echo "OK   snapshot wrapper /usr/local/bin/$name"
+    else
+      install_skip "snapshot wrapper $name (sudo install /usr/local/bin/$name failed; re-run with sudo)"
+    fi
   }
   if [ "$(command -v vim 2>/dev/null)" = "/usr/bin/vim" ]; then
     install_sudo_snapshot_wrapper vim /usr/bin/vim '  [ -e "$UHOME/.vimrc" ] && cp -f "$UHOME/.vimrc" /root/.vimrc
