@@ -161,6 +161,28 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# fzf (fuzzy finder). .terminal's profile-autocompletion.sh sources ~/.fzf.bash
+# and fzf registers the per-command completions (ssh host picker, Ctrl-R, ...).
+# Without fzf those completions silently do nothing on a fresh machine, so
+# install it unconditionally (CLI tool: needed on headless servers too).
+# ---------------------------------------------------------------------------
+if command -v fzf >/dev/null 2>&1; then
+  echo "OK   fzf already installed: $(command -v fzf)"
+elif [ "$DRY_RUN" = "1" ]; then
+  echo "DRY  would install fzf: git clone --depth 1 https://github.com/junegunn/fzf ~/.fzf && ~/.fzf/install --all"
+else
+  apt_install git || true
+  # Re-run safe: clone into an existing (non-empty) ~/.fzf fails; fall through
+  # to the installer either way.
+  git clone --depth 1 https://github.com/junegunn/fzf "$HOME/.fzf" 2>/dev/null || true
+  if [ -x "$HOME/.fzf/install" ] && "$HOME/.fzf/install" --all; then
+    echo "OK   fzf installed (~/.fzf; key bindings + completion wired into ~/.bashrc)"
+  else
+    install_skip "fzf (git clone/install failed; check network and re-run)"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 # pi coding agent (@earendil-works/pi-coding-agent)
 # Installs pi into the user's Volta toolchain. Also installs snapshot wrappers
 # in /usr/local/bin (pi, vim, nvim): when run via sudo they first copy the
