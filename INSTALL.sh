@@ -59,6 +59,24 @@ fi
 . "$DOTFILES_DIR/lib/common.sh"
 
 # ---------------------------------------------------------------------------
+# This installer runs AS THE USER: it symlinks configs into $HOME and installs
+# volta/cargo/pi into the user's home. Under sudo, $HOME is /root: the configs
+# land in /root and user-owned tools (e.g. xremap in ~user/.cargo/bin) are
+# invisible, so dependency checks fail. Privileged steps (apt, udev, the
+# /usr/local/bin wrappers) sudo themselves. If invoked via sudo, re-run as the
+# invoking user instead.
+# ---------------------------------------------------------------------------
+if [ "$(id -u)" = "0" ]; then
+  if [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ] && [ -z "${DOTFILES_DROPPED:-}" ]; then
+    REAL_HOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
+    echo "INFO: invoked via sudo; re-running as $SUDO_USER (this installer targets a user HOME)"
+    exec sudo -u "$SUDO_USER" env "DOTFILES_DROPPED=1" "HOME=$REAL_HOME" "USER=$SUDO_USER" "LOGNAME=$SUDO_USER" bash "$__DIR__/INSTALL.sh" "$@"
+  fi
+  install_error "run this as your regular user, not root: $0 installs into \$HOME and applies sudo internally where needed."
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
 # Preconditions
 # ---------------------------------------------------------------------------
 require_submodules() {
