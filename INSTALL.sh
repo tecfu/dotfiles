@@ -240,10 +240,19 @@ fi
 if [ "$(id -u)" = "0" ] && [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ]; then
   UHOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
   if [ -d "$UHOME/.pi/" ]; then
+    mkdir -p /root/.pi
+    # ~/.pi/agent is often a SYMLINK into the config repo. Without -L, rsync
+    # either lays the link down as-is (root would write INTO the repo) or, if
+    # /root/.pi/agent already exists as a real dir, dies on "could not make
+    # way for new symlink" — stderr dropped below, so root silently froze on
+    # a stale snapshot forever. -L copies THROUGH the link into a real dir;
+    # drop a legacy agent symlink first so the slot is a plain dir, and skip
+    # the repo's dangling agent/agent link and the user's session history.
+    [ -L /root/.pi/agent ] && rm -f /root/.pi/agent
     if command -v rsync >/dev/null 2>&1; then
-      rsync -a --no-o --no-g "$UHOME/.pi/" /root/.pi/ 2>/dev/null
+      rsync -aL --exclude agent/agent --exclude agent/sessions --no-o --no-g "$UHOME/.pi/" /root/.pi/ 2>/dev/null
     else
-      mkdir -p /root/.pi && cp -a "$UHOME/.pi/." /root/.pi/ 2>/dev/null
+      cp -aL "$UHOME/.pi/." /root/.pi/ 2>/dev/null
     fi
   fi
 fi
