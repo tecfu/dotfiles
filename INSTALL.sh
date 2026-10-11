@@ -382,7 +382,12 @@ else
       echo "INFO: low RAM detected (${total_mb}MB), building with -j 2"
       JOBS="-j 2"
     fi
-    cargo install --git "$ALACRITTY_REPO" alacritty $JOBS
+    # Cargo's built-in (libgit2) SSH can only authenticate through ssh-agent;
+    # it ignores IdentityFile in ~/.ssh/config, so on headless boxes with no
+    # agent it fails with "failed to authenticate when downloading repository"
+    # even though plain git works (url.insteadOf -> git@github.com resolves via
+    # the OpenSSH client config). Fetching with the git CLI fixes that.
+    CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install --git "$ALACRITTY_REPO" alacritty $JOBS
   else
     install_skip "cargo unavailable; install manually: cargo install --git $ALACRITTY_REPO alacritty"
   fi
