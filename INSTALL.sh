@@ -317,6 +317,9 @@ WRAPPER
     rm -f "$tmp"
   }
   if [ "$(command -v vim 2>/dev/null)" = "/usr/bin/vim" ]; then
+    # The snapshot body below is single-quoted on purpose: $UHOME must expand
+    # when the generated wrapper runs under sudo, not when this file is written.
+    # shellcheck disable=SC2016
     install_sudo_snapshot_wrapper vim /usr/bin/vim '  [ -e "$UHOME/.vimrc" ] && cp -f "$UHOME/.vimrc" /root/.vimrc
   if [ -d "$UHOME/.vim/" ]; then
     if command -v rsync >/dev/null 2>&1; then
@@ -327,6 +330,8 @@ WRAPPER
   fi'
   fi
   if [ "$(command -v nvim 2>/dev/null)" = "/usr/bin/nvim" ]; then
+    # Single-quoted snapshot body on purpose: see the vim case above.
+    # shellcheck disable=SC2016
     install_sudo_snapshot_wrapper nvim /usr/bin/nvim '  if [ -d "$UHOME/.config/nvim/" ]; then
     if command -v rsync >/dev/null 2>&1; then
       mkdir -p /root/.config && rsync -a --no-o --no-g "$UHOME/.config/nvim/" /root/.config/nvim/ 2>/dev/null
@@ -387,6 +392,8 @@ else
     # agent it fails with "failed to authenticate when downloading repository"
     # even though plain git works (url.insteadOf -> git@github.com resolves via
     # the OpenSSH client config). Fetching with the git CLI fixes that.
+    # $JOBS is either empty or "-j 2"; word-splitting it into args is the point.
+    # shellcheck disable=SC2086
     CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install --git "$ALACRITTY_REPO" alacritty $JOBS
   else
     install_skip "cargo unavailable; install manually: cargo install --git $ALACRITTY_REPO alacritty"
