@@ -91,6 +91,33 @@ check_cmd node
 check_cmd xfconf-query
 
 echo ""
+echo "---- root volta share ----"
+# scripts/volta-root-share.sh owns /usr/local/lib/volta/env, /etc/profile.d/
+# volta.sh and the /root/.bashrc hook. --check is read-only and reports DRIFT if
+# the farm symlink (a second spelling of $VOLTA_HOME/bin) is on root's PATH —
+# the condition that made volta-shim fork-loop. Needs no root itself except to
+# audit /root/.bashrc, which shows up as a DRIFT line rather than a crash.
+if command -v volta >/dev/null 2>&1 || [ -d "$HOME/.volta" ]; then
+  if vrs_out="$(bash "$ROOT/scripts/volta-root-share.sh" --check 2>&1 | sed 's/\x1b\[[0-9;]*m//g')"; then
+    ok "root volta env matches scripts/volta-root-share.sh"
+  else
+    while IFS= read -r line; do
+      case "$line" in
+        DRIFT*)
+          if [ "$CI_MODE" = "1" ]; then warn "${line#DRIFT }"; else bad "${line#DRIFT }"; fi ;;
+        STALE*)
+          warn "${line#STALE }" ;;
+        ERROR*)
+          if [ "$CI_MODE" = "1" ]; then warn "$line"; else bad "$line"; fi ;;
+      esac
+    done <<<"$vrs_out"
+    [ "$CI_MODE" = "1" ] || echo "       fix: bash $ROOT/scripts/volta-root-share.sh"
+  fi
+else
+  warn "volta not installed — skipping root volta share check"
+fi
+
+echo ""
 echo "---- submodules ----"
 for path in x11-config .terminal .vim; do
   if [ -d "$ROOT/$path" ] && [ -n "$(ls -A "$ROOT/$path" 2>/dev/null || true)" ]; then

@@ -119,6 +119,34 @@ Log out/in. For virtual consoles, use `.terminal/custom.kmap` with `loadkeys`.
 
 Checks symlinks, session/DE detection, and common tools (xsel, sxhkd, volta, vim/nvim, …).
 
+### Sharing the toolchain with root (`sudo pi`, `sudo npm`)
+
+`sudo` strips the environment, and Volta's shims find their toolchain through
+`$VOLTA_HOME` only — never from their own path — so root needs a `VOLTA_HOME`
+that points at the installing user's `~/.volta`. This repo provides it:
+
+```sh
+./scripts/volta-root-share.sh            # apply (writes /usr/local + /etc via sudo)
+./scripts/volta-root-share.sh --check    # read-only audit; exit 1 on drift
+bash scripts/test-volta-root-share.sh    # the harness, against a temp tree
+```
+
+The farm (`/usr/local/lib/volta/home -> ~/.volta`) is the *indirection point*, so
+switching users means repointing one symlink instead of editing `/etc`. It must
+never appear on `PATH`: Volta's anti-recursion guard removes the literal
+`"$VOLTA_HOME/bin"` from a child's `PATH` and execs the next `node` it finds, so a
+second spelling of that directory resolves straight back to the shim — an
+uncapped fork loop (`_VOLTA_TOOL_RECURSION=1` + aliased PATH = ~1,000 stopped
+`node` processes/second; see the 2026-10-17 incident). The snippet therefore
+resolves the farm with `readlink`, puts the real `tools/image/node/*/bin` first,
+and appends the canonical shim dir last. `INSTALL.sh` runs it after pi installs,
+`doctor.sh` audits it, and CI runs the harness.
+
+User-side, the matching guard is `.terminal/scripts/volta-path-doctor.sh` plus
+`.terminal/profile-path-safety.sh`, which prunes any aliased spelling of the shim
+dir from *your* PATH before the first `node` can run (sourced above the
+interactivity check, so `bash -lc` and `ssh host cmd` are covered too).
+
 ## Archived / historical
 
 - **Vimperator** — project is dead; config was removed from active install paths. Prefer Vimium.

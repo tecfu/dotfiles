@@ -349,6 +349,23 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Root's access to that toolchain ('sudo pi', 'sudo npm', bare `node` as root).
+# Owns /usr/local/lib/volta/env + /etc/profile.d/volta.sh + the /root/.bashrc
+# hook. Best-effort: a sudo failure must not abort the install under set -e,
+# but a DRIFT report is loud — the aliased shim dir it prevents is what made
+# `node` fork-loop at ~1,000 processes/second on 2026-10-17.
+# ---------------------------------------------------------------------------
+if [ "$SKIP_VOLTA" = "1" ]; then
+  install_skip "shared root volta env (--skip-volta)"
+elif [ "$DRY_RUN" = "1" ]; then
+  echo "DRY  would write /usr/local/lib/volta/env + /etc/profile.d/volta.sh (scripts/volta-root-share.sh)"
+elif bash "$DOTFILES_DIR/scripts/volta-root-share.sh" --quiet; then
+  echo "OK   root volta env shared without an aliased shim dir on PATH"
+else
+  install_skip "root volta env (needs sudo — re-run: sudo bash $DOTFILES_DIR/scripts/volta-root-share.sh)"
+fi
+
+# ---------------------------------------------------------------------------
 # Headless detection: skip UI components (alacritty) on servers.
 # GUI = live X11/Wayland session, or an X server actually running on this
 # machine (X sockets in /tmp/.X11-unix — covers SSH installs on desktops,

@@ -51,6 +51,8 @@ jobs:
             lib/common.sh \
             scripts/doctor.sh \
             scripts/update-submodules.sh \
+            scripts/volta-root-share.sh \
+            scripts/test-volta-root-share.sh \
             keyboard-shortcuts/install.sh \
             keyboard-shortcuts/export.sh \
             keyboard-shortcuts/dotfiles-tile
@@ -85,6 +87,15 @@ jobs:
           chmod +x scripts/doctor.sh
           ./scripts/doctor.sh --ci | tee /tmp/doctor.log
           # --ci exits 0 unless hard failures (e.g. broken script); missing symlinks warn only
+
+      - name: volta root share (sandboxed installer + harness)
+        run: |
+          set -euo pipefail
+          chmod +x scripts/volta-root-share.sh scripts/test-volta-root-share.sh
+          # Runs against a temp tree via a fake sudo; proves the farm alias never
+          # reaches root's PATH, which is the volta-shim fork-loop regression gate.
+          ./scripts/test-volta-root-share.sh | tee /tmp/volta-root-share.log
+          grep -q "failed 0" /tmp/volta-root-share.log
 
       - name: Reject unknown installer flags
         run: |
