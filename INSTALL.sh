@@ -272,6 +272,25 @@ if [ "$(id -u)" = "0" ] && [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ]
     else
       cp -aL "$UHOME/.pi/." /root/.pi/ 2>/dev/null
     fi
+    # settings.json lists git:/npm: packages, and pi reconciles packages at
+    # boot. The private git: repos need the invoking user's git identity (gh
+    # credential helper in ~/.gitconfig, ~/.ssh/config) — those live OUTSIDE
+    # ~/.pi, so the snapshot never carries them, and with BatchMode +
+    # GIT_TERMINAL_PROMPT=0 above the credential-less fetch fails fast:
+    # root's boot dies on the unreachable package (the same reason CI empties
+    # settings.json.packages before booting pi). Drop packages from the
+    # SNAPSHOT copy only — the user's settings.json is never touched here, and
+    # 'sudo pi update ...' still runs as the invoking user.
+    if [ -f /root/.pi/agent/settings.json ]; then
+      "$NODE" -e '
+        const fs = require("fs");
+        try {
+          const f = process.argv[1], s = JSON.parse(fs.readFileSync(f, "utf8"));
+          if (s && s.packages) { delete s.packages; fs.writeFileSync(f, JSON.stringify(s, null, 2) + "\n"); }
+        } catch { /* unparseable: leave it; pi will report its own error */ }
+      ' /root/.pi/agent/settings.json
+      echo "note: root's pi snapshot boots without settings.json packages (private git repos need $SUDO_USER's git identity, which is not in ~/.pi). Run 'pi update --extensions' as $SUDO_USER to refresh them." >&2
+    fi
   fi
 fi
 exec "$NODE" "$PI_BUNDLE" "$@"
